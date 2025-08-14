@@ -1,6 +1,8 @@
 
+import 'package:diehugosapp/router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:forui/forui.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -43,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 FButton(
-                  onPress: () {},
+                  onPress: () => context.go(RouterDestinations.home.url),
                   // onPress: () => setState(() => _count++),
                   suffix: const Icon(FIcons.lock),
                   child: const Text('Anmelden'),

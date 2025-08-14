@@ -1,21 +1,11 @@
 import 'package:diehugosapp/buildcontext.dart';
-import 'package:diehugosapp/screens/login/loginscreen.dart';
+import 'package:diehugosapp/router.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:go_router/go_router.dart';
 
 void main() {
   runApp(const Application());
 }
-
-final _router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => LoginScreen(),
-    ),
-  ],
-);
 
 class Application extends StatelessWidget {
   const Application({super.key});
@@ -36,7 +26,7 @@ class Application extends StatelessWidget {
       localizationsDelegates: const [...FLocalizations.localizationsDelegates],
       builder: (_, child) => FTheme(data: theme, child: child!),
       theme: theme.toApproximateMaterialTheme(),
-      routerConfig: _router,
+      routerConfig: goRouter,
     );
   }
 }
