@@ -11,17 +11,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) => FScaffold(
-    child: Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 20,
-        children: [
-          Text(
-            "Willkommen, Mona!",
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      spacing: 20,
+      children: [
+        Text(
+          "Willkommen, Mona!",
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+        ),
+        Spacer(),
+        FButton(onPress: () {}, child: Text("Zur Gruppenkassa")),
+      ],
     ),
   );
 }
