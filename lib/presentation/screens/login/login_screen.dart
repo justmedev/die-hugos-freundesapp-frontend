@@ -120,4 +120,11 @@ class _LoginScreenState extends State<LoginScreen> {
       description: const Text("Sind Email & Passwort korrekt?"),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
 }

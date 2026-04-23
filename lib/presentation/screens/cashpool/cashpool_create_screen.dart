@@ -82,4 +82,11 @@ class _CashpoolCreateScreenState extends State<CashpoolCreateScreen> {
     //   throw Exception("Unable to create cashpool!");
     // }
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _titleController.dispose();
+    _descriptionController.dispose();
+  }
 }
