@@ -1,11 +1,5 @@
-import "dart:convert";
-
 import "package:flutter/cupertino.dart";
-import "package:flutter/foundation.dart";
 import "package:forui/forui.dart";
-import "package:go_router/go_router.dart";
-import "package:http/http.dart" as http;
-import "package:shared_preferences/shared_preferences.dart";
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -49,11 +43,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 spacing: 10,
                 children: [
                   FTextField.email(
-                    controller: _emailController, // TextEditingController
+                    control: .managed(controller: _emailController),
                   ),
                   FTextField.password(
                     label: const Text("Passwort"),
-                    controller: _passwordController, // TextEditingController
+                    control: .managed(controller: _passwordController),
                   ),
                 ],
               ),
@@ -79,41 +73,41 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    final response = await http.post(
-      Uri.http("localhost:8000", "/auth/login"),
-      body: jsonEncode({"email": email, "password": password}),
-    );
-    if (response.statusCode != 200) {
-      if (kDebugMode) {
-        print("auth response not ok!");
-      }
-      failedLoginToast();
-      return;
-    }
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString("jwt", jsonDecode(response.body)["jwt"]);
-    if (kDebugMode) {
-      print("Set jwt!");
-    }
+    // final response = await http.post(
+    //   Uri.http("localhost:8000", "/auth/login"),
+    //   body: jsonEncode({"email": email, "password": password}),
+    // );
+    // if (response.statusCode != 200) {
+    //   if (kDebugMode) {
+    //     print("auth response not ok!");
+    //   }
+    //   failedLoginToast();
+    //   return;
+    // }
+    // final prefs = await SharedPreferences.getInstance();
+    // prefs.setString("jwt", jsonDecode(response.body)["jwt"]);
+    // if (kDebugMode) {
+    //   print("Set jwt!");
+    // }
     continueToAppIfJwt();
   }
 
   Future<void> continueToAppIfJwt() async {
-    final prefs = await SharedPreferences.getInstance();
-    final jwt = prefs.getString("jwt");
-    if (jwt == null) return;
-    final payload = jsonDecode(
-      utf8.decode(base64Url.decode('${jwt.split('.')[1]}=')),
-    );
-    if (payload["exp"] <= DateTime.now().millisecondsSinceEpoch / 1_000) {
-      if (kDebugMode) print("JWT expired!");
-      failedLoginToast();
-      return; // Not valid anymore
-    }
-    if (mounted) {
-      context.go("/");
-      // context.pushReplacement(RouterDestinations.home.url);
-    }
+    // final prefs = await SharedPreferences.getInstance();
+    // final jwt = prefs.getString("jwt");
+    // if (jwt == null) return;
+    // final payload = jsonDecode(
+    //   utf8.decode(base64Url.decode('${jwt.split('.')[1]}=')),
+    // );
+    // if (payload["exp"] <= DateTime.now().millisecondsSinceEpoch / 1_000) {
+    //   if (kDebugMode) print("JWT expired!");
+    //   failedLoginToast();
+    //   return; // Not valid anymore
+    // }
+    // if (mounted) {
+    //   context.go("/");
+    //   // context.pushReplacement(RouterDestinations.home.url);
+    // }
   }
 
   void failedLoginToast() {

@@ -5,7 +5,6 @@ import "package:diehugosapp/data/models/cashpool.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
 import "package:go_router/go_router.dart";
-import "package:http/http.dart" as http;
 import "package:shared_preferences/shared_preferences.dart";
 
 class CashpoolOverviewScreen extends StatefulWidget {
@@ -76,24 +75,26 @@ class _CashpoolOverviewScreenState extends State<CashpoolOverviewScreen> {
   Future<List<Cashpool>> fetchCashpools() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final response = await http.get(
-      Uri.http("localhost:8000", "/cashpools"),
-      // Send authorization headers to the backend.
-      headers: {
-        HttpHeaders.acceptHeader: "application/json",
-        HttpHeaders.authorizationHeader: 'Bearer ${prefs.getString("jwt")}',
-      },
-    );
+    // final response = await http.get(
+    //   Uri.http("localhost:8000", "/cashpools"),
+    //   // Send authorization headers to the backend.
+    //   headers: {
+    //     HttpHeaders.acceptHeader: "application/json",
+    //     HttpHeaders.authorizationHeader: 'Bearer ${prefs.getString("jwt")}',
+    //   },
+    // );
+//
+    // if (response.statusCode != 200) {
+    //   throw Exception("Unable to fetch cashpools!");
+    // }
+//
+    // final Iterable decoded = jsonDecode(response.body);
+//
+    // return List<Cashpool>.from(
+    //   decoded.map((model) => Cashpool.fromJson(model)),
+    // );
 
-    if (response.statusCode != 200) {
-      throw Exception("Unable to fetch cashpools!");
-    }
-
-    final Iterable decoded = jsonDecode(response.body);
-
-    return List<Cashpool>.from(
-      decoded.map((model) => Cashpool.fromJson(model)),
-    );
+    return List<Cashpool>.empty();
   }
 
   String formatDate(DateTime dt) {

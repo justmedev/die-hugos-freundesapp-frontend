@@ -1,11 +1,9 @@
-import "dart:convert";
-import "dart:io";
+import "dart:async";
 
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
 import "package:go_router/go_router.dart";
-import "package:http/http.dart" as http;
 import "package:shared_preferences/shared_preferences.dart";
 
 class CashpoolCreateScreen extends StatefulWidget {
@@ -33,7 +31,7 @@ class _CashpoolCreateScreenState extends State<CashpoolCreateScreen> {
       children: [
         FTextFormField(
           label: const Text("Titel"),
-          controller: _titleController,
+          control: .managed(controller: _titleController),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) => ((value?.length ?? 0) >= 1)
               ? null
@@ -42,7 +40,7 @@ class _CashpoolCreateScreenState extends State<CashpoolCreateScreen> {
         const SizedBox(height: 10),
         FTextFormField.multiline(
           label: const Text("Beschreibung"),
-          controller: _descriptionController,
+          control: .managed(controller: _descriptionController),
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) => ((value?.length ?? 0) >= 1)
               ? null
@@ -68,20 +66,20 @@ class _CashpoolCreateScreenState extends State<CashpoolCreateScreen> {
   Future<void> createCashpool() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final response = await http.post(
-      Uri.http("10.0.2.2:8000", "/cashpools"),
-      body: jsonEncode({
-        "title": _titleController.text.trim(),
-        "description": _descriptionController.text.trim(),
-      }),
-      headers: {
-        HttpHeaders.contentTypeHeader: "application/json",
-        HttpHeaders.authorizationHeader: 'Bearer ${prefs.getString("jwt")}',
-      },
-    );
-
-    if (response.statusCode != 200) {
-      throw Exception("Unable to create cashpool!");
-    }
+    // final response = await http.post(
+    //   Uri.http("10.0.2.2:8000", "/cashpools"),
+    //   body: jsonEncode({
+    //     "title": _titleController.text.trim(),
+    //     "description": _descriptionController.text.trim(),
+    //   }),
+    //   headers: {
+    //     HttpHeaders.contentTypeHeader: "application/json",
+    //     HttpHeaders.authorizationHeader: 'Bearer ${prefs.getString("jwt")}',
+    //   },
+    // );
+    //
+    // if (response.statusCode != 200) {
+    //   throw Exception("Unable to create cashpool!");
+    // }
   }
 }

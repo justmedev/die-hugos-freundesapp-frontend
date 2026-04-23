@@ -17,7 +17,6 @@ class _CashpoolDetailScreenState extends State<CashpoolDetailScreen> {
   @override
   Widget build(BuildContext context) {
     final typography = context.theme.typography;
-    final itemStyle = context.theme.itemStyle;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
