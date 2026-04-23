@@ -10,12 +10,26 @@ class ScaffoldWithNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var routeName = GoRouterState.of(context).topRoute?.name;
+
+    final canPop = shellNavigatorKey.currentState?.canPop() ?? false;
+    print("Can pop? $canPop");
+    Widget? header;
+    if (routeName != null) {
+      if (!(shellNavigatorKey.currentState?.canPop() ?? false)) {
+        header = FHeader(title: Text(routeName));
+      } else {
+        header = FHeader.nested(
+          title: Text(routeName),
+          prefixes: [FHeaderAction.back(onPress: () {
+            context.pop();
+          })],
+        );
+      }
+    }
+
     return FScaffold(
-      header:
-          GoRouterState.of(context).matchedLocation ==
-              RouterDestinations.login.url
-          ? null
-          : FHeader(title: Text('Die Hugos')),
+      header: header,
       child: SafeArea(top: false, child: child),
     );
   }

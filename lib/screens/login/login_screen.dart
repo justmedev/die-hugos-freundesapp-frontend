@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     var response = await http.post(
-      Uri.http("10.0.2.2:8000", "/auth/login"),
+      Uri.http("localhost:8000", "/auth/login"),
       body: jsonEncode({'email': email, 'password': password}),
     );
     if (response.statusCode != 200) {
@@ -112,7 +112,8 @@ class _LoginScreenState extends State<LoginScreen> {
       return; // Not valid anymore
     }
     if (mounted) {
-      context.go(RouterDestinations.home.url);
+      context.go('/');
+      // context.pushReplacement(RouterDestinations.home.url);
     }
   }
 
