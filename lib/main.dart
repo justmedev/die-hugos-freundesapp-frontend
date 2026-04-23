@@ -1,5 +1,5 @@
-import 'package:diehugosapp/buildcontext.dart';
-import 'package:diehugosapp/router.dart';
+import 'package:diehugosapp/core/utils/buildcontext_extensions.dart';
+import 'package:diehugosapp/presentation/routes/router.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 

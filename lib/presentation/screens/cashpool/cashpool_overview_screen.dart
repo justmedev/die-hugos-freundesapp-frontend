@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:diehugosapp/models/cashpool.dart';
-import 'package:diehugosapp/router.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../data/models/cashpool.dart';
 
 class CashpoolOverviewScreen extends StatefulWidget {
   const CashpoolOverviewScreen({super.key});
@@ -31,48 +30,48 @@ class _CashpoolOverviewScreenState extends State<CashpoolOverviewScreen> {
     print("[CASHPOOLS] Can pop? ${context.canPop()}");
 
     return Column(
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      FutureBuilder(
-        future: futureCashpools,
-        builder: (context, asyncSnapshot) {
-          if (asyncSnapshot.hasData) {
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: asyncSnapshot.data?.length,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        FutureBuilder(
+          future: futureCashpools,
+          builder: (context, asyncSnapshot) {
+            if (asyncSnapshot.hasData) {
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: asyncSnapshot.data?.length,
 
-              itemBuilder: (ctx, i) {
-                Cashpool data = asyncSnapshot.data![i];
-                return FItem(
-                  title: Text(data.title),
-                  subtitle: Text(data.description),
-                  details: Text(
-                    'von ${data.ownerId} am ${formatDate(data.createdAt)}',
-                  ),
-                  suffix: Icon(FIcons.chevronRight),
-                  onPress: () {
-                    context.push('/cashpools/details');
-                    // context.push(RouterDestinations.cashpoolDetail.url);
-                  },
-                );
-              },
-            );
-          } else if (asyncSnapshot.hasError) {
-            return Text('${asyncSnapshot.error}');
-          }
-          return Center(child: CircularProgressIndicator());
-        },
-      ),
-      Spacer(),
-      FButton(
-        onPress: () {
-          context.push('/cashpools/create');
-          // context.push(RouterDestinations.cashpoolCreate.url);
-        },
-        child: Text("Gruppenkassa erstellen"),
-      ),
-    ],
-  );
+                itemBuilder: (ctx, i) {
+                  Cashpool data = asyncSnapshot.data![i];
+                  return FItem(
+                    title: Text(data.title),
+                    subtitle: Text(data.description),
+                    details: Text(
+                      'von ${data.ownerId} am ${formatDate(data.createdAt)}',
+                    ),
+                    suffix: Icon(FIcons.chevronRight),
+                    onPress: () {
+                      context.push('/cashpools/details');
+                      // context.push(RouterDestinations.cashpoolDetail.url);
+                    },
+                  );
+                },
+              );
+            } else if (asyncSnapshot.hasError) {
+              return Text('${asyncSnapshot.error}');
+            }
+            return Center(child: CircularProgressIndicator());
+          },
+        ),
+        Spacer(),
+        FButton(
+          onPress: () {
+            context.push('/cashpools/create');
+            // context.push(RouterDestinations.cashpoolCreate.url);
+          },
+          child: Text("Gruppenkassa erstellen"),
+        ),
+      ],
+    );
   }
 
   Future<List<Cashpool>> fetchCashpools() async {

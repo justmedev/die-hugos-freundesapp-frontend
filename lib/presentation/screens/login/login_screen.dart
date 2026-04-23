@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:diehugosapp/router.dart';
+import 'package:diehugosapp/presentation/routes/router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:forui/forui.dart';

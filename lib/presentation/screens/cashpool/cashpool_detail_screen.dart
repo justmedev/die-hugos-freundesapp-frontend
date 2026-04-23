@@ -1,13 +1,5 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:diehugosapp/models/cashpool.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:forui/forui.dart';
-import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CashpoolDetailScreen extends StatefulWidget {
   const CashpoolDetailScreen({super.key});

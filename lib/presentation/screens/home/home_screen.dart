@@ -1,4 +1,4 @@
-import 'package:diehugosapp/router.dart';
+import 'package:diehugosapp/presentation/routes/router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:forui/forui.dart';
 import 'package:go_router/go_router.dart';

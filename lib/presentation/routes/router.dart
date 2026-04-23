@@ -1,11 +1,12 @@
-import 'package:diehugosapp/components/scaffold_with_navbar.dart';
-import 'package:diehugosapp/screens/cashpool/cashpool_create_screen.dart';
-import 'package:diehugosapp/screens/cashpool/cashpool_detail_screen.dart';
-import 'package:diehugosapp/screens/cashpool/cashpool_overview_screen.dart';
-import 'package:diehugosapp/screens/home/home_screen.dart';
-import 'package:diehugosapp/screens/login/login_screen.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+
+import '../screens/cashpool/cashpool_create_screen.dart';
+import '../screens/cashpool/cashpool_detail_screen.dart';
+import '../screens/cashpool/cashpool_overview_screen.dart';
+import '../screens/home/home_screen.dart';
+import '../screens/login/login_screen.dart';
+import '../widgets/scaffold_with_navbar.dart';
 
 enum RouterDestinations {
   home(url: '/'),
@@ -61,9 +62,9 @@ final goRouter = GoRouter(
                   name: "Gruppenkassa",
                   builder: (context, state) => CashpoolDetailScreen(),
                 ),
-              ]
+              ],
             ),
-          ]
+          ],
         ),
       ],
     ),
