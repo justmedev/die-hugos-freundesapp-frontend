@@ -71,7 +71,6 @@ class _CashpoolCreateScreenState extends State<CashpoolCreateScreen> {
     final response = await http.post(
       Uri.http("10.0.2.2:8000", "/cashpools"),
       body: jsonEncode({
-
         'title': _titleController.text.trim(),
         'description': _descriptionController.text.trim(),
       }),
