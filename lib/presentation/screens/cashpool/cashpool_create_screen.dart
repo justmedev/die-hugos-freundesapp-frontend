@@ -1,12 +1,12 @@
-import 'dart:convert';
-import 'dart:io';
+import "dart:convert";
+import "dart:io";
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:forui/forui.dart';
-import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
+import "package:flutter/cupertino.dart";
+import "package:flutter/material.dart";
+import "package:forui/forui.dart";
+import "package:go_router/go_router.dart";
+import "package:http/http.dart" as http;
+import "package:shared_preferences/shared_preferences.dart";
 
 class CashpoolCreateScreen extends StatefulWidget {
   const CashpoolCreateScreen({super.key});
@@ -32,25 +32,25 @@ class _CashpoolCreateScreenState extends State<CashpoolCreateScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         FTextFormField(
-          label: const Text('Titel'),
+          label: const Text("Titel"),
           controller: _titleController,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) => ((value?.length ?? 0) >= 1)
               ? null
-              : 'Der eingegebene Titel ist zu kurz.',
+              : "Der eingegebene Titel ist zu kurz.",
         ),
         const SizedBox(height: 10),
         FTextFormField.multiline(
-          label: const Text('Beschreibung'),
+          label: const Text("Beschreibung"),
           controller: _descriptionController,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           validator: (value) => ((value?.length ?? 0) >= 1)
               ? null
-              : 'Die eingegebene Beschreibung ist zu kurz.',
+              : "Die eingegebene Beschreibung ist zu kurz.",
         ),
         const SizedBox(height: 20),
         FButton(
-          child: const Text('Erstellen'),
+          child: const Text("Erstellen"),
           onPress: () {
             if (!_formKey.currentState!.validate()) {
               return; // Form is invalid.
@@ -71,11 +71,11 @@ class _CashpoolCreateScreenState extends State<CashpoolCreateScreen> {
     final response = await http.post(
       Uri.http("10.0.2.2:8000", "/cashpools"),
       body: jsonEncode({
-        'title': _titleController.text.trim(),
-        'description': _descriptionController.text.trim(),
+        "title": _titleController.text.trim(),
+        "description": _descriptionController.text.trim(),
       }),
       headers: {
-        HttpHeaders.contentTypeHeader: 'application/json',
+        HttpHeaders.contentTypeHeader: "application/json",
         HttpHeaders.authorizationHeader: 'Bearer ${prefs.getString("jwt")}',
       },
     );

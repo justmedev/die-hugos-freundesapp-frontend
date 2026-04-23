@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:forui/forui.dart';
+import "package:flutter/material.dart";
+import "package:forui/forui.dart";
 
 class CashpoolDetailScreen extends StatefulWidget {
   const CashpoolDetailScreen({super.key});
@@ -28,14 +28,13 @@ class _CashpoolDetailScreenState extends State<CashpoolDetailScreen> {
         // ),
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           decoration: const BoxDecoration(
             color: Colors.green,
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            borderRadius: BorderRadius.all(Radius.circular(15)),
           ),
           child: Center(
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(

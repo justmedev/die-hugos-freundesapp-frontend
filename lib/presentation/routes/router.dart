@@ -1,19 +1,18 @@
-import 'package:flutter/widgets.dart';
-import 'package:go_router/go_router.dart';
-
-import '../screens/cashpool/cashpool_create_screen.dart';
-import '../screens/cashpool/cashpool_detail_screen.dart';
-import '../screens/cashpool/cashpool_overview_screen.dart';
-import '../screens/home/home_screen.dart';
-import '../screens/login/login_screen.dart';
-import '../widgets/scaffold_with_navbar.dart';
+import "package:diehugosapp/presentation/screens/cashpool/cashpool_create_screen.dart";
+import "package:diehugosapp/presentation/screens/cashpool/cashpool_detail_screen.dart";
+import "package:diehugosapp/presentation/screens/cashpool/cashpool_overview_screen.dart";
+import "package:diehugosapp/presentation/screens/home/home_screen.dart";
+import "package:diehugosapp/presentation/screens/login/login_screen.dart";
+import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
+import "package:flutter/widgets.dart";
+import "package:go_router/go_router.dart";
 
 enum RouterDestinations {
-  home(url: '/'),
-  login(url: '/login'),
-  cashpoolOverview(url: '/cashpoolOverview'),
-  cashpoolDetail(url: '/cashpoolDetail'),
-  cashpoolCreate(url: '/cashpoolCreate');
+  home(url: "/"),
+  login(url: "/login"),
+  cashpoolOverview(url: "/cashpoolOverview"),
+  cashpoolDetail(url: "/cashpoolDetail"),
+  cashpoolCreate(url: "/cashpoolCreate");
 
   final String url;
 
@@ -21,10 +20,10 @@ enum RouterDestinations {
 }
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
-  debugLabel: 'root',
+  debugLabel: "root",
 );
 final GlobalKey<NavigatorState> shellNavigatorKey = GlobalKey<NavigatorState>(
-  debugLabel: 'shell',
+  debugLabel: "shell",
 );
 
 final goRouter = GoRouter(
@@ -33,34 +32,34 @@ final goRouter = GoRouter(
   routes: [
     ShellRoute(
       navigatorKey: shellNavigatorKey,
-      builder: (BuildContext context, GoRouterState state, Widget child) {
+      builder: (context, state, child) {
         return ScaffoldWithNavbar(child: child);
       },
       routes: [
         GoRoute(
-          path: '/login',
+          path: "/login",
           name: "Anmelden",
-          builder: (context, state) => LoginScreen(),
+          builder: (context, state) => const LoginScreen(),
         ),
         GoRoute(
-          path: '/',
+          path: "/",
           name: "Die Hugos",
-          builder: (context, state) => HomeScreen(),
+          builder: (context, state) => const HomeScreen(),
           routes: [
             GoRoute(
-              path: 'cashpools',
+              path: "cashpools",
               name: "Gruppenkassen",
-              builder: (context, state) => CashpoolOverviewScreen(),
+              builder: (context, state) => const CashpoolOverviewScreen(),
               routes: [
                 GoRoute(
-                  path: 'create',
+                  path: "create",
                   name: "Gruppenkassa erstellen",
-                  builder: (context, state) => CashpoolCreateScreen(),
+                  builder: (context, state) => const CashpoolCreateScreen(),
                 ),
                 GoRoute(
-                  path: 'details',
+                  path: "details",
                   name: "Gruppenkassa",
-                  builder: (context, state) => CashpoolDetailScreen(),
+                  builder: (context, state) => const CashpoolDetailScreen(),
                 ),
               ],
             ),

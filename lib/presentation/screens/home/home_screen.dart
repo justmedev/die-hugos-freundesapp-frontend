@@ -1,7 +1,6 @@
-import 'package:diehugosapp/presentation/routes/router.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:forui/forui.dart';
-import 'package:go_router/go_router.dart';
+import "package:flutter/cupertino.dart";
+import "package:forui/forui.dart";
+import "package:go_router/go_router.dart";
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,14 +15,14 @@ class _HomeScreenState extends State<HomeScreen> {
     mainAxisSize: MainAxisSize.min,
     spacing: 20,
     children: [
-      Text(
+      const Text(
         "Willkommen, Mona!",
         style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
       ),
-      Spacer(),
+      const Spacer(),
       FButton(onPress: () {
-        context.push('/cashpools');
-      }, child: Text("Zur Gruppenkassa")),
+        context.push("/cashpools");
+      }, child: const Text("Zur Gruppenkassa")),
     ],
   );
 }

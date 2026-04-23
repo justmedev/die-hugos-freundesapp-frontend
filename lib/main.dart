@@ -1,7 +1,7 @@
-import 'package:diehugosapp/core/utils/buildcontext_extensions.dart';
-import 'package:diehugosapp/presentation/routes/router.dart';
-import 'package:flutter/material.dart';
-import 'package:forui/forui.dart';
+import "package:diehugosapp/core/utils/buildcontext_extensions.dart";
+import "package:diehugosapp/presentation/routes/router.dart";
+import "package:flutter/material.dart";
+import "package:forui/forui.dart";
 
 void main() {
   runApp(const Application());
@@ -21,7 +21,7 @@ class Application extends StatelessWidget {
         : FThemes.zinc.light;
 
     return MaterialApp.router(
-      supportedLocales: [/*Locale('en'), */ Locale('de', 'AT')],
+      supportedLocales: const [/*Locale('en'), */ Locale("de", "AT")],
       // TODO: add your application's localizations delegates.
       localizationsDelegates: const [...FLocalizations.localizationsDelegates],
       builder: (_, child) => FTheme(data: theme, child: child!),

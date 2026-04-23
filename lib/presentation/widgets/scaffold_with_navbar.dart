@@ -1,16 +1,16 @@
-import 'package:diehugosapp/presentation/routes/router.dart';
-import 'package:flutter/widgets.dart';
-import 'package:forui/forui.dart';
-import 'package:go_router/go_router.dart';
+import "package:diehugosapp/presentation/routes/router.dart";
+import "package:flutter/widgets.dart";
+import "package:forui/forui.dart";
+import "package:go_router/go_router.dart";
 
 class ScaffoldWithNavbar extends StatelessWidget {
-  const ScaffoldWithNavbar({super.key, required this.child});
+  const ScaffoldWithNavbar({required this.child, super.key});
 
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    var routeName = GoRouterState.of(context).topRoute?.name;
+    final routeName = GoRouterState.of(context).topRoute?.name;
 
     final canPop = shellNavigatorKey.currentState?.canPop() ?? false;
     print("Can pop? $canPop");
