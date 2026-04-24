@@ -22,7 +22,7 @@ class HomeScreen extends GetView<HomeController> {
           const Spacer(),
           FButton(
             onPress: () async {
-              await Get.to(const CashpoolOverviewScreen());
+              await Get.to(() => const CashpoolOverviewScreen());
             },
             child: const Text("Zur Gruppenkassa"),
           ),

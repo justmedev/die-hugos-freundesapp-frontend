@@ -48,7 +48,7 @@ class _CashpoolOverviewScreenState extends State<CashpoolOverviewScreen> {
                       ),
                       suffix: const Icon(FIcons.chevronRight),
                       onPress: () async {
-                        await Get.to(const CashpoolDetailScreen());
+                        await Get.to(() => const CashpoolDetailScreen());
                       },
                     );
                   },
@@ -62,7 +62,7 @@ class _CashpoolOverviewScreenState extends State<CashpoolOverviewScreen> {
           const Spacer(),
           FButton(
             onPress: () async {
-              await Get.to(const CashpoolCreateScreen());
+              await Get.to(() => const CashpoolCreateScreen());
             },
             child: const Text("Gruppenkassa erstellen"),
           ),
