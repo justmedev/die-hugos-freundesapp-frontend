@@ -1,7 +1,7 @@
 import "dart:convert";
 
-import "package:diehugosapp/data/models/auth/auth_response.dart";
-import "package:diehugosapp/data/models/user/user.dart";
+import "package:diehugosapp/data/models/auth/auth_response/auth_response.dart";
+import "package:diehugosapp/data/models/auth/auth_state/auth_state.dart";
 import "package:dio/dio.dart";
 import "package:get/get_core/src/get_main.dart";
 import "package:get/get_instance/src/extension_instance.dart";
@@ -10,12 +10,13 @@ import "package:shared_preferences/shared_preferences.dart";
 abstract class AuthRepo {
   Future<AuthResponse> login(String email, String password);
 
-  Future<User?> authLocally();
+  Future<AuthState?> authLocally();
+
+  Future<void> logout();
 }
 
 class AuthRepoImpl implements AuthRepo {
-  static const String jwtPrefKey = "jwt";
-  static const String userPrefKey = "user";
+  static const String statePrefKey = "authState";
 
   @override
   Future<AuthResponse> login(String email, String password) async {
@@ -30,41 +31,52 @@ class AuthRepoImpl implements AuthRepo {
       return Future.error(Exception("Auth Response not 200!"));
     }
 
-    final data = AuthResponse.fromJson(res.data as Map<String, Object?>);
-    await prefs.setString(jwtPrefKey, data.jwt);
-    await prefs.setString(userPrefKey, jsonEncode(data.user));
+    final data = AuthResponse.fromJson(res.data! as Map<String, Object?>);
+    await prefs.setString(
+      statePrefKey,
+      jsonEncode(AuthState.fromAuthResponse(data)),
+    );
     return data;
   }
 
   @override
-  Future<User?> authLocally() async {
+  Future<AuthState?> authLocally() async {
     final prefs = Get.find<SharedPreferences>();
-    final jwt = prefs.getString(jwtPrefKey);
-    if (jwt == null || jwt.isEmpty) return null;
+    final stringified = prefs.getString(statePrefKey);
+    if (stringified == null) return null;
+    final state = AuthState.fromJson(
+      jsonDecode(stringified) as Map<String, Object?>,
+    );
 
     try {
       final payload = jsonDecode(
-        utf8.decode(base64Url.decode('${jwt.split('.')[1]}=')),
+        utf8.decode(base64Url.decode('${state.jwt.split('.')[1]}=')),
       );
       final isExpired =
           int.parse(payload["exp"].toString()) <=
           (DateTime.now().millisecondsSinceEpoch / 1000);
 
       if (isExpired) {
-        await prefs.remove(jwtPrefKey);
+        await prefs.remove(statePrefKey);
         return null;
       }
 
-      final encodedStoredUser = await prefs.getString(userPrefKey);
-      if (encodedStoredUser == null) {
+      final encodedStoredState = await prefs.getString(statePrefKey);
+      if (encodedStoredState == null) {
         print("when a jwt is present, a user should also be present!");
         return null;
       }
-      final decodedUser = jsonDecode(encodedStoredUser);
+      final decodedState = jsonDecode(encodedStoredState);
 
-      return User.fromJson(decodedUser as Map<String, Object?>);
+      return AuthState.fromJson(decodedState as Map<String, Object?>);
     } catch (e) {
       return null;
     }
+  }
+
+  @override
+  Future<void> logout() async {
+    final prefs = Get.find<SharedPreferences>();
+    await prefs.remove(statePrefKey);
   }
 }

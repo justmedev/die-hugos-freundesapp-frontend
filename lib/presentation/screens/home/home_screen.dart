@@ -21,6 +21,10 @@ class HomeScreen extends GetView<HomeController> {
           ),
           const Spacer(),
           FButton(
+            onPress: () => controller.logout(),
+            child: const Text("Logout"),
+          ),
+          FButton(
             onPress: () async {
               await Get.to(() => const CashpoolOverviewScreen());
             },
