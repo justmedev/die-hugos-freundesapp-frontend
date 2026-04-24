@@ -1,5 +1,7 @@
 import "package:diehugosapp/core/utils/buildcontext_extensions.dart";
+import "package:diehugosapp/data/services/auth_service.dart";
 import "package:diehugosapp/di/providers.dart";
+import "package:diehugosapp/presentation/screens/home/home_screen.dart";
 import "package:diehugosapp/presentation/screens/login/login_screen.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
@@ -8,6 +10,7 @@ import "package:get/get.dart";
 
 Future<void> main() async {
   await initGlobalProviders();
+  await Get.find<AuthService>().authLocally();
   runApp(const Application());
 }
 
@@ -41,7 +44,9 @@ class Application extends StatelessWidget {
         child: FToaster(child: child!),
       ),
       theme: platformSpecificTheme.toApproximateMaterialTheme(),
-      home: LoginScreen(),
+      home: Get.find<AuthService>().isAuthenticated
+          ? const HomeScreen()
+          : LoginScreen(),
     );
   }
 }
