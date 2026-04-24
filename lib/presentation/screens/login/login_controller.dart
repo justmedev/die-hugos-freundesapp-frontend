@@ -1,6 +1,6 @@
-import "package:diehugosapp/data/services/auth_service.dart";
-import "package:diehugosapp/data/services/toaster_service.dart";
 import "package:diehugosapp/presentation/screens/home/home_screen.dart";
+import "package:diehugosapp/services/auth_service.dart";
+import "package:diehugosapp/services/toaster_service.dart";
 import "package:flutter/widgets.dart";
 import "package:forui/assets.dart";
 import "package:get/get.dart";

@@ -1,5 +1,5 @@
-import "package:diehugosapp/data/services/auth_service.dart";
-import "package:diehugosapp/data/services/toaster_service.dart";
+import "package:diehugosapp/services/auth_service.dart";
+import "package:diehugosapp/services/toaster_service.dart";
 import "package:dio/dio.dart";
 import "package:flutter/cupertino.dart";
 import "package:forui/assets.dart";

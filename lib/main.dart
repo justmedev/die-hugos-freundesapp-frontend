@@ -1,8 +1,8 @@
 import "package:diehugosapp/core/utils/buildcontext_extensions.dart";
-import "package:diehugosapp/data/services/auth_service.dart";
 import "package:diehugosapp/di/providers.dart";
 import "package:diehugosapp/presentation/screens/home/home_screen.dart";
 import "package:diehugosapp/presentation/screens/login/login_screen.dart";
+import "package:diehugosapp/services/auth_service.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
