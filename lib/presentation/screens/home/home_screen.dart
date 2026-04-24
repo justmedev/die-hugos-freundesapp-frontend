@@ -1,4 +1,4 @@
-import "package:diehugosapp/presentation/screens/cashpool/cashpool_overview_screen.dart";
+import "package:diehugosapp/presentation/screens/cashpool/overview/cashpool_overview_screen.dart";
 import "package:diehugosapp/presentation/screens/home/home_controller.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/cupertino.dart";

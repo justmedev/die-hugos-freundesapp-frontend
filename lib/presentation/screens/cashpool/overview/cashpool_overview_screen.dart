@@ -1,6 +1,6 @@
 import "package:diehugosapp/data/models/cashpool.dart";
-import "package:diehugosapp/presentation/screens/cashpool/cashpool_create_screen.dart";
-import "package:diehugosapp/presentation/screens/cashpool/cashpool_detail_screen.dart";
+import "package:diehugosapp/presentation/screens/cashpool/create/cashpool_create_screen.dart";
+import "package:diehugosapp/presentation/screens/cashpool/detail/cashpool_detail_screen.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
