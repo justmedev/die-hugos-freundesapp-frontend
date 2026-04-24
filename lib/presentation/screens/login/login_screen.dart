@@ -1,99 +1,81 @@
+import "package:diehugosapp/presentation/screens/login/login_controller.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/cupertino.dart";
 import "package:forui/forui.dart";
+import "package:get/get.dart";
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class LoginScreen extends GetView<LoginController> {
+  LoginScreen({super.key});
 
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) async => continueToAppIfJwt(),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) => ScaffoldWithNavbar(
-    child: Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 20,
-        children: [
-          const Text(
-            "⬇️ Die Hugos ⬇️",
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          ),
-
-          FCard(
-            title: const Text("Anmelden 🔐"),
-            subtitle: const Text(
-              "Bei Passwortzurücksetzung bitte bei Ilja melden :)",
-            ),
+    child: Obx(
+      () {
+        if (controller.isLoading.value) {
+          return const Center(
             child: Column(
-              spacing: 20,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Column(
-                  spacing: 10,
+                FCircularProgress(),
+                SizedBox(height: 10),
+                Text("Logging you in ..."),
+              ],
+            ),
+          );
+        }
+
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            spacing: 20,
+            children: [
+              const Text(
+                "⬇️ Die Hugos ⬇️",
+                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+              ),
+
+              FCard(
+                title: const Text("Anmelden 🔐"),
+                subtitle: const Text(
+                  "Bei Passwortzurücksetzung bitte bei Ilja melden :)",
+                ),
+                child: Column(
+                  spacing: 20,
                   children: [
-                    FTextField.email(
-                      control: .managed(controller: _emailController),
+                    Column(
+                      spacing: 10,
+                      children: [
+                        FTextField.email(
+                          control: .managed(controller: _emailController),
+                        ),
+                        FTextField.password(
+                          label: const Text("Passwort"),
+                          control: .managed(controller: _passwordController),
+                        ),
+                      ],
                     ),
-                    FTextField.password(
-                      label: const Text("Passwort"),
-                      control: .managed(controller: _passwordController),
+
+                    FButton(
+                      onPress: () => controller.submitLogin(
+                        _emailController.text,
+                        _passwordController.text,
+                      ),
+                      // onPress: () => setState(() => _count++),
+                      suffix: const Icon(FIcons.lock),
+                      child: const Text("Anmelden"),
                     ),
                   ],
                 ),
-
-                FButton(
-                  onPress: authAndGoHome,
-                  // onPress: () => setState(() => _count++),
-                  suffix: const Icon(FIcons.lock),
-                  child: const Text("Anmelden"),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     ),
   );
-
-  Future<void> authAndGoHome() async {
-    final email = _emailController.text.trim();
-    final password = _passwordController.text.trim();
-    if (email.isEmpty || password.isEmpty) {
-      failedLoginToast();
-      return;
-    }
-
-    // final response = await http.post(
-    //   Uri.http("localhost:8000", "/auth/login"),
-    //   body: jsonEncode({"email": email, "password": password}),
-    // );
-    // if (response.statusCode != 200) {
-    //   if (kDebugMode) {
-    //     print("auth response not ok!");
-    //   }
-    //   failedLoginToast();
-    //   return;
-    // }
-    // final prefs = await SharedPreferences.getInstance();
-    // prefs.setString("jwt", jsonDecode(response.body)["jwt"]);
-    // if (kDebugMode) {
-    //   print("Set jwt!");
-    // }
-    continueToAppIfJwt();
-  }
 
   Future<void> continueToAppIfJwt() async {
     // final prefs = await SharedPreferences.getInstance();
@@ -113,21 +95,10 @@ class _LoginScreenState extends State<LoginScreen> {
     // }
   }
 
-  void failedLoginToast() {
-    showFToast(
-      context: context,
-      alignment: FToastAlignment.topCenter,
-      icon: const Icon(FIcons.triangleAlert),
-      swipeToDismiss: [AxisDirection.up],
-      title: const Text("Die Anmeldung war nicht erfolgreich!"),
-      description: const Text("Sind Email & Passwort korrekt?"),
-    );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   _emailController.dispose();
+  //   _passwordController.dispose();
+  // }
 }

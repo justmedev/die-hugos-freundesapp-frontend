@@ -1,11 +1,13 @@
 import "package:diehugosapp/core/utils/buildcontext_extensions.dart";
-import "package:diehugosapp/presentation/screens/home/home_screen.dart";
+import "package:diehugosapp/di/providers.dart";
+import "package:diehugosapp/presentation/screens/login/login_screen.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
 import "package:get/get.dart";
 
-void main() {
+Future<void> main() async {
+  await initGlobalProviders();
   runApp(const Application());
 }
 
@@ -34,9 +36,12 @@ class Application extends StatelessWidget {
     return GetMaterialApp(
       supportedLocales: const [Locale("de", "AT")],
       localizationsDelegates: const [...FLocalizations.localizationsDelegates],
-      builder: (_, child) => FTheme(data: platformSpecificTheme, child: child!),
+      builder: (_, child) => FTheme(
+        data: platformSpecificTheme,
+        child: FToaster(child: child!),
+      ),
       theme: platformSpecificTheme.toApproximateMaterialTheme(),
-      home: const HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
