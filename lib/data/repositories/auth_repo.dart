@@ -1,21 +1,24 @@
 import "dart:convert";
 
+import "package:diehugosapp/data/models/auth/auth_response.dart";
+import "package:diehugosapp/data/models/user/user.dart";
 import "package:dio/dio.dart";
 import "package:get/get_core/src/get_main.dart";
 import "package:get/get_instance/src/extension_instance.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
 abstract class AuthRepo {
-  Future<String> login(String email, String password);
+  Future<AuthResponse> login(String email, String password);
 
-  Future<bool> authLocally();
+  Future<User?> authLocally();
 }
 
 class AuthRepoImpl implements AuthRepo {
   static const String jwtPrefKey = "jwt";
+  static const String userPrefKey = "user";
 
   @override
-  Future<String> login(String email, String password) async {
+  Future<AuthResponse> login(String email, String password) async {
     final dio = Get.find<Dio>();
     final prefs = Get.find<SharedPreferences>();
 
@@ -23,21 +26,21 @@ class AuthRepoImpl implements AuthRepo {
       "/auth/login",
       data: {"email": email, "password": password},
     );
-    final jwt = res.data?["jwt"] as String?;
-
-    if (jwt == null || res.statusCode != 200) {
-      return Future.error(Error());
+    if (res.data == null || res.statusCode != 200) {
+      return Future.error(Exception("Auth Response not 200!"));
     }
 
-    await prefs.setString(jwtPrefKey, jwt);
-    return jwt;
+    final data = AuthResponse.fromJson(res.data as Map<String, Object?>);
+    await prefs.setString(jwtPrefKey, data.jwt);
+    await prefs.setString(userPrefKey, jsonEncode(data.user));
+    return data;
   }
 
   @override
-  Future<bool> authLocally() async {
+  Future<User?> authLocally() async {
     final prefs = Get.find<SharedPreferences>();
     final jwt = prefs.getString(jwtPrefKey);
-    if (jwt == null || jwt.isEmpty) return false;
+    if (jwt == null || jwt.isEmpty) return null;
 
     try {
       final payload = jsonDecode(
@@ -49,11 +52,19 @@ class AuthRepoImpl implements AuthRepo {
 
       if (isExpired) {
         await prefs.remove(jwtPrefKey);
-        return false;
+        return null;
       }
-      return true;
+
+      final encodedStoredUser = await prefs.getString(userPrefKey);
+      if (encodedStoredUser == null) {
+        print("when a jwt is present, a user should also be present!");
+        return null;
+      }
+      final decodedUser = jsonDecode(encodedStoredUser);
+
+      return User.fromJson(decodedUser as Map<String, Object?>);
     } catch (e) {
-      return false;
+      return null;
     }
   }
 }

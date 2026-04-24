@@ -1,3 +1,4 @@
+import "package:diehugosapp/data/models/user/user.dart";
 import "package:diehugosapp/data/repositories/auth_repo.dart";
 import "package:dio/dio.dart";
 import "package:get/get.dart";
@@ -6,8 +7,9 @@ class WrongCredentials implements Exception {}
 
 class AuthService extends GetxService {
   final RxBool _isLoggedIn = false.obs;
+  final Rxn<User> _user = Rxn<User>();
 
-  // final RxString _token = "".obs;
+  User? get user => _user.value;
 
   bool get isAuthenticated => _isLoggedIn.value;
 
@@ -15,8 +17,7 @@ class AuthService extends GetxService {
     if (_isLoggedIn.value) return;
     final authRepo = Get.find<AuthRepo>();
     try {
-      // _token.value =
-      await authRepo.login(email, password);
+      _user.value = (await authRepo.login(email, password)).user;
       _isLoggedIn.value = true;
     } catch (e) {
       print(e);
@@ -26,7 +27,7 @@ class AuthService extends GetxService {
         }
       }
       _isLoggedIn.value = false;
-      // _token.value = "";
+      _user.value = null;
       rethrow;
     }
   }
@@ -34,6 +35,7 @@ class AuthService extends GetxService {
   Future<void> authLocally() async {
     if (_isLoggedIn.value) return;
     final authRepo = Get.find<AuthRepo>();
-    _isLoggedIn.value = await authRepo.authLocally();
+    _user.value = await authRepo.authLocally();
+    _isLoggedIn.value = user != null;
   }
 }

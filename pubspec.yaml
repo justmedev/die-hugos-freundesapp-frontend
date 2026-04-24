@@ -36,8 +36,10 @@ dependencies:
   cupertino_icons: ^1.0.9
   forui: ^0.21.2
   shared_preferences: ^2.5.3
+  freezed_annotation: ^3.1.0
   get: ^4.7.3
   dio: ^5.9.2
+  json_annotation: ^4.11.0
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +47,10 @@ dev_dependencies:
 
   # see analysis_options.yaml for more info
   very_good_analysis: ^10.2.0
+
+  freezed: ^3.2.5
+  build_runner: ^2.14.0
+  json_serializable: ^6.13.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
