@@ -1,10 +1,11 @@
-import "dart:convert";
-import "dart:io";
-
 import "package:diehugosapp/data/models/cashpool.dart";
+import "package:diehugosapp/presentation/screens/cashpool/cashpool_create_screen.dart";
+import "package:diehugosapp/presentation/screens/cashpool/cashpool_detail_screen.dart";
+import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
-import "package:go_router/go_router.dart";
+import "package:get/get_core/src/get_main.dart";
+import "package:get/get_navigation/src/extension_navigation.dart";
 import "package:shared_preferences/shared_preferences.dart";
 
 class CashpoolOverviewScreen extends StatefulWidget {
@@ -25,50 +26,48 @@ class _CashpoolOverviewScreenState extends State<CashpoolOverviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("[CASHPOOLS] Can pop? ${context.canPop()}");
+    return ScaffoldWithNavbar(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          FutureBuilder(
+            future: futureCashpools,
+            builder: (context, asyncSnapshot) {
+              if (asyncSnapshot.hasData) {
+                return ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: asyncSnapshot.data?.length,
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        FutureBuilder(
-          future: futureCashpools,
-          builder: (context, asyncSnapshot) {
-            if (asyncSnapshot.hasData) {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: asyncSnapshot.data?.length,
-
-                itemBuilder: (ctx, i) {
-                  final data = asyncSnapshot.data![i];
-                  return FItem(
-                    title: Text(data.title),
-                    subtitle: Text(data.description),
-                    details: Text(
-                      "von ${data.ownerId} am ${formatDate(data.createdAt)}",
-                    ),
-                    suffix: const Icon(FIcons.chevronRight),
-                    onPress: () {
-                      context.push("/cashpools/details");
-                      // context.push(RouterDestinations.cashpoolDetail.url);
-                    },
-                  );
-                },
-              );
-            } else if (asyncSnapshot.hasError) {
-              return Text("${asyncSnapshot.error}");
-            }
-            return const Center(child: CircularProgressIndicator());
-          },
-        ),
-        const Spacer(),
-        FButton(
-          onPress: () {
-            context.push("/cashpools/create");
-            // context.push(RouterDestinations.cashpoolCreate.url);
-          },
-          child: const Text("Gruppenkassa erstellen"),
-        ),
-      ],
+                  itemBuilder: (ctx, i) {
+                    final data = asyncSnapshot.data![i];
+                    return FItem(
+                      title: Text(data.title),
+                      subtitle: Text(data.description),
+                      details: Text(
+                        "von ${data.ownerId} am ${formatDate(data.createdAt)}",
+                      ),
+                      suffix: const Icon(FIcons.chevronRight),
+                      onPress: () async {
+                        await Get.to(const CashpoolDetailScreen());
+                      },
+                    );
+                  },
+                );
+              } else if (asyncSnapshot.hasError) {
+                return Text("${asyncSnapshot.error}");
+              }
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
+          const Spacer(),
+          FButton(
+            onPress: () async {
+              await Get.to(const CashpoolCreateScreen());
+            },
+            child: const Text("Gruppenkassa erstellen"),
+          ),
+        ],
+      ),
     );
   }
 
@@ -83,13 +82,13 @@ class _CashpoolOverviewScreenState extends State<CashpoolOverviewScreen> {
     //     HttpHeaders.authorizationHeader: 'Bearer ${prefs.getString("jwt")}',
     //   },
     // );
-//
+    //
     // if (response.statusCode != 200) {
     //   throw Exception("Unable to fetch cashpools!");
     // }
-//
+    //
     // final Iterable decoded = jsonDecode(response.body);
-//
+    //
     // return List<Cashpool>.from(
     //   decoded.map((model) => Cashpool.fromJson(model)),
     // );

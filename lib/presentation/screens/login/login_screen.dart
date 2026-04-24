@@ -1,3 +1,4 @@
+import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/cupertino.dart";
 import "package:forui/forui.dart";
 
@@ -21,47 +22,49 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => Center(
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      spacing: 20,
-      children: [
-        const Text(
-          "⬇️ Die Hugos ⬇️",
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-        ),
-
-        FCard(
-          title: const Text("Anmelden 🔐"),
-          subtitle: const Text(
-            "Bei Passwortzurücksetzung bitte bei Ilja melden :)",
+  Widget build(BuildContext context) => ScaffoldWithNavbar(
+    child: Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 20,
+        children: [
+          const Text(
+            "⬇️ Die Hugos ⬇️",
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
-          child: Column(
-            spacing: 20,
-            children: [
-              Column(
-                spacing: 10,
-                children: [
-                  FTextField.email(
-                    control: .managed(controller: _emailController),
-                  ),
-                  FTextField.password(
-                    label: const Text("Passwort"),
-                    control: .managed(controller: _passwordController),
-                  ),
-                ],
-              ),
 
-              FButton(
-                onPress: authAndGoHome,
-                // onPress: () => setState(() => _count++),
-                suffix: const Icon(FIcons.lock),
-                child: const Text("Anmelden"),
-              ),
-            ],
+          FCard(
+            title: const Text("Anmelden 🔐"),
+            subtitle: const Text(
+              "Bei Passwortzurücksetzung bitte bei Ilja melden :)",
+            ),
+            child: Column(
+              spacing: 20,
+              children: [
+                Column(
+                  spacing: 10,
+                  children: [
+                    FTextField.email(
+                      control: .managed(controller: _emailController),
+                    ),
+                    FTextField.password(
+                      label: const Text("Passwort"),
+                      control: .managed(controller: _passwordController),
+                    ),
+                  ],
+                ),
+
+                FButton(
+                  onPress: authAndGoHome,
+                  // onPress: () => setState(() => _count++),
+                  suffix: const Icon(FIcons.lock),
+                  child: const Text("Anmelden"),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 

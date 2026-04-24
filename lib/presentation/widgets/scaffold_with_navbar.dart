@@ -1,7 +1,7 @@
-import "package:diehugosapp/presentation/routes/router.dart";
 import "package:flutter/widgets.dart";
 import "package:forui/forui.dart";
-import "package:go_router/go_router.dart";
+import "package:get/get_core/src/get_main.dart";
+import "package:get/get_navigation/src/extension_navigation.dart";
 
 class ScaffoldWithNavbar extends StatelessWidget {
   const ScaffoldWithNavbar({required this.child, super.key});
@@ -10,26 +10,24 @@ class ScaffoldWithNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final routeName = GoRouterState.of(context).topRoute?.name;
+    final nav = Navigator.of(context);
 
-    final canPop = shellNavigatorKey.currentState?.canPop() ?? false;
-    print("Can pop? $canPop");
-    Widget? header;
-    if (routeName != null) {
-      if (!(shellNavigatorKey.currentState?.canPop() ?? false)) {
-        header = FHeader(title: Text(routeName));
-      } else {
-        header = FHeader.nested(
-          title: Text(routeName),
-          prefixes: [FHeaderAction.back(onPress: () {
-            context.pop();
-          })],
-        );
-      }
+    if (nav.canPop()) {
+      return FScaffold(
+        header: FHeader.nested(
+          title: const Text("ABC"),
+          prefixes: [
+            FHeaderAction.back(
+              onPress: Get.back,
+            ),
+          ],
+        ),
+        child: SafeArea(top: false, child: child),
+      );
     }
 
     return FScaffold(
-      header: header,
+      header: const FHeader(title: Text("ABC")),
       child: SafeArea(top: false, child: child),
     );
   }
