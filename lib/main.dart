@@ -2,7 +2,6 @@ import "package:diehugosapp/core/utils/buildcontext_extensions.dart";
 import "package:diehugosapp/di/di.dart";
 import "package:diehugosapp/presentation/routes/route_bindings.dart";
 import "package:diehugosapp/presentation/screens/home/home_screen.dart";
-import "package:diehugosapp/presentation/screens/login/login_screen.dart";
 import "package:diehugosapp/services/auth_service.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
@@ -46,9 +45,7 @@ class Application extends StatelessWidget {
       ),
       theme: platformSpecificTheme.toApproximateMaterialTheme(),
       getPages: routeBindings(),
-      home: Get.find<AuthService>().isAuthenticated
-          ? const HomeScreen()
-          : LoginScreen(),
+      home: const HomeScreen(),
     );
   }
 }
