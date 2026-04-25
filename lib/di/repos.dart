@@ -2,6 +2,6 @@ part of "di.dart";
 
 void _setupRepos() {
   Get
-    ..lazyPut<AuthRepo>(AuthRepoImpl.new)
-    ..lazyPut<CashpoolRepo>(CashpoolRepoImpl.new);
+    ..lazyPut<AuthRepo>(AuthRepoImpl.new, fenix: true)
+    ..lazyPut<CashpoolRepo>(CashpoolRepoImpl.new, fenix: true);
 }
