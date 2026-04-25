@@ -25,6 +25,6 @@ class CashpoolCreateController extends GetxController {
       ),
     );
 
-    Get.back();
+    Get.offNamed("/cashpools");
   }
 }

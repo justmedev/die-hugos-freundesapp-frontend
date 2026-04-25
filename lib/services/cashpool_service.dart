@@ -28,7 +28,9 @@ class CashpoolService extends GetxService {
   Future<void> fetch() async {
     final cashpoolRepo = Get.find<CashpoolRepo>();
     try {
-      cashpools.addAll(await cashpoolRepo.fetch());
+      cashpools
+        ..clear()
+        ..addAll(await cashpoolRepo.fetch());
     } catch (e) {
       print(e);
       if (e is DioException) {

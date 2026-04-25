@@ -20,26 +20,26 @@ class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
             Success() => Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: controller.cashpoolService.cashpools.length,
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.cashpoolService.cashpools.length,
 
-                  itemBuilder: (ctx, i) {
-                    final data = controller.cashpoolService.cashpools[i];
-                    return FItem(
-                      title: Text(data.title),
-                      subtitle: Text(data.description),
-                      details: Text(
-                        "von ${data.ownerId} am ${formatDate(data.createdAt)}",
-                      ),
-                      suffix: const Icon(FIcons.chevronRight),
-                      onPress: () async {
-                        await Get.to(() => const CashpoolDetailScreen());
-                      },
-                    );
-                  },
+                    itemBuilder: (ctx, i) {
+                      final data = controller.cashpoolService.cashpools[i];
+                      return FItem(
+                        title: Text(data.title),
+                        subtitle: Text(data.description),
+                        details: Text(
+                          "von ${data.ownerId} am ${formatDate(data.createdAt)}",
+                        ),
+                        suffix: const Icon(FIcons.chevronRight),
+                        onPress: () async {
+                          await Get.to(() => const CashpoolDetailScreen());
+                        },
+                      );
+                    },
+                  ),
                 ),
-                const Spacer(),
                 FButton(
                   onPress: () async {
                     await Get.toNamed("/cashpools/create");
