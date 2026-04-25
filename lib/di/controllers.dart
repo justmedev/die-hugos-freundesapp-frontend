@@ -1,17 +1,6 @@
 part of "di.dart";
 
 void _setupControllers() {
-  Get
-    ..lazyPut(() => LoginController(authService: Get.find<AuthService>()))
-    ..lazyPut(() => HomeController(authService: Get.find<AuthService>()))
-    ..lazyPut(
-      () => CashpoolCreateController(
-        cashpoolService: Get.find<CashpoolService>(),
-      ),
-    )
-    ..lazyPut(
-      () => CashpoolOverviewController(
-        cashpoolService: Get.find<CashpoolService>(),
-      ),
-    );
+  Get.put(HomeController(authService: Get.find<AuthService>()));
+  // All other controllers are set up in route_bindings
 }

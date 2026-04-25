@@ -1,4 +1,3 @@
-import "package:diehugosapp/presentation/screens/cashpool/overview/cashpool_overview_screen.dart";
 import "package:diehugosapp/presentation/screens/home/home_controller.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/cupertino.dart";
@@ -26,7 +25,7 @@ class HomeScreen extends GetView<HomeController> {
           ),
           FButton(
             onPress: () async {
-              await Get.to(() => const CashpoolOverviewScreen());
+              await Get.toNamed("/cashpools");
             },
             child: const Text("Zur Gruppenkassa"),
           ),
