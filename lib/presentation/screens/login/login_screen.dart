@@ -5,10 +5,7 @@ import "package:forui/forui.dart";
 import "package:get/get.dart";
 
 class LoginScreen extends GetView<LoginController> {
-  LoginScreen({super.key});
-
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) => ScaffoldWithNavbar(
@@ -49,21 +46,21 @@ class LoginScreen extends GetView<LoginController> {
                       spacing: 10,
                       children: [
                         FTextField.email(
-                          control: .managed(controller: _emailController),
+                          control: .managed(
+                            controller: controller.emailController.value,
+                          ),
                         ),
                         FTextField.password(
                           label: const Text("Passwort"),
-                          control: .managed(controller: _passwordController),
+                          control: .managed(
+                            controller: controller.passwordController.value,
+                          ),
                         ),
                       ],
                     ),
 
                     FButton(
-                      onPress: () => controller.submitLogin(
-                        _emailController.text,
-                        _passwordController.text,
-                      ),
-                      // onPress: () => setState(() => _count++),
+                      onPress: () => controller.submitLogin(),
                       suffix: const Icon(FIcons.lock),
                       child: const Text("Anmelden"),
                     ),
@@ -76,29 +73,4 @@ class LoginScreen extends GetView<LoginController> {
       },
     ),
   );
-
-  Future<void> continueToAppIfJwt() async {
-    // final prefs = await SharedPreferences.getInstance();
-    // final jwt = prefs.getString("jwt");
-    // if (jwt == null) return;
-    // final payload = jsonDecode(
-    //   utf8.decode(base64Url.decode('${jwt.split('.')[1]}=')),
-    // );
-    // if (payload["exp"] <= DateTime.now().millisecondsSinceEpoch / 1_000) {
-    //   if (kDebugMode) print("JWT expired!");
-    //   failedLoginToast();
-    //   return; // Not valid anymore
-    // }
-    // if (mounted) {
-    //   context.go("/");
-    //   // context.pushReplacement(RouterDestinations.home.url);
-    // }
-  }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _emailController.dispose();
-  //   _passwordController.dispose();
-  // }
 }

@@ -9,14 +9,20 @@ class LoginController extends GetxController {
 
   late final AuthService authService;
 
+  final Rx<TextEditingController> emailController = TextEditingController().obs;
+  final Rx<TextEditingController> passwordController =
+      TextEditingController().obs;
   RxBool isLoading = false.obs;
 
-  Future<void> submitLogin(String email, String password) async {
+  Future<void> submitLogin() async {
     final toastService = Get.find<ToastService>();
     isLoading.value = true;
 
     try {
-      await authService.login(email, password);
+      await authService.login(
+        emailController.value.text,
+        passwordController.value.text,
+      );
 
       if (authService.isAuthenticated) {
         await Get.offNamed("/");
@@ -30,5 +36,12 @@ class LoginController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.value.dispose();
+    passwordController.value.dispose();
   }
 }

@@ -27,4 +27,11 @@ class CashpoolCreateController extends GetxController {
 
     Get.offNamed("/cashpools");
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    titleController.value.dispose();
+    descriptionController.value.dispose();
+  }
 }
