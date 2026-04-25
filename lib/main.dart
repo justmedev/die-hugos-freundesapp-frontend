@@ -1,5 +1,5 @@
 import "package:diehugosapp/core/utils/buildcontext_extensions.dart";
-import "package:diehugosapp/di/providers.dart";
+import "package:diehugosapp/di/di.dart";
 import "package:diehugosapp/presentation/screens/home/home_screen.dart";
 import "package:diehugosapp/presentation/screens/login/login_screen.dart";
 import "package:diehugosapp/services/auth_service.dart";
@@ -9,7 +9,7 @@ import "package:forui/forui.dart";
 import "package:get/get.dart";
 
 Future<void> main() async {
-  await initGlobalProviders();
+  await setupDI();
   await Get.find<AuthService>().authLocally();
   runApp(const Application());
 }
@@ -19,9 +19,9 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// To create a custom theme:
+    /// To cmds a custom theme:
     /// ```shell
-    /// dart forui theme create [theme template].
+    /// dart forui theme cmds [theme template].
     /// ```
     final theme = context.isDarkModeEnabled
         ? FThemes.zinc.dark

@@ -1,4 +1,4 @@
-import "package:diehugosapp/data/models/cashpool.dart";
+import "package:diehugosapp/data/models/cashpool/cashpool.dart";
 import "package:diehugosapp/presentation/screens/cashpool/create/cashpool_create_screen.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/cashpool_detail_screen.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
@@ -62,7 +62,7 @@ class _CashpoolOverviewScreenState extends State<CashpoolOverviewScreen> {
           const Spacer(),
           FButton(
             onPress: () async {
-              await Get.to(() => const CashpoolCreateScreen());
+              await Get.to(CashpoolCreateScreen.new);
             },
             child: const Text("Gruppenkassa erstellen"),
           ),
