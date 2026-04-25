@@ -1,4 +1,3 @@
-import "package:diehugosapp/presentation/screens/login/login_screen.dart";
 import "package:diehugosapp/services/auth_service.dart";
 import "package:get/get.dart";
 
@@ -9,6 +8,6 @@ class HomeController extends GetxController {
 
   Future<void> logout() async {
     await authService.logout();
-    Get.off(LoginScreen.new);
+    await Get.offNamed("/login");
   }
 }

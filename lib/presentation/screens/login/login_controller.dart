@@ -1,4 +1,3 @@
-import "package:diehugosapp/presentation/screens/home/home_screen.dart";
 import "package:diehugosapp/services/auth_service.dart";
 import "package:diehugosapp/services/toaster_service.dart";
 import "package:flutter/widgets.dart";
@@ -20,7 +19,7 @@ class LoginController extends GetxController {
       await authService.login(email, password);
 
       if (authService.isAuthenticated) {
-        await Get.off(() => const HomeScreen());
+        await Get.offNamed("/");
       }
     } on WrongCredentials {
       toastService.show(
