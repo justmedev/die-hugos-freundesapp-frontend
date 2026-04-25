@@ -1,6 +1,7 @@
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
+import "package:get/get.dart";
 
 class CashpoolDetailScreen extends StatefulWidget {
   const CashpoolDetailScreen({super.key});
@@ -17,16 +18,12 @@ class _CashpoolDetailScreenState extends State<CashpoolDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final typography = context.theme.typography;
+    final typography = FThemeBuildContext(context).theme.typography;
 
     return ScaffoldWithNavbar(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // FTile(
-          //   prefix: Icon(FIcons.banknote),
-          //   title: const Text('23€ bezahlt'),
-          // ),
           Container(
             width: double.infinity,
             padding: const EdgeInsets.all(8),
@@ -60,6 +57,31 @@ class _CashpoolDetailScreenState extends State<CashpoolDetailScreen> {
           Text(
             style: typography.xl2.copyWith(fontWeight: FontWeight.bold),
             "Aktivität",
+          ),
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: 10,
+
+              itemBuilder: (ctx, i) {
+                return FItem(
+                  title: const Text("Ilja"),
+                  subtitle: const Text("25.04.2026 15:30"),
+                  details: Text(
+                    "10€",
+                    style: TextStyle(color: Get.theme.colorScheme.error),
+                  ),
+                  suffix: Icon(
+                    FIcons.banknoteArrowDown,
+                    color: Get.theme.colorScheme.error,
+                  ),
+                );
+              },
+            ),
+          ),
+          FButton(
+            onPress: () {},
+            child: const Text("Transaktion eintragen"),
           ),
         ],
       ),
