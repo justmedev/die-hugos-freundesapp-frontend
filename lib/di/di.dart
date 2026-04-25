@@ -4,6 +4,7 @@ import "package:diehugosapp/data/repositories/auth_repo.dart";
 import "package:diehugosapp/data/repositories/cashpool_repo.dart";
 import "package:diehugosapp/di/dio.dart";
 import "package:diehugosapp/presentation/screens/cashpool/create/cashpool_create_controller.dart";
+import "package:diehugosapp/presentation/screens/cashpool/overview/cashpool_overview_controller.dart";
 import "package:diehugosapp/presentation/screens/home/home_controller.dart";
 import "package:diehugosapp/presentation/screens/login/login_controller.dart";
 import "package:diehugosapp/services/auth_service.dart";

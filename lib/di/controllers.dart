@@ -8,5 +8,10 @@ void _setupControllers() {
       () => CashpoolCreateController(
         cashpoolService: Get.find<CashpoolService>(),
       ),
+    )
+    ..lazyPut(
+      () => CashpoolOverviewController(
+        cashpoolService: Get.find<CashpoolService>(),
+      ),
     );
 }
