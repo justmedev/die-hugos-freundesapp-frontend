@@ -1,22 +1,15 @@
-import "package:diehugosapp/services/auth_service.dart";
+import "package:diehugosapp/core/network/interceptors/auth_interceptor.dart";
 import "package:diehugosapp/services/toaster_service.dart";
 import "package:dio/dio.dart";
 import "package:flutter/cupertino.dart";
 import "package:forui/assets.dart";
-import "package:get/get_core/src/get_main.dart";
-import "package:get/get_instance/src/extension_instance.dart";
+import "package:get/get.dart";
 
 Dio getNewSetupDio() {
   final dio = Dio(BaseOptions(baseUrl: "http://localhost:8000"));
-  dio.interceptors.add(
+  dio.interceptors.addAll([
+    AuthInterceptor(),
     InterceptorsWrapper(
-      onRequest: (opts, handler) {
-        final authService = Get.find<AuthService>();
-        if (authService.isAuthenticated && authService.accessToken != null) {
-          opts.headers["Authorization"] = "Bearer ${authService.accessToken}";
-        }
-        return handler.next(opts);
-      },
       onError: (err, handler) {
         if (err.type == DioExceptionType.connectionError ||
             err.type == DioExceptionType.connectionTimeout) {
@@ -27,9 +20,9 @@ Dio getNewSetupDio() {
           );
         }
 
-        throw err;
+        return handler.next(err);
       },
     ),
-  );
+  ]);
   return dio;
 }

@@ -1,30 +1,21 @@
-import "dart:convert";
-
-import "package:diehugosapp/core/utils/jwt_utils.dart";
+import "package:diehugosapp/data/managers/session_manager.dart";
 import "package:diehugosapp/data/models/auth/auth_response/auth_response.dart";
 import "package:diehugosapp/data/models/auth/auth_state/auth_state.dart";
 import "package:dio/dio.dart";
-import "package:shared_preferences/shared_preferences.dart";
 
 abstract class AuthRepo {
   Future<AuthResponse> login(String email, String password);
 
-  Future<AuthState?> authLocally();
+  Future<AuthSession?> authLocally();
 
-  Future<void> saveAuthState(AuthState state);
-
-  Future<AuthState?> loadAuthState();
-
-  Future<void> clearAuthState();
+  Future<AuthSession> tokenRefresh(String refreshToken);
 }
 
 class AuthRepoImpl implements AuthRepo {
-  AuthRepoImpl({required this.prefs, required this.dio});
+  AuthRepoImpl({required this.sessionManager, required this.dio});
 
-  late final SharedPreferences prefs;
+  late final SessionManager sessionManager;
   late final Dio dio;
-
-  static const String _statePrefKey = "authState";
 
   @override
   Future<AuthResponse> login(String email, String password) async {
@@ -37,47 +28,31 @@ class AuthRepoImpl implements AuthRepo {
     }
 
     final data = AuthResponse.fromJson(res.data! as Map<String, Object?>);
-    await saveAuthState(AuthState.fromAuthResponse(data));
+    await sessionManager.saveSession(AuthSession.fromAuthResponse(data));
     return data;
   }
 
   @override
-  Future<AuthState?> authLocally() async {
-    try {
-      final state = await loadAuthState();
-      if (state == null) return null;
+  Future<AuthSession?> authLocally() async {
+    return sessionManager.currentSession;
+  }
 
-      final expiry = getJWTExpirationDate(state.accessToken);
-      if (expiry!.isBefore(DateTime.now())) {
-        await prefs.remove(_statePrefKey);
-        return null;
-      }
-
-      return state;
-    } catch (e) {
-      return null;
+  @override
+  Future<AuthSession> tokenRefresh(String refreshToken) async {
+    final res = await dio.post<Map<dynamic, dynamic>>(
+      "/auth/refresh",
+      data: {"refreshToken": refreshToken},
+    );
+    if (res.data == null || res.statusCode != 200) {
+      return Future.error(Exception("Auth Response not 200!"));
     }
-  }
 
-  @override
-  Future<void> saveAuthState(AuthState state) async {
-    await prefs.setString(
-      _statePrefKey,
-      jsonEncode(state),
+    final session = AuthSession.fromAuthResponse(
+      AuthResponse.fromJson(
+        res.data! as Map<String, Object?>,
+      ),
     );
-  }
-
-  @override
-  Future<AuthState?> loadAuthState() async {
-    final stringified = prefs.getString(_statePrefKey);
-    if (stringified == null) return null;
-    return AuthState.fromJson(
-      jsonDecode(stringified) as Map<String, Object?>,
-    );
-  }
-
-  @override
-  Future<void> clearAuthState() async {
-    await prefs.remove(_statePrefKey);
+    await sessionManager.saveSession(session);
+    return session;
   }
 }

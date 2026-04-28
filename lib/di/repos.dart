@@ -4,7 +4,7 @@ void _setupRepos() {
   Get
     ..lazyPut<AuthRepo>(
       () => AuthRepoImpl(
-        prefs: Get.find<SharedPreferences>(),
+        sessionManager: Get.find<SessionManager>(),
         dio: Get.find<Dio>(),
       ),
       fenix: true,

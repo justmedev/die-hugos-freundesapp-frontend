@@ -6,19 +6,19 @@ part "auth_state.freezed.dart";
 part "auth_state.g.dart";
 
 @freezed
-abstract class AuthState with _$AuthState {
-  const factory AuthState({
+abstract class AuthSession with _$AuthSession {
+  const factory AuthSession({
     required String accessToken,
     required String refreshToken,
     required User user,
-  }) = _AuthState;
+  }) = _AuthSession;
 
-  factory AuthState.fromAuthResponse(AuthResponse res) => AuthState(
+  factory AuthSession.fromAuthResponse(AuthResponse res) => AuthSession(
     accessToken: res.accessToken,
     refreshToken: res.refreshToken,
     user: res.user,
   );
 
-  factory AuthState.fromJson(Map<String, Object?> json) =>
-      _$AuthStateFromJson(json);
+  factory AuthSession.fromJson(Map<String, Object?> json) =>
+      _$AuthSessionFromJson(json);
 }

@@ -6,13 +6,13 @@ part of 'auth_state.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_AuthState _$AuthStateFromJson(Map<String, dynamic> json) => _AuthState(
+_AuthSession _$AuthSessionFromJson(Map<String, dynamic> json) => _AuthSession(
   accessToken: json['accessToken'] as String,
   refreshToken: json['refreshToken'] as String,
   user: User.fromJson(json['user'] as Map<String, dynamic>),
 );
 
-Map<String, dynamic> _$AuthStateToJson(_AuthState instance) =>
+Map<String, dynamic> _$AuthSessionToJson(_AuthSession instance) =>
     <String, dynamic>{
       'accessToken': instance.accessToken,
       'refreshToken': instance.refreshToken,

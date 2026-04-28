@@ -1,55 +1,61 @@
+import "package:diehugosapp/data/managers/session_manager.dart";
 import "package:diehugosapp/data/models/auth/auth_state/auth_state.dart";
 import "package:diehugosapp/data/models/user/user.dart";
 import "package:diehugosapp/data/repositories/auth_repo.dart";
 import "package:dio/dio.dart";
+import "package:flutter/foundation.dart";
 import "package:get/get.dart";
 
 class WrongCredentials implements Exception {}
 
 class AuthService extends GetxService {
-  AuthService(this.authRepo);
+  AuthService(this.authRepo, this.sessionManager);
 
   late final AuthRepo authRepo;
+  late final SessionManager sessionManager;
 
   final RxBool _isLoggedIn = false.obs;
-  final Rxn<AuthState?> _authState = Rxn<AuthState>();
+  final Rxn<AuthSession?> _authState = Rxn<AuthSession>();
 
   User? get user => _authState.value?.user;
 
   String? get accessToken => _authState.value?.accessToken;
 
-  String? get refreshToken => _authState.value?.refreshToken;
-
   bool get isAuthenticated => _isLoggedIn.value;
+
+  @override
+  void onInit() {
+    super.onInit();
+    _authState.value = sessionManager.currentSession;
+    _isLoggedIn.value = sessionManager.currentSession != null;
+
+    sessionManager.sessionStream.listen((session) {
+      _authState.value = session;
+      _isLoggedIn.value = session != null;
+    });
+  }
 
   Future<void> login(String email, String password) async {
     if (_isLoggedIn.value) return;
     try {
-      final res = await authRepo.login(email, password);
-      _authState.value = AuthState.fromAuthResponse(res);
-      _isLoggedIn.value = true;
-    } catch (e) {
-      print(e);
+      await authRepo.login(email, password);
+    } on Exception catch (e) {
+      debugPrint("Login failed: $e");
+
       if (e is DioException) {
         if (e.response?.statusCode == 401) {
           throw WrongCredentials();
         }
       }
-      _isLoggedIn.value = false;
-      _authState.value = null;
-      rethrow;
     }
   }
 
   Future<void> authLocally() async {
     if (_isLoggedIn.value) return;
-    _authState.value = await authRepo.authLocally();
-    _isLoggedIn.value = user != null;
+    await authRepo.authLocally();
   }
 
   Future<void> logout() async {
-    await authRepo.clearAuthState();
-    _isLoggedIn.value = false;
-    _authState.value = null;
+    await sessionManager.clearSession();
   }
 }
