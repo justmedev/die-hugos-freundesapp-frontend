@@ -19,7 +19,7 @@ part "services.dart";
 
 Future<void> setupDI() async {
   await _setupExternals();
-  _setupServices();
   _setupRepos();
+  _setupServices();
   _setupControllers();
 }
