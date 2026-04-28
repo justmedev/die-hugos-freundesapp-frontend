@@ -12,7 +12,8 @@ class AuthService extends GetxService {
 
   User? get user => _authState.value?.user;
 
-  String? get token => _authState.value?.jwt;
+  String? get accessToken => _authState.value?.accessToken;
+  String? get refreshToken => _authState.value?.refreshToken;
 
   bool get isAuthenticated => _isLoggedIn.value;
 
@@ -21,12 +22,12 @@ class AuthService extends GetxService {
     final authRepo = Get.find<AuthRepo>();
     try {
       final res = await authRepo.login(email, password);
-      _authState.value = AuthState(jwt: res.jwt, user: res.user);
+      _authState.value = AuthState.fromAuthResponse(res);
       _isLoggedIn.value = true;
     } catch (e) {
       print(e);
       if (e is DioException) {
-        if (e.response?.statusCode == 422) {
+        if (e.response?.statusCode == 401) {
           throw WrongCredentials();
         }
       }

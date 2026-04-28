@@ -7,7 +7,8 @@ part "auth_response.g.dart";
 @freezed
 abstract class AuthResponse with _$AuthResponse {
   const factory AuthResponse({
-    required String jwt,
+    required String accessToken,
+    required String refreshToken,
     required User user,
   }) = _AuthResponse;
 

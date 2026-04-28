@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$User {
 
- int get id; DateTime? get updatedAt; DateTime get createdAt; String get email; String get firstName; String get lastName; DateTime get birthdate; bool get isAdmin;
+ int get id; String get email; String get firstName; String get lastName; DateTime get birthdate; bool get isAdmin; DateTime get createdAt;
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $UserCopyWith<User> get copyWith => _$UserCopyWithImpl<User>(this as User, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.id, id) || other.id == id)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.email, email) || other.email == email)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.birthdate, birthdate) || other.birthdate == birthdate)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is User&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.birthdate, birthdate) || other.birthdate == birthdate)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,updatedAt,createdAt,email,firstName,lastName,birthdate,isAdmin);
+int get hashCode => Object.hash(runtimeType,id,email,firstName,lastName,birthdate,isAdmin,createdAt);
 
 @override
 String toString() {
-  return 'User(id: $id, updatedAt: $updatedAt, createdAt: $createdAt, email: $email, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, isAdmin: $isAdmin)';
+  return 'User(id: $id, email: $email, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, isAdmin: $isAdmin, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $UserCopyWith<$Res>  {
   factory $UserCopyWith(User value, $Res Function(User) _then) = _$UserCopyWithImpl;
 @useResult
 $Res call({
- int id, DateTime? updatedAt, DateTime createdAt, String email, String firstName, String lastName, DateTime birthdate, bool isAdmin
+ int id, String email, String firstName, String lastName, DateTime birthdate, bool isAdmin, DateTime createdAt
 });
 
 
@@ -65,17 +65,16 @@ class _$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? updatedAt = freezed,Object? createdAt = null,Object? email = null,Object? firstName = null,Object? lastName = null,Object? birthdate = null,Object? isAdmin = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? email = null,Object? firstName = null,Object? lastName = null,Object? birthdate = null,Object? isAdmin = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as int,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,birthdate: null == birthdate ? _self.birthdate : birthdate // ignore: cast_nullable_to_non_nullable
 as DateTime,isAdmin: null == isAdmin ? _self.isAdmin : isAdmin // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 
@@ -160,10 +159,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  DateTime? updatedAt,  DateTime createdAt,  String email,  String firstName,  String lastName,  DateTime birthdate,  bool isAdmin)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String email,  String firstName,  String lastName,  DateTime birthdate,  bool isAdmin,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
-return $default(_that.id,_that.updatedAt,_that.createdAt,_that.email,_that.firstName,_that.lastName,_that.birthdate,_that.isAdmin);case _:
+return $default(_that.id,_that.email,_that.firstName,_that.lastName,_that.birthdate,_that.isAdmin,_that.createdAt);case _:
   return orElse();
 
 }
@@ -181,10 +180,10 @@ return $default(_that.id,_that.updatedAt,_that.createdAt,_that.email,_that.first
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  DateTime? updatedAt,  DateTime createdAt,  String email,  String firstName,  String lastName,  DateTime birthdate,  bool isAdmin)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String email,  String firstName,  String lastName,  DateTime birthdate,  bool isAdmin,  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _User():
-return $default(_that.id,_that.updatedAt,_that.createdAt,_that.email,_that.firstName,_that.lastName,_that.birthdate,_that.isAdmin);case _:
+return $default(_that.id,_that.email,_that.firstName,_that.lastName,_that.birthdate,_that.isAdmin,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -201,10 +200,10 @@ return $default(_that.id,_that.updatedAt,_that.createdAt,_that.email,_that.first
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  DateTime? updatedAt,  DateTime createdAt,  String email,  String firstName,  String lastName,  DateTime birthdate,  bool isAdmin)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String email,  String firstName,  String lastName,  DateTime birthdate,  bool isAdmin,  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
-return $default(_that.id,_that.updatedAt,_that.createdAt,_that.email,_that.firstName,_that.lastName,_that.birthdate,_that.isAdmin);case _:
+return $default(_that.id,_that.email,_that.firstName,_that.lastName,_that.birthdate,_that.isAdmin,_that.createdAt);case _:
   return null;
 
 }
@@ -213,20 +212,19 @@ return $default(_that.id,_that.updatedAt,_that.createdAt,_that.email,_that.first
 }
 
 /// @nodoc
+@JsonSerializable()
 
-@JsonSerializable(fieldRename: FieldRename.snake)
 class _User implements User {
-  const _User({required this.id, required this.updatedAt, required this.createdAt, required this.email, required this.firstName, required this.lastName, required this.birthdate, required this.isAdmin});
+  const _User({required this.id, required this.email, required this.firstName, required this.lastName, required this.birthdate, required this.isAdmin, required this.createdAt});
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
 @override final  int id;
-@override final  DateTime? updatedAt;
-@override final  DateTime createdAt;
 @override final  String email;
 @override final  String firstName;
 @override final  String lastName;
 @override final  DateTime birthdate;
 @override final  bool isAdmin;
+@override final  DateTime createdAt;
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +239,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.id, id) || other.id == id)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.email, email) || other.email == email)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.birthdate, birthdate) || other.birthdate == birthdate)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _User&&(identical(other.id, id) || other.id == id)&&(identical(other.email, email) || other.email == email)&&(identical(other.firstName, firstName) || other.firstName == firstName)&&(identical(other.lastName, lastName) || other.lastName == lastName)&&(identical(other.birthdate, birthdate) || other.birthdate == birthdate)&&(identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,updatedAt,createdAt,email,firstName,lastName,birthdate,isAdmin);
+int get hashCode => Object.hash(runtimeType,id,email,firstName,lastName,birthdate,isAdmin,createdAt);
 
 @override
 String toString() {
-  return 'User(id: $id, updatedAt: $updatedAt, createdAt: $createdAt, email: $email, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, isAdmin: $isAdmin)';
+  return 'User(id: $id, email: $email, firstName: $firstName, lastName: $lastName, birthdate: $birthdate, isAdmin: $isAdmin, createdAt: $createdAt)';
 }
 
 
@@ -261,7 +259,7 @@ abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) _then) = __$UserCopyWithImpl;
 @override @useResult
 $Res call({
- int id, DateTime? updatedAt, DateTime createdAt, String email, String firstName, String lastName, DateTime birthdate, bool isAdmin
+ int id, String email, String firstName, String lastName, DateTime birthdate, bool isAdmin, DateTime createdAt
 });
 
 
@@ -278,17 +276,16 @@ class __$UserCopyWithImpl<$Res>
 
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? updatedAt = freezed,Object? createdAt = null,Object? email = null,Object? firstName = null,Object? lastName = null,Object? birthdate = null,Object? isAdmin = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? email = null,Object? firstName = null,Object? lastName = null,Object? birthdate = null,Object? isAdmin = null,Object? createdAt = null,}) {
   return _then(_User(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
-as DateTime,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
+as int,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
 as String,firstName: null == firstName ? _self.firstName : firstName // ignore: cast_nullable_to_non_nullable
 as String,lastName: null == lastName ? _self.lastName : lastName // ignore: cast_nullable_to_non_nullable
 as String,birthdate: null == birthdate ? _self.birthdate : birthdate // ignore: cast_nullable_to_non_nullable
 as DateTime,isAdmin: null == isAdmin ? _self.isAdmin : isAdmin // ignore: cast_nullable_to_non_nullable
-as bool,
+as bool,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as DateTime,
   ));
 }
 

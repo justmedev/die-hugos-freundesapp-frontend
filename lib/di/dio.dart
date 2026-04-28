@@ -12,8 +12,8 @@ Dio getNewSetupDio() {
     InterceptorsWrapper(
       onRequest: (opts, handler) {
         final authService = Get.find<AuthService>();
-        if (authService.isAuthenticated && authService.token != null) {
-          opts.headers["Authorization"] = "Bearer ${authService.token}";
+        if (authService.isAuthenticated && authService.accessToken != null) {
+          opts.headers["Authorization"] = "Bearer ${authService.accessToken}";
         }
         return handler.next(opts);
       },

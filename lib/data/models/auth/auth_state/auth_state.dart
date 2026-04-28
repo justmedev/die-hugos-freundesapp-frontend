@@ -8,12 +8,16 @@ part "auth_state.g.dart";
 @freezed
 abstract class AuthState with _$AuthState {
   const factory AuthState({
-    required String jwt,
+    required String accessToken,
+    required String refreshToken,
     required User user,
   }) = _AuthState;
 
-  factory AuthState.fromAuthResponse(AuthResponse res) =>
-      AuthState(jwt: res.jwt, user: res.user);
+  factory AuthState.fromAuthResponse(AuthResponse res) => AuthState(
+    accessToken: res.accessToken,
+    refreshToken: res.refreshToken,
+    user: res.user,
+  );
 
   factory AuthState.fromJson(Map<String, Object?> json) =>
       _$AuthStateFromJson(json);

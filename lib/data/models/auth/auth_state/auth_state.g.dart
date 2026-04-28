@@ -7,9 +7,14 @@ part of 'auth_state.dart';
 // **************************************************************************
 
 _AuthState _$AuthStateFromJson(Map<String, dynamic> json) => _AuthState(
-  jwt: json['jwt'] as String,
+  accessToken: json['accessToken'] as String,
+  refreshToken: json['refreshToken'] as String,
   user: User.fromJson(json['user'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$AuthStateToJson(_AuthState instance) =>
-    <String, dynamic>{'jwt': instance.jwt, 'user': instance.user};
+    <String, dynamic>{
+      'accessToken': instance.accessToken,
+      'refreshToken': instance.refreshToken,
+      'user': instance.user,
+    };

@@ -50,7 +50,7 @@ class AuthRepoImpl implements AuthRepo {
 
     try {
       final payload = jsonDecode(
-        utf8.decode(base64Url.decode('${state.jwt.split('.')[1]}=')),
+        utf8.decode(base64Url.decode('${state.accessToken.split('.')[1]}=')),
       );
       final isExpired =
           int.parse(payload["exp"].toString()) <=
