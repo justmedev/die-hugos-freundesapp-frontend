@@ -7,19 +7,23 @@ import "package:get/get.dart";
 class WrongCredentials implements Exception {}
 
 class AuthService extends GetxService {
+  AuthService(this.authRepo);
+
+  late final AuthRepo authRepo;
+
   final RxBool _isLoggedIn = false.obs;
   final Rxn<AuthState?> _authState = Rxn<AuthState>();
 
   User? get user => _authState.value?.user;
 
   String? get accessToken => _authState.value?.accessToken;
+
   String? get refreshToken => _authState.value?.refreshToken;
 
   bool get isAuthenticated => _isLoggedIn.value;
 
   Future<void> login(String email, String password) async {
     if (_isLoggedIn.value) return;
-    final authRepo = Get.find<AuthRepo>();
     try {
       final res = await authRepo.login(email, password);
       _authState.value = AuthState.fromAuthResponse(res);
@@ -39,13 +43,12 @@ class AuthService extends GetxService {
 
   Future<void> authLocally() async {
     if (_isLoggedIn.value) return;
-    final authRepo = Get.find<AuthRepo>();
     _authState.value = await authRepo.authLocally();
     _isLoggedIn.value = user != null;
   }
 
   Future<void> logout() async {
-    Get.find<AuthRepo>().logout();
+    await authRepo.clearAuthState();
     _isLoggedIn.value = false;
     _authState.value = null;
   }
