@@ -1,5 +1,4 @@
 import "package:diehugosapp/core/utils/ui_state.dart";
-import "package:diehugosapp/presentation/screens/cashpool/detail/cashpool_detail_screen.dart";
 import "package:diehugosapp/presentation/screens/cashpool/overview/cashpool_overview_controller.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/material.dart";
@@ -34,7 +33,12 @@ class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
                         ),
                         suffix: const Icon(FIcons.chevronRight),
                         onPress: () async {
-                          await Get.to(() => const CashpoolDetailScreen());
+                          await Get.toNamed(
+                            "/cashpools/details",
+                            arguments: {
+                              "id": data.id,
+                            },
+                          );
                         },
                       );
                     },

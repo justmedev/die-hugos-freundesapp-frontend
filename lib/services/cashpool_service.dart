@@ -1,4 +1,5 @@
 import "package:diehugosapp/data/models/cashpool/cashpool.dart";
+import "package:diehugosapp/data/models/cashpool/cashpool_detailed.dart";
 import "package:diehugosapp/data/models/cashpool/cmds/cashpool_create_cmd.dart";
 import "package:diehugosapp/data/repositories/cashpool_repo.dart";
 import "package:get/get.dart";
@@ -18,15 +19,20 @@ class CashpoolService extends GetxService {
   }
 
   /// Clear the [cashpools] list and repopulate it with fetched content.
-  Future<void> fetch() async {
+  Future<void> getAll() async {
     final cashpoolRepo = Get.find<CashpoolRepo>();
     try {
       cashpools
         ..clear()
-        ..addAll(await cashpoolRepo.fetch());
+        ..addAll(await cashpoolRepo.getAll());
     } catch (e) {
       print(e);
       rethrow;
     }
+  }
+
+  Future<CashpoolDetailed> getDetailed(int id) async {
+    final cashpoolRepo = Get.find<CashpoolRepo>();
+    return cashpoolRepo.getDetailed(id);
   }
 }

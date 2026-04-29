@@ -9,5 +9,8 @@ void _setupRepos() {
       ),
       fenix: true,
     )
-    ..lazyPut<CashpoolRepo>(CashpoolRepoImpl.new, fenix: true);
+    ..lazyPut<CashpoolRepo>(
+      () => CashpoolRepoImpl(Get.find<Dio>()),
+      fenix: true,
+    );
 }
