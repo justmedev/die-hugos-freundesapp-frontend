@@ -6,8 +6,11 @@ void _setupServices() {
       AuthService(Get.find<AuthRepo>(), Get.find<SessionManager>()),
       permanent: true,
     )
-    ..put(CashpoolService(), permanent: true)
     ..put(CashpoolService(Get.find<CashpoolRepo>()), permanent: true)
+    ..put(
+      CashpoolTransactionService(Get.find<CashpoolTransactionRepo>()),
+      permanent: true,
+    )
     ..put(ToastService(), permanent: true)
     ..put(DialogService(), permanent: true);
 }
