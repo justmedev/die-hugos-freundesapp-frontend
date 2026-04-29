@@ -12,12 +12,14 @@ class CashpoolCreateTransactionSheetController extends GetxController {
 
   late final CashpoolTransactionService cashpoolTransactionService;
 
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final Rx<UiState> state = UiState.loading().obs;
   final Rx<String> category = "expense".obs;
   final Rx<TextEditingValue> label = TextEditingValue.empty.obs;
   final Rx<TextEditingValue> amountCents = TextEditingValue.empty.obs;
 
   Future<void> handleCreateTransaction() async {
+    if (!formKey.currentState!.validate()) return;
     state.value = UiState.loading();
 
     try {
@@ -46,5 +48,17 @@ class CashpoolCreateTransactionSheetController extends GetxController {
       state.value = UiState.error("Unable to create a transaction");
     }
     state.value = UiState.success();
+  }
+
+  String? validateLabelField(String? value) {
+    if (value == null || value.isEmpty) return "Dieses Feld ist Pflicht!";
+    if (value.length > 255) return "Die Eingabe ist zu lang!";
+    return null;
+  }
+
+  String? validateAmountField(String? value) {
+    if (value == null || value.isEmpty) return "Dieses Feld ist Pflicht!";
+    if (int.parse(value) <= 0) return "Der Betrag muss positiv sein!";
+    return null;
   }
 }

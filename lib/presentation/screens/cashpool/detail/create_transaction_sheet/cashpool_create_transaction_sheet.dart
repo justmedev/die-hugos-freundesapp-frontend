@@ -35,65 +35,72 @@ class CashpoolCreateTransactionSheet
                 ),
               ),
               SizedBox(
-                child: Column(
-                  children: [
-                    FSelectTileGroup<String>(
-                      control: .managedRadio(
-                        initial: "expense",
-                        onChange: (v) => controller.category.value = v.first,
-                      ),
-                      label: const Text("Kategorie"),
-                      children: [
-                        FSelectTile.suffix(
-                          prefix: Icon(
-                            FIcons.banknoteArrowDown,
-                            color: theme.colors.error,
+                child: Form(
+                  key: controller.formKey,
+                  child: Column(
+                    children: [
+                      FSelectTileGroup<String>(
+                        control: .managedRadio(
+                          initial: "expense",
+                          onChange: (v) => controller.category.value = v.first,
+                        ),
+                        label: const Text("Kategorie"),
+                        children: [
+                          FSelectTile.suffix(
+                            prefix: Icon(
+                              FIcons.banknoteArrowDown,
+                              color: theme.colors.error,
+                            ),
+                            title: const Text("Ausgabe"),
+                            value: "expense",
                           ),
-                          title: const Text("Ausgabe"),
-                          value: "expense",
-                        ),
-                        const FSelectTile.suffix(
-                          prefix: Icon(
-                            FIcons.banknoteArrowUp,
-                            color: Colors.green,
+                          const FSelectTile.suffix(
+                            prefix: Icon(
+                              FIcons.banknoteArrowUp,
+                              color: Colors.green,
+                            ),
+                            title: Text("Einnahme"),
+                            value: "income",
                           ),
-                          title: Text("Einnahme"),
-                          value: "income",
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Obx(
-                      () => FTextField(
-                        label: const Text("Bezeichnung"),
-                        hint: "Alkshopping",
-                        control: .lifted(
-                          value: controller.label.value,
-                          onChange: (v) => controller.label.value = v,
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Obx(
+                        () => FTextFormField(
+                          label: const Text("Bezeichnung"),
+                          hint: "Alkshopping",
+                          control: .lifted(
+                            value: controller.label.value,
+                            onChange: (v) => controller.label.value = v,
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: controller.validateLabelField,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 12),
-                    Obx(
-                      () => FTextField(
-                        label: const Text("Betrag"),
-                        hint: "10€",
-                        control: .lifted(
-                          value: controller.amountCents.value,
-                          onChange: (v) => controller.amountCents.value = v,
-                        ),
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
+                      const SizedBox(height: 12),
+                      Obx(
+                        () => FTextFormField(
+                          label: const Text("Betrag"),
+                          hint: "10€",
+                          control: .lifted(
+                            value: controller.amountCents.value,
+                            onChange: (v) => controller.amountCents.value = v,
+                          ),
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: controller.validateAmountField,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20),
-                    FButton(
-                      size: .sm,
-                      onPress: controller.handleCreateTransaction,
-                      child: const Text("Speichern"),
-                    ),
-                  ],
+                      const SizedBox(height: 20),
+                      FButton(
+                        size: .sm,
+                        onPress: controller.handleCreateTransaction,
+                        child: const Text("Speichern"),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
