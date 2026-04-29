@@ -110,6 +110,6 @@ class CashpoolDetailController extends GetxController {
       backgroundColor: Get.theme.colorScheme.surface,
       isScrollControlled: true,
     );
-    if (transaction != null) transactions.add(transaction);
+    if (transaction != null) transactions.insert(0, transaction);
   }
 }

@@ -65,33 +65,27 @@ class CashpoolCreateTransactionSheet
                         ],
                       ),
                       const SizedBox(height: 12),
-                      Obx(
-                        () => FTextFormField(
-                          label: const Text("Bezeichnung"),
-                          hint: "Alkshopping",
-                          control: .lifted(
-                            value: controller.label.value,
-                            onChange: (v) => controller.label.value = v,
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: controller.validateLabelField,
+                      FTextFormField(
+                        label: const Text("Bezeichnung"),
+                        hint: "Alkshopping",
+                        control: .managed(
+                          onChange: (v) => controller.label.value = v,
                         ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: controller.validateLabelField,
                       ),
                       const SizedBox(height: 12),
-                      Obx(
-                        () => FTextFormField(
-                          label: const Text("Betrag"),
-                          hint: "10€",
-                          control: .lifted(
-                            value: controller.amountCents.value,
-                            onChange: (v) => controller.amountCents.value = v,
-                          ),
-                          keyboardType: const TextInputType.numberWithOptions(
-                            decimal: true,
-                          ),
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: controller.validateAmountField,
+                      FTextFormField(
+                        label: const Text("Betrag"),
+                        hint: "10€",
+                        control: .managed(
+                          onChange: (v) => controller.amountCents.value = v,
                         ),
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: controller.validateAmountField,
                       ),
                       const SizedBox(height: 20),
                       FButton(
