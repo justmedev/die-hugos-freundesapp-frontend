@@ -12,6 +12,7 @@ class CashpoolCreateTransactionSheetController extends GetxController {
   late final CashpoolTransactionService cashpoolTransactionService;
 
   final Rx<UiState> state = UiState.loading().obs;
+  final Rx<String> category = "expense".obs;
   final Rx<TextEditingValue> label = TextEditingValue.empty.obs;
   final Rx<TextEditingValue> amountCents = TextEditingValue.empty.obs;
 
@@ -24,13 +25,16 @@ class CashpoolCreateTransactionSheetController extends GetxController {
         throw Exception("an id has to be passed to the bottom sheet!");
       }
 
+      final isExpense = category.value == "expense";
+      print(category.value);
+
       final amountEuros = int.tryParse(amountCents.value.text);
       if (amountEuros == null) return;
 
       await cashpoolTransactionService.create(
         CashpoolTransactionCreateCmd(
           label: label.value.text,
-          amountCents: amountEuros * 100,
+          amountCents: amountEuros * 100 * (isExpense ? -1 : 1),
           cashpoolId: cashpoolId,
         ),
       );

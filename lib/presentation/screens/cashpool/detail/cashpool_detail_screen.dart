@@ -4,6 +4,7 @@ import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
 import "package:get/get.dart";
+import "package:intl/intl.dart";
 
 class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
   const CashpoolDetailScreen({super.key});
@@ -11,6 +12,8 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
   @override
   Widget build(BuildContext context) {
     final typography = FThemeBuildContext(context).theme.typography;
+    final formatCurrency = NumberFormat.simpleCurrency(locale: "de");
+    final formatDatetime = DateFormat("d.M.y HH:mm", "de");
 
     return ScaffoldWithNavbar(
       child: Obx(() {
@@ -63,14 +66,22 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
                     final transaction = controller.transactions[i];
                     return FItem(
                       title: Text(transaction.label),
-                      subtitle: const Text("25.04.2026 15:30"),
+                      subtitle: Text(
+                        formatDatetime.format(transaction.createdAt),
+                      ),
                       details: Text(
-                        (transaction.amountCents / 100).toString(),
-                        style: TextStyle(color: Get.theme.colorScheme.error),
+                        formatCurrency.format(transaction.amountCents / 100),
+                        style: TextStyle(
+                          color: transaction.amountCents > 0
+                              ? Colors.green
+                              : Get.theme.colorScheme.error,
+                        ),
                       ),
                       suffix: Icon(
                         FIcons.banknoteArrowDown,
-                        color: Get.theme.colorScheme.error,
+                        color: transaction.amountCents > 0
+                            ? Colors.green
+                            : Get.theme.colorScheme.error,
                       ),
                     );
                   },

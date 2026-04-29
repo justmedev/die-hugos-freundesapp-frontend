@@ -38,7 +38,10 @@ class CashpoolCreateTransactionSheet
                 child: Column(
                   children: [
                     FSelectTileGroup<String>(
-                      control: const .managedRadio(),
+                      control: .managedRadio(
+                        initial: "expense",
+                        onChange: (v) => controller.category.value = v.first,
+                      ),
                       label: const Text("Kategorie"),
                       children: [
                         FSelectTile.suffix(
