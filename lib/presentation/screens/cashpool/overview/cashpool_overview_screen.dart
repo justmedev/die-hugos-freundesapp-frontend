@@ -46,9 +46,7 @@ class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
                   ),
                 ),
                 FButton(
-                  onPress: () async {
-                    await Get.toNamed("/cashpools/create");
-                  },
+                  onPress: controller.handleCreateCashpool,
                   child: const Text("Gruppenkassa erstellen"),
                 ),
                 const BottomSpacing(),

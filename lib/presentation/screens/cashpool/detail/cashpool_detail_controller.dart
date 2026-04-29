@@ -2,8 +2,8 @@ import "package:diehugosapp/core/errors/not_a_cashpool_member.dart";
 import "package:diehugosapp/core/utils/ui_state.dart";
 import "package:diehugosapp/data/models/cashpool/cashpool_detailed.dart";
 import "package:diehugosapp/data/models/cashpool_transactions/cashpool_transaction.dart";
+import "package:diehugosapp/presentation/screens/cashpool/detail/create_transaction_sheet/cashpool_create_transaction_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/create_transaction_sheet/cashpool_create_transaction_sheet.dart";
-import "package:diehugosapp/presentation/screens/cashpool/detail/create_transaction_sheet/cashpool_create_transaction_sheet_controller.dart";
 import "package:diehugosapp/services/cashpool_service.dart";
 import "package:diehugosapp/services/cashpool_transaction_service.dart";
 import "package:diehugosapp/services/dialog_service.dart";
@@ -108,7 +108,7 @@ class CashpoolDetailController extends GetxController {
 
   Future<void> showCreateTransactionSheet() async {
     Get.lazyPut(
-      () => CashpoolCreateTransactionSheetController(
+      () => CashpoolCreateTransactionController(
         cashpoolTransactionService: cashpoolTransactionService,
       ),
     );

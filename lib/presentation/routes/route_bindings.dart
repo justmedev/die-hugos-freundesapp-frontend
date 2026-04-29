@@ -1,5 +1,3 @@
-import "package:diehugosapp/presentation/screens/cashpool/create/cashpool_create_controller.dart";
-import "package:diehugosapp/presentation/screens/cashpool/create/cashpool_create_screen.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/cashpool_detail_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/cashpool_detail_screen.dart";
 import "package:diehugosapp/presentation/screens/cashpool/overview/cashpool_overview_controller.dart";
@@ -61,17 +59,6 @@ List<GetPage<dynamic>> routeBindings() => [
           ),
         );
       },
-    ),
-  ),
-  GetPage(
-    name: "/cashpools/create",
-    page: () => const CashpoolCreateScreen(),
-    binding: BindingsBuilder<dynamic>(
-      () => Get.lazyPut(
-        () => CashpoolCreateController(
-          cashpoolService: Get.find<CashpoolService>(),
-        ),
-      ),
     ),
   ),
 ];

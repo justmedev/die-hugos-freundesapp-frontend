@@ -5,8 +5,8 @@ import "package:diehugosapp/services/cashpool_transaction_service.dart";
 import "package:flutter/cupertino.dart";
 import "package:get/get.dart";
 
-class CashpoolCreateTransactionSheetController extends GetxController {
-  CashpoolCreateTransactionSheetController({
+class CashpoolCreateTransactionController extends GetxController {
+  CashpoolCreateTransactionController({
     required this.cashpoolTransactionService,
   });
 
@@ -45,7 +45,7 @@ class CashpoolCreateTransactionSheetController extends GetxController {
       Get.back<CashpoolTransaction>(result: transaction);
     } on Exception catch (e) {
       print(e);
-      state.value = UiState.error("Unable to create a transaction");
+      state.value = UiState.error("Unable to create_sheet a transaction");
     }
     state.value = UiState.success();
   }
