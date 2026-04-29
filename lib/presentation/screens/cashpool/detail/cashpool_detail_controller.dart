@@ -108,6 +108,7 @@ class CashpoolDetailController extends GetxController {
       const CashpoolCreateTransactionSheet(),
       settings: RouteSettings(arguments: Get.arguments),
       backgroundColor: Get.theme.colorScheme.surface,
+      isScrollControlled: true,
     );
   }
 }
