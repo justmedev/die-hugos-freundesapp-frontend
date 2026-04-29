@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Cashpool {
 
- int get id; DateTime get updatedAt; DateTime get createdAt; String get title; String get description; bool get isOpened; int get ownerId;
+ int get id; DateTime get createdAt; String get title; String get description; bool get isOpened; User get owner;
 /// Create a copy of Cashpool
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $CashpoolCopyWith<Cashpool> get copyWith => _$CashpoolCopyWithImpl<Cashpool>(thi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Cashpool&&(identical(other.id, id) || other.id == id)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isOpened, isOpened) || other.isOpened == isOpened)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Cashpool&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isOpened, isOpened) || other.isOpened == isOpened)&&(identical(other.owner, owner) || other.owner == owner));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,updatedAt,createdAt,title,description,isOpened,ownerId);
+int get hashCode => Object.hash(runtimeType,id,createdAt,title,description,isOpened,owner);
 
 @override
 String toString() {
-  return 'Cashpool(id: $id, updatedAt: $updatedAt, createdAt: $createdAt, title: $title, description: $description, isOpened: $isOpened, ownerId: $ownerId)';
+  return 'Cashpool(id: $id, createdAt: $createdAt, title: $title, description: $description, isOpened: $isOpened, owner: $owner)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $CashpoolCopyWith<$Res>  {
   factory $CashpoolCopyWith(Cashpool value, $Res Function(Cashpool) _then) = _$CashpoolCopyWithImpl;
 @useResult
 $Res call({
- int id, DateTime updatedAt, DateTime createdAt, String title, String description, bool isOpened, int ownerId
+ int id, DateTime createdAt, String title, String description, bool isOpened, User owner
 });
 
 
-
+$UserCopyWith<$Res> get owner;
 
 }
 /// @nodoc
@@ -65,19 +65,27 @@ class _$CashpoolCopyWithImpl<$Res>
 
 /// Create a copy of Cashpool
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? updatedAt = null,Object? createdAt = null,Object? title = null,Object? description = null,Object? isOpened = null,Object? ownerId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? createdAt = null,Object? title = null,Object? description = null,Object? isOpened = null,Object? owner = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,isOpened: null == isOpened ? _self.isOpened : isOpened // ignore: cast_nullable_to_non_nullable
-as bool,ownerId: null == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
-as int,
+as bool,owner: null == owner ? _self.owner : owner // ignore: cast_nullable_to_non_nullable
+as User,
   ));
 }
-
+/// Create a copy of Cashpool
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserCopyWith<$Res> get owner {
+  
+  return $UserCopyWith<$Res>(_self.owner, (value) {
+    return _then(_self.copyWith(owner: value));
+  });
+}
 }
 
 
@@ -159,10 +167,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  DateTime updatedAt,  DateTime createdAt,  String title,  String description,  bool isOpened,  int ownerId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  DateTime createdAt,  String title,  String description,  bool isOpened,  User owner)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Cashpool() when $default != null:
-return $default(_that.id,_that.updatedAt,_that.createdAt,_that.title,_that.description,_that.isOpened,_that.ownerId);case _:
+return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isOpened,_that.owner);case _:
   return orElse();
 
 }
@@ -180,10 +188,10 @@ return $default(_that.id,_that.updatedAt,_that.createdAt,_that.title,_that.descr
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  DateTime updatedAt,  DateTime createdAt,  String title,  String description,  bool isOpened,  int ownerId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  DateTime createdAt,  String title,  String description,  bool isOpened,  User owner)  $default,) {final _that = this;
 switch (_that) {
 case _Cashpool():
-return $default(_that.id,_that.updatedAt,_that.createdAt,_that.title,_that.description,_that.isOpened,_that.ownerId);case _:
+return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isOpened,_that.owner);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -200,10 +208,10 @@ return $default(_that.id,_that.updatedAt,_that.createdAt,_that.title,_that.descr
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  DateTime updatedAt,  DateTime createdAt,  String title,  String description,  bool isOpened,  int ownerId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  DateTime createdAt,  String title,  String description,  bool isOpened,  User owner)?  $default,) {final _that = this;
 switch (_that) {
 case _Cashpool() when $default != null:
-return $default(_that.id,_that.updatedAt,_that.createdAt,_that.title,_that.description,_that.isOpened,_that.ownerId);case _:
+return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isOpened,_that.owner);case _:
   return null;
 
 }
@@ -212,19 +220,18 @@ return $default(_that.id,_that.updatedAt,_that.createdAt,_that.title,_that.descr
 }
 
 /// @nodoc
+@JsonSerializable()
 
-@JsonSerializable(fieldRename: FieldRename.snake)
 class _Cashpool implements Cashpool {
-  const _Cashpool({required this.id, required this.updatedAt, required this.createdAt, required this.title, required this.description, required this.isOpened, required this.ownerId});
+  const _Cashpool({required this.id, required this.createdAt, required this.title, required this.description, required this.isOpened, required this.owner});
   factory _Cashpool.fromJson(Map<String, dynamic> json) => _$CashpoolFromJson(json);
 
 @override final  int id;
-@override final  DateTime updatedAt;
 @override final  DateTime createdAt;
 @override final  String title;
 @override final  String description;
 @override final  bool isOpened;
-@override final  int ownerId;
+@override final  User owner;
 
 /// Create a copy of Cashpool
 /// with the given fields replaced by the non-null parameter values.
@@ -239,16 +246,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Cashpool&&(identical(other.id, id) || other.id == id)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isOpened, isOpened) || other.isOpened == isOpened)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Cashpool&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isOpened, isOpened) || other.isOpened == isOpened)&&(identical(other.owner, owner) || other.owner == owner));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,updatedAt,createdAt,title,description,isOpened,ownerId);
+int get hashCode => Object.hash(runtimeType,id,createdAt,title,description,isOpened,owner);
 
 @override
 String toString() {
-  return 'Cashpool(id: $id, updatedAt: $updatedAt, createdAt: $createdAt, title: $title, description: $description, isOpened: $isOpened, ownerId: $ownerId)';
+  return 'Cashpool(id: $id, createdAt: $createdAt, title: $title, description: $description, isOpened: $isOpened, owner: $owner)';
 }
 
 
@@ -259,11 +266,11 @@ abstract mixin class _$CashpoolCopyWith<$Res> implements $CashpoolCopyWith<$Res>
   factory _$CashpoolCopyWith(_Cashpool value, $Res Function(_Cashpool) _then) = __$CashpoolCopyWithImpl;
 @override @useResult
 $Res call({
- int id, DateTime updatedAt, DateTime createdAt, String title, String description, bool isOpened, int ownerId
+ int id, DateTime createdAt, String title, String description, bool isOpened, User owner
 });
 
 
-
+@override $UserCopyWith<$Res> get owner;
 
 }
 /// @nodoc
@@ -276,20 +283,28 @@ class __$CashpoolCopyWithImpl<$Res>
 
 /// Create a copy of Cashpool
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? updatedAt = null,Object? createdAt = null,Object? title = null,Object? description = null,Object? isOpened = null,Object? ownerId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? createdAt = null,Object? title = null,Object? description = null,Object? isOpened = null,Object? owner = null,}) {
   return _then(_Cashpool(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,updatedAt: null == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
-as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
 as String,isOpened: null == isOpened ? _self.isOpened : isOpened // ignore: cast_nullable_to_non_nullable
-as bool,ownerId: null == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
-as int,
+as bool,owner: null == owner ? _self.owner : owner // ignore: cast_nullable_to_non_nullable
+as User,
   ));
 }
 
-
+/// Create a copy of Cashpool
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$UserCopyWith<$Res> get owner {
+  
+  return $UserCopyWith<$Res>(_self.owner, (value) {
+    return _then(_self.copyWith(owner: value));
+  });
+}
 }
 
 // dart format on

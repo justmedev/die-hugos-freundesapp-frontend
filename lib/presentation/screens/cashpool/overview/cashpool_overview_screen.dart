@@ -30,7 +30,7 @@ class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
                         title: Text(data.title),
                         subtitle: Text(data.description),
                         details: Text(
-                          "von ${data.ownerId} am ${formatDate(data.createdAt)}",
+                          "von ${data.owner.firstName} ${data.owner.lastName} am ${formatDate(data.createdAt)}",
                         ),
                         suffix: const Icon(FIcons.chevronRight),
                         onPress: () async {
