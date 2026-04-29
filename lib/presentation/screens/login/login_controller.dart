@@ -9,9 +9,8 @@ class LoginController extends GetxController {
 
   late final AuthService authService;
 
-  final Rx<TextEditingController> emailController = TextEditingController().obs;
-  final Rx<TextEditingController> passwordController =
-      TextEditingController().obs;
+  Rx<TextEditingValue> email = TextEditingValue.empty.obs;
+  Rx<TextEditingValue> password = TextEditingValue.empty.obs;
   RxBool isLoading = false.obs;
 
   Future<void> submitLogin() async {
@@ -20,8 +19,8 @@ class LoginController extends GetxController {
 
     try {
       await authService.login(
-        emailController.value.text,
-        passwordController.value.text,
+        email.value.text,
+        password.value.text,
       );
 
       if (authService.isAuthenticated) {
@@ -36,12 +35,5 @@ class LoginController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    emailController.value.dispose();
-    passwordController.value.dispose();
   }
 }

@@ -9,9 +9,8 @@ class CashpoolCreateController extends GetxController {
   late final CashpoolService cashpoolService;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final Rx<TextEditingController> titleController = TextEditingController().obs;
-  final Rx<TextEditingController> descriptionController =
-      TextEditingController().obs;
+  Rx<TextEditingValue> title = TextEditingValue.empty.obs;
+  Rx<TextEditingValue> description = TextEditingValue.empty.obs;
 
   Future<void> handleCreatePressed() async {
     if (!formKey.currentState!.validate()) {
@@ -20,18 +19,11 @@ class CashpoolCreateController extends GetxController {
 
     await cashpoolService.create(
       CashpoolCreateCmd(
-        title: titleController.value.text,
-        description: descriptionController.value.text,
+        title: title.value.text,
+        description: description.value.text,
       ),
     );
 
     Get.back();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    titleController.value.dispose();
-    descriptionController.value.dispose();
   }
 }

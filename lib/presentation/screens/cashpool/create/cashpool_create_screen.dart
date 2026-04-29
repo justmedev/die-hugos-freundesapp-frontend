@@ -18,7 +18,10 @@ class CashpoolCreateScreen extends GetView<CashpoolCreateController> {
           children: [
             FTextFormField(
               label: const Text("Titel"),
-              control: .managed(controller: controller.titleController.value),
+              control: .lifted(
+                value: controller.title.value,
+                onChange: (v) => controller.title.value = v,
+              ),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) => ((value?.length ?? 0) >= 1)
                   ? null
@@ -27,8 +30,9 @@ class CashpoolCreateScreen extends GetView<CashpoolCreateController> {
             const SizedBox(height: 10),
             FTextFormField.multiline(
               label: const Text("Beschreibung"),
-              control: .managed(
-                controller: controller.descriptionController.value,
+              control: .lifted(
+                value: controller.description.value,
+                onChange: (v) => controller.description.value = v,
               ),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) => ((value?.length ?? 0) >= 1)

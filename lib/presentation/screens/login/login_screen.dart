@@ -1,6 +1,6 @@
 import "package:diehugosapp/presentation/screens/login/login_controller.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
-import "package:flutter/cupertino.dart";
+import "package:flutter/material.dart";
 import "package:forui/forui.dart";
 import "package:get/get.dart";
 
@@ -18,7 +18,7 @@ class LoginScreen extends GetView<LoginController> {
               children: [
                 FCircularProgress(),
                 SizedBox(height: 10),
-                Text("Logging you in ..."),
+                Text("Anmeldung erfolgt ..."),
               ],
             ),
           );
@@ -46,14 +46,17 @@ class LoginScreen extends GetView<LoginController> {
                       spacing: 10,
                       children: [
                         FTextField.email(
-                          control: .managed(
-                            controller: controller.emailController.value,
+                          label: const Text("E-Mail"),
+                          control: .lifted(
+                            value: controller.email.value,
+                            onChange: (v) => controller.email.value = v,
                           ),
                         ),
                         FTextField.password(
                           label: const Text("Passwort"),
-                          control: .managed(
-                            controller: controller.passwordController.value,
+                          control: .lifted(
+                            value: controller.password.value,
+                            onChange: (v) => controller.password.value = v,
                           ),
                         ),
                       ],
