@@ -12,7 +12,6 @@ _CashpoolDetailed _$CashpoolDetailedFromJson(Map<String, dynamic> json) =>
       createdAt: DateTime.parse(json['createdAt'] as String),
       title: json['title'] as String,
       description: json['description'] as String,
-      isMember: json['isMember'] as bool,
       isOpened: json['isOpened'] as bool,
       owner: User.fromJson(json['owner'] as Map<String, dynamic>),
     );
@@ -23,7 +22,6 @@ Map<String, dynamic> _$CashpoolDetailedToJson(_CashpoolDetailed instance) =>
       'createdAt': instance.createdAt.toIso8601String(),
       'title': instance.title,
       'description': instance.description,
-      'isMember': instance.isMember,
       'isOpened': instance.isOpened,
       'owner': instance.owner,
     };

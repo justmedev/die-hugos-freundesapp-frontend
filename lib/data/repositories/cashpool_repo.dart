@@ -1,3 +1,4 @@
+import "package:diehugosapp/core/errors/not_a_cashpool_member.dart";
 import "package:diehugosapp/data/models/cashpool/cashpool.dart";
 import "package:diehugosapp/data/models/cashpool/cashpool_detailed.dart";
 import "package:diehugosapp/data/models/cashpool/cmds/cashpool_create_cmd.dart";
@@ -36,8 +37,15 @@ class CashpoolRepoImpl implements CashpoolRepo {
 
   @override
   Future<CashpoolDetailed> getDetailed(int id) async {
-    final res = await dio.get("/cashpools/$id");
-    if (res.data == null) throw Exception("res.data shall not be null!");
-    return CashpoolDetailed.fromJson(res.data! as Map<String, Object?>);
+    try {
+      final res = await dio.get("/cashpools/$id");
+      if (res.data == null) throw Exception("res.data shall not be null!");
+      return CashpoolDetailed.fromJson(res.data! as Map<String, Object?>);
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 403) {
+        throw NotACashpoolMember();
+      }
+      rethrow;
+    }
   }
 }

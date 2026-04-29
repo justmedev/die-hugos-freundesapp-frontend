@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$CashpoolDetailed {
 
- int get id; DateTime get createdAt; String get title; String get description; bool get isMember; bool get isOpened; User get owner;
+ int get id; DateTime get createdAt; String get title; String get description; bool get isOpened; User get owner;
 /// Create a copy of CashpoolDetailed
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $CashpoolDetailedCopyWith<CashpoolDetailed> get copyWith => _$CashpoolDetailedCo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CashpoolDetailed&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isMember, isMember) || other.isMember == isMember)&&(identical(other.isOpened, isOpened) || other.isOpened == isOpened)&&(identical(other.owner, owner) || other.owner == owner));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CashpoolDetailed&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isOpened, isOpened) || other.isOpened == isOpened)&&(identical(other.owner, owner) || other.owner == owner));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,createdAt,title,description,isMember,isOpened,owner);
+int get hashCode => Object.hash(runtimeType,id,createdAt,title,description,isOpened,owner);
 
 @override
 String toString() {
-  return 'CashpoolDetailed(id: $id, createdAt: $createdAt, title: $title, description: $description, isMember: $isMember, isOpened: $isOpened, owner: $owner)';
+  return 'CashpoolDetailed(id: $id, createdAt: $createdAt, title: $title, description: $description, isOpened: $isOpened, owner: $owner)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $CashpoolDetailedCopyWith<$Res>  {
   factory $CashpoolDetailedCopyWith(CashpoolDetailed value, $Res Function(CashpoolDetailed) _then) = _$CashpoolDetailedCopyWithImpl;
 @useResult
 $Res call({
- int id, DateTime createdAt, String title, String description, bool isMember, bool isOpened, User owner
+ int id, DateTime createdAt, String title, String description, bool isOpened, User owner
 });
 
 
@@ -65,14 +65,13 @@ class _$CashpoolDetailedCopyWithImpl<$Res>
 
 /// Create a copy of CashpoolDetailed
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? createdAt = null,Object? title = null,Object? description = null,Object? isMember = null,Object? isOpened = null,Object? owner = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? createdAt = null,Object? title = null,Object? description = null,Object? isOpened = null,Object? owner = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,isMember: null == isMember ? _self.isMember : isMember // ignore: cast_nullable_to_non_nullable
-as bool,isOpened: null == isOpened ? _self.isOpened : isOpened // ignore: cast_nullable_to_non_nullable
+as String,isOpened: null == isOpened ? _self.isOpened : isOpened // ignore: cast_nullable_to_non_nullable
 as bool,owner: null == owner ? _self.owner : owner // ignore: cast_nullable_to_non_nullable
 as User,
   ));
@@ -168,10 +167,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  DateTime createdAt,  String title,  String description,  bool isMember,  bool isOpened,  User owner)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  DateTime createdAt,  String title,  String description,  bool isOpened,  User owner)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _CashpoolDetailed() when $default != null:
-return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isMember,_that.isOpened,_that.owner);case _:
+return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isOpened,_that.owner);case _:
   return orElse();
 
 }
@@ -189,10 +188,10 @@ return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isM
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  DateTime createdAt,  String title,  String description,  bool isMember,  bool isOpened,  User owner)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  DateTime createdAt,  String title,  String description,  bool isOpened,  User owner)  $default,) {final _that = this;
 switch (_that) {
 case _CashpoolDetailed():
-return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isMember,_that.isOpened,_that.owner);case _:
+return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isOpened,_that.owner);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -209,10 +208,10 @@ return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isM
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  DateTime createdAt,  String title,  String description,  bool isMember,  bool isOpened,  User owner)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  DateTime createdAt,  String title,  String description,  bool isOpened,  User owner)?  $default,) {final _that = this;
 switch (_that) {
 case _CashpoolDetailed() when $default != null:
-return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isMember,_that.isOpened,_that.owner);case _:
+return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isOpened,_that.owner);case _:
   return null;
 
 }
@@ -224,14 +223,13 @@ return $default(_that.id,_that.createdAt,_that.title,_that.description,_that.isM
 @JsonSerializable()
 
 class _CashpoolDetailed implements CashpoolDetailed {
-  const _CashpoolDetailed({required this.id, required this.createdAt, required this.title, required this.description, required this.isMember, required this.isOpened, required this.owner});
+  const _CashpoolDetailed({required this.id, required this.createdAt, required this.title, required this.description, required this.isOpened, required this.owner});
   factory _CashpoolDetailed.fromJson(Map<String, dynamic> json) => _$CashpoolDetailedFromJson(json);
 
 @override final  int id;
 @override final  DateTime createdAt;
 @override final  String title;
 @override final  String description;
-@override final  bool isMember;
 @override final  bool isOpened;
 @override final  User owner;
 
@@ -248,16 +246,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CashpoolDetailed&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isMember, isMember) || other.isMember == isMember)&&(identical(other.isOpened, isOpened) || other.isOpened == isOpened)&&(identical(other.owner, owner) || other.owner == owner));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CashpoolDetailed&&(identical(other.id, id) || other.id == id)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&(identical(other.isOpened, isOpened) || other.isOpened == isOpened)&&(identical(other.owner, owner) || other.owner == owner));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,createdAt,title,description,isMember,isOpened,owner);
+int get hashCode => Object.hash(runtimeType,id,createdAt,title,description,isOpened,owner);
 
 @override
 String toString() {
-  return 'CashpoolDetailed(id: $id, createdAt: $createdAt, title: $title, description: $description, isMember: $isMember, isOpened: $isOpened, owner: $owner)';
+  return 'CashpoolDetailed(id: $id, createdAt: $createdAt, title: $title, description: $description, isOpened: $isOpened, owner: $owner)';
 }
 
 
@@ -268,7 +266,7 @@ abstract mixin class _$CashpoolDetailedCopyWith<$Res> implements $CashpoolDetail
   factory _$CashpoolDetailedCopyWith(_CashpoolDetailed value, $Res Function(_CashpoolDetailed) _then) = __$CashpoolDetailedCopyWithImpl;
 @override @useResult
 $Res call({
- int id, DateTime createdAt, String title, String description, bool isMember, bool isOpened, User owner
+ int id, DateTime createdAt, String title, String description, bool isOpened, User owner
 });
 
 
@@ -285,14 +283,13 @@ class __$CashpoolDetailedCopyWithImpl<$Res>
 
 /// Create a copy of CashpoolDetailed
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? createdAt = null,Object? title = null,Object? description = null,Object? isMember = null,Object? isOpened = null,Object? owner = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? createdAt = null,Object? title = null,Object? description = null,Object? isOpened = null,Object? owner = null,}) {
   return _then(_CashpoolDetailed(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,description: null == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
-as String,isMember: null == isMember ? _self.isMember : isMember // ignore: cast_nullable_to_non_nullable
-as bool,isOpened: null == isOpened ? _self.isOpened : isOpened // ignore: cast_nullable_to_non_nullable
+as String,isOpened: null == isOpened ? _self.isOpened : isOpened // ignore: cast_nullable_to_non_nullable
 as bool,owner: null == owner ? _self.owner : owner // ignore: cast_nullable_to_non_nullable
 as User,
   ));

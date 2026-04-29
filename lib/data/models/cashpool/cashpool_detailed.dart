@@ -12,7 +12,6 @@ abstract class CashpoolDetailed with _$CashpoolDetailed {
 
     required String title,
     required String description,
-    required bool isMember,
     required bool isOpened,
     required User owner,
   }) = _CashpoolDetailed;
