@@ -9,6 +9,8 @@ import "package:forui/forui.dart";
 import "package:get/get.dart";
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await setupDI();
   await Get.find<AuthService>().authLocally();
   runApp(const Application());
