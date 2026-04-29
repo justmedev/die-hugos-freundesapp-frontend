@@ -26,27 +26,29 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(8),
-                decoration: const BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                decoration: BoxDecoration(
+                  color: Get.theme.colorScheme.secondary,
+                  borderRadius: const BorderRadius.all(Radius.circular(15)),
                 ),
                 child: Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "23€",
-                        style: TextStyle(
+                      const Icon(
+                        FIcons.sigma,
+                        size: 24,
+                      ),
+                      Container(width: 8),
+                      Text(
+                        formatCurrency.format(
+                          controller.totalCashpoolValueCents.value / 100,
+                        ),
+                        style: const TextStyle(
                           height: 1.1,
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
-                      ),
-                      Container(width: 6),
-                      const Text(
-                        " für die Gruppe bezahlt!",
-                        style: TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
@@ -59,33 +61,43 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
               ),
 
               Expanded(
-                child: ListView.builder(
-                  itemCount: controller.transactions.length,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (ctx, i) {
-                    final transaction = controller.transactions[i];
-                    return FItem(
-                      title: Text(transaction.label),
-                      subtitle: Text(
-                        formatDatetime.format(transaction.createdAt),
-                      ),
-                      details: Text(
-                        formatCurrency.format(transaction.amountCents / 100),
-                        style: TextStyle(
-                          color: transaction.amountCents > 0
-                              ? Colors.green
-                              : Get.theme.colorScheme.error,
-                        ),
-                      ),
-                      suffix: Icon(
-                        FIcons.banknoteArrowDown,
-                        color: transaction.amountCents > 0
-                            ? Colors.green
-                            : Get.theme.colorScheme.error,
-                      ),
+                child: Obx(() {
+                  if (controller.transactions.isEmpty) {
+                    return const Center(
+                      child: Text("Es gibt noch keine Transaktionen!"),
                     );
-                  },
-                ),
+                  } else {
+                    return ListView.builder(
+                      itemCount: controller.transactions.length,
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (ctx, i) {
+                        final transaction = controller.transactions[i];
+                        return FItem(
+                          title: Text(transaction.label),
+                          subtitle: Text(
+                            formatDatetime.format(transaction.createdAt),
+                          ),
+                          details: Text(
+                            formatCurrency.format(
+                              transaction.amountCents / 100,
+                            ),
+                            style: TextStyle(
+                              color: transaction.amountCents > 0
+                                  ? Colors.green
+                                  : Get.theme.colorScheme.error,
+                            ),
+                          ),
+                          suffix: Icon(
+                            FIcons.banknoteArrowDown,
+                            color: transaction.amountCents > 0
+                                ? Colors.green
+                                : Get.theme.colorScheme.error,
+                          ),
+                        );
+                      },
+                    );
+                  }
+                }),
               ),
               FButton(
                 onPress: controller.showCreateTransactionSheet,
