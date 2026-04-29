@@ -58,7 +58,7 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
               Expanded(
                 child: ListView.builder(
                   itemCount: 10,
-
+                  padding: EdgeInsets.zero,
                   itemBuilder: (ctx, i) {
                     return FItem(
                       title: const Text("Ilja"),

@@ -22,7 +22,7 @@ class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
                 Expanded(
                   child: ListView.builder(
                     itemCount: controller.cashpoolService.cashpools.length,
-
+                    padding: EdgeInsets.zero,
                     itemBuilder: (ctx, i) {
                       final data = controller.cashpoolService.cashpools[i];
                       return FItem(

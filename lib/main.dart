@@ -38,6 +38,16 @@ class Application extends StatelessWidget {
         ? theme.touch
         : theme.desktop;
 
+    final materialTheme = platformSpecificTheme
+        .toApproximateMaterialTheme()
+        .copyWith(
+          pageTransitionsTheme: const PageTransitionsTheme(
+            builders: {
+              TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+            },
+          ),
+        );
+
     return GetMaterialApp(
       supportedLocales: const [Locale("de", "AT")],
       localizationsDelegates: const [...FLocalizations.localizationsDelegates],
@@ -45,7 +55,7 @@ class Application extends StatelessWidget {
         data: platformSpecificTheme,
         child: FToaster(child: child!),
       ),
-      theme: platformSpecificTheme.toApproximateMaterialTheme(),
+      theme: materialTheme,
       getPages: routeBindings(),
       home: const HomeScreen(),
     );
