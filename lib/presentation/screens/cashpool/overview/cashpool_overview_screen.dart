@@ -5,12 +5,15 @@ import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
 import "package:get/get.dart";
+import "package:intl/intl.dart";
 
 class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
   const CashpoolOverviewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final formatDatetime = DateFormat("d.M.y HH:mm", "de");
+
     return ScaffoldWithNavbar(
       child: Obx(
         () {
@@ -30,11 +33,11 @@ class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
                         title: Text(data.title),
                         subtitle: Text(data.description),
                         details: Text(
-                          "von ${data.owner.firstName} ${data.owner.lastName} am ${formatDate(data.createdAt)}",
+                          "von ${data.owner.firstName} ${data.owner.lastName} am ${formatDatetime.format(data.createdAt)}",
                         ),
                         suffix: const Icon(FIcons.chevronRight),
                         onPress: () async {
-                          await Get.toNamed(
+                          await Get.toNamed<void>(
                             "/cashpools/details",
                             arguments: {
                               "id": data.id,
@@ -56,10 +59,5 @@ class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
         },
       ),
     );
-  }
-
-  String formatDate(DateTime dt) {
-    // DD.MM.YY
-    return "${dt.day.toString().padLeft(2, "0")}.${dt.month.toString().padLeft(2, "0")}.${dt.year.toString().replaceRange(0, 2, "")}";
   }
 }

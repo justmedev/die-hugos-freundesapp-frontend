@@ -16,21 +16,23 @@ class CashpoolTransactionRepoImpl implements CashpoolTransactionRepo {
 
   @override
   Future<CashpoolTransaction> create(CashpoolTransactionCreateCmd cmd) async {
-    final res = await dio.post(
+    final res = await dio.post<Map<String, Object?>>(
       "/cashpools/${cmd.cashpoolId}/transactions",
       data: cmd.toRequest().toJson(),
     );
     if (res.data == null) throw Exception("res.data shall not be null!");
-    return CashpoolTransaction.fromJson(res.data! as Map<String, Object?>);
+    return CashpoolTransaction.fromJson(res.data!);
   }
 
   @override
   Future<Iterable<CashpoolTransaction>> getAllByCashpoolId(
     int cashpoolId,
   ) async {
-    final res = await dio.get("/cashpools/$cashpoolId/transactions");
+    final res = await dio.get<List<dynamic>>(
+      "/cashpools/$cashpoolId/transactions",
+    );
     if (res.data == null) throw Exception("res.data shall not be null!");
-    return (res.data! as List<dynamic>).map(
+    return res.data!.map(
       (item) => CashpoolTransaction.fromJson(item as Map<String, Object?>),
     );
   }

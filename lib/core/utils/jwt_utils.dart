@@ -20,7 +20,7 @@ DateTime? getJWTExpirationDate(String token) {
         isUtc: true,
       );
     }
-  } catch (e) {
+  } on Exception {
     return null;
   }
   return null;

@@ -20,17 +20,19 @@ class CashpoolRepoImpl implements CashpoolRepo {
 
   @override
   Future<Cashpool> create(CashpoolCreateCmd cmd) async {
-    final res = await dio.post("/cashpools", data: cmd.toRequest().toJson());
+    final res = await dio.post<Map<String, Object?>>(
+      "/cashpools",
+      data: cmd.toRequest().toJson(),
+    );
     if (res.data == null) throw Exception("res.data shall not be null!");
-    print(res.data);
-    return Cashpool.fromJson(res.data! as Map<String, Object?>);
+    return Cashpool.fromJson(res.data!);
   }
 
   @override
   Future<Iterable<Cashpool>> getAll() async {
-    final res = await dio.get("/cashpools");
+    final res = await dio.get<List<dynamic>>("/cashpools");
     if (res.data == null) throw Exception("res.data shall not be null!");
-    return (res.data! as List<dynamic>).map(
+    return res.data!.map(
       (item) => Cashpool.fromJson(item as Map<String, Object?>),
     );
   }
@@ -38,9 +40,9 @@ class CashpoolRepoImpl implements CashpoolRepo {
   @override
   Future<CashpoolDetailed> getDetailed(int id) async {
     try {
-      final res = await dio.get("/cashpools/$id");
+      final res = await dio.get<Map<String, Object?>>("/cashpools/$id");
       if (res.data == null) throw Exception("res.data shall not be null!");
-      return CashpoolDetailed.fromJson(res.data! as Map<String, Object?>);
+      return CashpoolDetailed.fromJson(res.data!);
     } on DioException catch (e) {
       if (e.response?.statusCode == 403) {
         throw NotACashpoolMember();

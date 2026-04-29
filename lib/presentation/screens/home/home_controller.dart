@@ -9,11 +9,13 @@ class HomeController extends GetxController {
   @override
   Future<void> onReady() async {
     super.onReady();
-    if (!Get.find<AuthService>().isAuthenticated) await Get.offNamed("/login");
+    if (!Get.find<AuthService>().isAuthenticated) {
+      await Get.offNamed<void>("/login");
+    }
   }
 
   Future<void> logout() async {
     await authService.logout();
-    await Get.offNamed("/login");
+    await Get.offNamed<void>("/login");
   }
 }

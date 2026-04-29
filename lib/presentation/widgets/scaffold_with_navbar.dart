@@ -18,7 +18,7 @@ class ScaffoldWithNavbar extends StatelessWidget {
           title: const Text("Die Hugos"),
           prefixes: [
             FHeaderAction.back(
-              onPress: Get.back,
+              onPress: Get.back<void>,
             ),
           ],
         ),

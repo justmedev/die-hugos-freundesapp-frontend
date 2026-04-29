@@ -24,7 +24,7 @@ class LoginController extends GetxController {
       );
 
       if (authService.isAuthenticated) {
-        await Get.offNamed("/");
+        await Get.offNamed<void>("/");
       }
     } on WrongCredentials {
       toastService.show(

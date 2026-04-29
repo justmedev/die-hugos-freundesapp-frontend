@@ -24,6 +24,6 @@ class CashpoolCreateController extends GetxController {
       ),
     );
 
-    Get.back();
+    Get.back<void>();
   }
 }

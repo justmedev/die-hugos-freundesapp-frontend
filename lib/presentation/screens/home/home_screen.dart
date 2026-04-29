@@ -27,7 +27,7 @@ class HomeScreen extends GetView<HomeController> {
         const SizedBox(height: 8),
         FButton(
           onPress: () async {
-            await Get.toNamed("/cashpools");
+            await Get.toNamed<void>("/cashpools");
           },
           child: const Text("Zur Gruppenkassa"),
         ),

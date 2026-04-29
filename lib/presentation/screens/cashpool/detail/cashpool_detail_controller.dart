@@ -58,7 +58,7 @@ class CashpoolDetailController extends GetxController {
           animation: animation,
           title: const Text("Kein Mitglied"),
           body: const Text(
-            "Du bist noch nicht Mitglied dieser Gruppenkassa. Wenn du beitrittst, musst du auch an den Zahlungen teilnehmen. Willst du beitreten?",
+            "Du bist noch kein Mitglied dieser Gruppenkassa. Wenn du beitrittst, musst du auch an den Zahlungen teilnehmen. Willst du beitreten?",
           ),
           actions: [
             FButton(
@@ -69,7 +69,7 @@ class CashpoolDetailController extends GetxController {
             FButton(
               onPress: () {
                 // TODO: Join
-                Get.back(); // Close dialog
+                Get.back<void>(); // Close dialog
               },
               child: const Text("Beitreten"),
             ),
