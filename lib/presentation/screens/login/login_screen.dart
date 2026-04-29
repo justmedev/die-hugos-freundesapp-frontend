@@ -9,71 +9,59 @@ class LoginScreen extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) => ScaffoldWithNavbar(
-    child: Obx(
-      () {
-        if (controller.isLoading.value) {
-          return const Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                FCircularProgress(),
-                SizedBox(height: 10),
-                Text("Anmeldung erfolgt ..."),
-              ],
+    child: Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 20,
+        children: [
+          const Text(
+            "⬇️ Die Hugos ⬇️",
+            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+          ),
+
+          FCard(
+            title: const Text("Anmelden 🔐"),
+            subtitle: const Text(
+              "Bei Passwortzurücksetzung bitte bei Ilja melden :)",
             ),
-          );
-        }
-
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 20,
-            children: [
-              const Text(
-                "⬇️ Die Hugos ⬇️",
-                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-              ),
-
-              FCard(
-                title: const Text("Anmelden 🔐"),
-                subtitle: const Text(
-                  "Bei Passwortzurücksetzung bitte bei Ilja melden :)",
-                ),
-                child: Column(
-                  spacing: 20,
+            child: Column(
+              spacing: 20,
+              children: [
+                Column(
+                  spacing: 10,
                   children: [
-                    Column(
-                      spacing: 10,
-                      children: [
-                        FTextField.email(
-                          label: const Text("E-Mail"),
-                          control: .lifted(
-                            value: controller.email.value,
-                            onChange: (v) => controller.email.value = v,
-                          ),
-                        ),
-                        FTextField.password(
-                          label: const Text("Passwort"),
-                          control: .lifted(
-                            value: controller.password.value,
-                            onChange: (v) => controller.password.value = v,
-                          ),
-                        ),
-                      ],
+                    FTextField.email(
+                      label: const Text("E-Mail"),
+                      control: .managed(
+                        onChange: (v) => controller.email.value = v,
+                      ),
                     ),
-
-                    FButton(
-                      onPress: () => controller.submitLogin(),
-                      suffix: const Icon(FIcons.lock),
-                      child: const Text("Anmelden"),
+                    FTextField.password(
+                      label: const Text("Passwort"),
+                      control: .managed(
+                        onChange: (v) => controller.password.value = v,
+                      ),
                     ),
                   ],
                 ),
-              ),
-            ],
+
+                Obx(
+                  () => FButton(
+                    prefix: controller.isLoading.value
+                        ? const FCircularProgress()
+                        : null,
+                    onPress: controller.isLoading.value
+                        ? null
+                        : () => controller.submitLogin(),
+                    suffix: const Icon(FIcons.lock),
+                    child: const Text("Anmelden"),
+                  ),
+                ),
+              ],
+            ),
           ),
-        );
-      },
+        ],
+      ),
     ),
   );
 }
