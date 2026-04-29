@@ -1,4 +1,5 @@
 import "package:diehugosapp/core/utils/ui_state.dart";
+import "package:diehugosapp/data/models/cashpool_transactions/cashpool_transaction.dart";
 import "package:diehugosapp/data/models/cashpool_transactions/cmds/cashpool_create_transaction_cmd.dart";
 import "package:diehugosapp/services/cashpool_transaction_service.dart";
 import "package:flutter/cupertino.dart";
@@ -31,7 +32,7 @@ class CashpoolCreateTransactionSheetController extends GetxController {
       final amountEuros = int.tryParse(amountCents.value.text);
       if (amountEuros == null) return;
 
-      await cashpoolTransactionService.create(
+      final transaction = await cashpoolTransactionService.create(
         CashpoolTransactionCreateCmd(
           label: label.value.text,
           amountCents: amountEuros * 100 * (isExpense ? -1 : 1),
@@ -39,7 +40,7 @@ class CashpoolCreateTransactionSheetController extends GetxController {
         ),
       );
 
-      Get.back();
+      Get.back<CashpoolTransaction>(result: transaction);
     } on Exception catch (e) {
       print(e);
       state.value = UiState.error("Unable to create a transaction");

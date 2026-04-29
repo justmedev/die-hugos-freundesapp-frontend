@@ -104,11 +104,12 @@ class CashpoolDetailController extends GetxController {
       ),
     );
 
-    await Get.bottomSheet<void>(
+    final transaction = await Get.bottomSheet<CashpoolTransaction>(
       const CashpoolCreateTransactionSheet(),
       settings: RouteSettings(arguments: Get.arguments),
       backgroundColor: Get.theme.colorScheme.surface,
       isScrollControlled: true,
     );
+    if (transaction != null) transactions.add(transaction);
   }
 }
