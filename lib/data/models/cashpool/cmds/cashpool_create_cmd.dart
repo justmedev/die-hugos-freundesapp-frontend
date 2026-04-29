@@ -1,15 +1,16 @@
-import "package:freezed_annotation/freezed_annotation.dart";
+import "package:diehugosapp/data/models/cashpool/requests/cashpool_create_request.dart";
 
-part "cashpool_create_cmd.freezed.dart";
-part "cashpool_create_cmd.g.dart";
+class CashpoolCreateCmd {
+  const CashpoolCreateCmd({
+    required this.title,
+    required this.description,
+  });
 
-@freezed
-abstract class CashpoolCreateCmd with _$CashpoolCreateCmd {
-  const factory CashpoolCreateCmd({
-    required String title,
-    required String description,
-  }) = _CashpoolCreateCmd;
+  final String title;
+  final String description;
 
-  factory CashpoolCreateCmd.fromJson(Map<String, Object?> json) =>
-      _$CashpoolCreateCmdFromJson(json);
+  CashpoolCreateRequest toRequest() => CashpoolCreateRequest(
+    title: title,
+    description: description,
+  );
 }

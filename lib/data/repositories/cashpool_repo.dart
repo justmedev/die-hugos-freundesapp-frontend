@@ -20,7 +20,7 @@ class CashpoolRepoImpl implements CashpoolRepo {
 
   @override
   Future<Cashpool> create(CashpoolCreateCmd cmd) async {
-    final res = await dio.post("/cashpools", data: cmd.toJson());
+    final res = await dio.post("/cashpools", data: cmd.toRequest().toJson());
     if (res.data == null) throw Exception("res.data shall not be null!");
     print(res.data);
     return Cashpool.fromJson(res.data! as Map<String, Object?>);

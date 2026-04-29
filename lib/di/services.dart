@@ -7,6 +7,7 @@ void _setupServices() {
       permanent: true,
     )
     ..put(CashpoolService(), permanent: true)
+    ..put(CashpoolService(Get.find<CashpoolRepo>()), permanent: true)
     ..put(ToastService(), permanent: true)
     ..put(DialogService(), permanent: true);
 }
