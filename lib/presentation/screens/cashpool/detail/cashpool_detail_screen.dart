@@ -57,14 +57,15 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
 
               Expanded(
                 child: ListView.builder(
-                  itemCount: 10,
+                  itemCount: controller.transactions.length,
                   padding: EdgeInsets.zero,
                   itemBuilder: (ctx, i) {
+                    final transaction = controller.transactions[i];
                     return FItem(
-                      title: const Text("Ilja"),
+                      title: Text(transaction.label),
                       subtitle: const Text("25.04.2026 15:30"),
                       details: Text(
-                        "10€",
+                        (transaction.amountCents / 100).toString(),
                         style: TextStyle(color: Get.theme.colorScheme.error),
                       ),
                       suffix: Icon(
@@ -76,7 +77,7 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
                 ),
               ),
               FButton(
-                onPress: () {},
+                onPress: controller.showCreateTransactionSheet,
                 child: const Text("Transaktion eintragen"),
               ),
             ],
