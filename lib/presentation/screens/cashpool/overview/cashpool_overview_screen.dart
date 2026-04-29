@@ -1,5 +1,6 @@
 import "package:diehugosapp/core/utils/ui_state.dart";
 import "package:diehugosapp/presentation/screens/cashpool/overview/cashpool_overview_controller.dart";
+import "package:diehugosapp/presentation/widgets/bottom_spacing.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
@@ -50,6 +51,7 @@ class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
                   },
                   child: const Text("Gruppenkassa erstellen"),
                 ),
+                const BottomSpacing(),
               ],
             ),
           };

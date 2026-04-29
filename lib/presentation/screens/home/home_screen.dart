@@ -1,4 +1,5 @@
 import "package:diehugosapp/presentation/screens/home/home_controller.dart";
+import "package:diehugosapp/presentation/widgets/bottom_spacing.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/cupertino.dart";
 import "package:forui/forui.dart";
@@ -9,28 +10,29 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) => ScaffoldWithNavbar(
-    child: Obx(
-      () => Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 20,
-        children: [
-          Text(
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Obx(
+          () => Text(
             "Willkommen, ${controller.authService.user?.firstName}!",
             style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
-          const Spacer(),
-          FButton(
-            onPress: () => controller.logout(),
-            child: const Text("Logout"),
-          ),
-          FButton(
-            onPress: () async {
-              await Get.toNamed("/cashpools");
-            },
-            child: const Text("Zur Gruppenkassa"),
-          ),
-        ],
-      ),
+        ),
+        const Spacer(),
+        FButton(
+          onPress: () => controller.logout(),
+          child: const Text("Logout"),
+        ),
+        const SizedBox(height: 8),
+        FButton(
+          onPress: () async {
+            await Get.toNamed("/cashpools");
+          },
+          child: const Text("Zur Gruppenkassa"),
+        ),
+        const BottomSpacing(),
+      ],
     ),
   );
 }

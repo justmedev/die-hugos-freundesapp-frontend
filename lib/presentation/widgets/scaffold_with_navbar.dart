@@ -15,7 +15,7 @@ class ScaffoldWithNavbar extends StatelessWidget {
     if (nav.canPop()) {
       return FScaffold(
         header: FHeader.nested(
-          title: const Text("ABC"),
+          title: const Text("Die Hugos"),
           prefixes: [
             FHeaderAction.back(
               onPress: Get.back,
@@ -27,7 +27,7 @@ class ScaffoldWithNavbar extends StatelessWidget {
     }
 
     return FScaffold(
-      header: const FHeader(title: Text("ABC")),
+      header: const FHeader(title: Text("Die Hugos")),
       child: SafeArea(top: false, child: child),
     );
   }

@@ -1,5 +1,6 @@
 import "package:diehugosapp/core/utils/ui_state.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/cashpool_detail_controller.dart";
+import "package:diehugosapp/presentation/widgets/bottom_spacing.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
@@ -103,6 +104,7 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
                 onPress: controller.showCreateTransactionSheet,
                 child: const Text("Transaktion eintragen"),
               ),
+              const BottomSpacing(),
             ],
           ),
         };
