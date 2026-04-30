@@ -17,6 +17,12 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
     final formatDatetime = DateFormat("d.M.y HH:mm", "de");
 
     return ScaffoldWithNavbar(
+      suffixes: [
+        FHeaderAction(
+          icon: const Icon(FIcons.calculator),
+          onPress: () async => await Get.toNamed("/cashpools/details/settle"),
+        ),
+      ],
       child: Obx(() {
         return switch (controller.state.value) {
           Loading() => const Center(child: FCircularProgress()),
