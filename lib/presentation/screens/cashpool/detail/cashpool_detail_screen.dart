@@ -76,7 +76,7 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
                         return FItem(
                           title: Text(transaction.label),
                           subtitle: Text(
-                            formatDatetime.format(transaction.createdAt),
+                            "${transaction.owner.firstName} · ${formatDatetime.format(transaction.createdAt)}",
                           ),
                           details: Text(
                             formatCurrency.format(
