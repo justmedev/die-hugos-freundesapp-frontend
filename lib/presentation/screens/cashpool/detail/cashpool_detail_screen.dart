@@ -74,6 +74,7 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
                       itemBuilder: (ctx, i) {
                         final transaction = controller.transactions[i];
                         return FItem(
+                          onPress: () => controller.handleItemPress(i),
                           title: Text(transaction.label),
                           subtitle: Text(
                             "${transaction.owner.firstName} · ${formatDatetime.format(transaction.createdAt)}",

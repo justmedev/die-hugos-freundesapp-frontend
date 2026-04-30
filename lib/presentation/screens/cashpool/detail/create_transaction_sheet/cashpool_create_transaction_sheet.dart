@@ -18,45 +18,52 @@ class CashpoolCreateTransactionSheet
         mainAxisSize: .min,
         crossAxisAlignment: .start,
         children: [
-          Text(
-            "Transaktion hinzufügen",
-            style: Styles.titleStyle,
+          Obx(
+            () => Text(
+              controller.editingTransaction.value == null
+                  ? "Transaktion hinzufügen"
+                  : "Transaktion editieren",
+              style: Styles.titleStyle,
+            ),
           ),
           SizedBox(
             child: Form(
               key: controller.formKey,
               child: Column(
                 children: [
-                  FSelectTileGroup<String>(
-                    control: .managedRadio(
-                      initial: "expense",
-                      onChange: (v) => controller.category.value = v.first,
+                  Obx(
+                    () => FSelectTileGroup<String>(
+                      control: .managedRadio(
+                        initial: controller.category.value,
+                        onChange: (v) => controller.category.value = v.first,
+                      ),
+                      label: const Text("Kategorie"),
+                      children: [
+                        FSelectTile.suffix(
+                          prefix: Icon(
+                            FIcons.banknoteArrowDown,
+                            color: theme.colors.error,
+                          ),
+                          title: const Text("Ausgabe"),
+                          value: "expense",
+                        ),
+                        const FSelectTile.suffix(
+                          prefix: Icon(
+                            FIcons.banknoteArrowUp,
+                            color: Colors.green,
+                          ),
+                          title: Text("Einnahme"),
+                          value: "income",
+                        ),
+                      ],
                     ),
-                    label: const Text("Kategorie"),
-                    children: [
-                      FSelectTile.suffix(
-                        prefix: Icon(
-                          FIcons.banknoteArrowDown,
-                          color: theme.colors.error,
-                        ),
-                        title: const Text("Ausgabe"),
-                        value: "expense",
-                      ),
-                      const FSelectTile.suffix(
-                        prefix: Icon(
-                          FIcons.banknoteArrowUp,
-                          color: Colors.green,
-                        ),
-                        title: Text("Einnahme"),
-                        value: "income",
-                      ),
-                    ],
                   ),
                   const SizedBox(height: 12),
                   FTextFormField(
                     label: const Text("Bezeichnung"),
                     hint: "Alkshopping",
                     control: .managed(
+                      initial: controller.label.value,
                       onChange: (v) => controller.label.value = v,
                     ),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -67,6 +74,7 @@ class CashpoolCreateTransactionSheet
                     label: const Text("Betrag"),
                     hint: "10€",
                     control: .managed(
+                      initial: controller.amountCents.value,
                       onChange: (v) => controller.amountCents.value = v,
                     ),
                     keyboardType: const TextInputType.numberWithOptions(
@@ -78,7 +86,7 @@ class CashpoolCreateTransactionSheet
                   const SizedBox(height: 20),
                   FButton(
                     size: .sm,
-                    onPress: controller.handleCreateTransaction,
+                    onPress: controller.handleCreateOrEditTransaction,
                     child: const Text("Speichern"),
                   ),
                 ],

@@ -1,5 +1,6 @@
 import "package:diehugosapp/data/models/cashpool_transactions/cashpool_transaction.dart";
 import "package:diehugosapp/data/models/cashpool_transactions/cmds/cashpool_create_transaction_cmd.dart";
+import "package:diehugosapp/data/models/cashpool_transactions/cmds/cashpool_update_transaction_cmd.dart";
 import "package:diehugosapp/data/repositories/cashpool_transaction_repo.dart";
 import "package:get/get.dart";
 
@@ -12,6 +13,16 @@ class CashpoolTransactionService extends GetxService {
   Future<CashpoolTransaction> create(CashpoolTransactionCreateCmd cmd) async {
     try {
       return await repo.create(cmd);
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
+
+  /// Create a new [CashpoolTransaction]
+  Future<CashpoolTransaction> update(CashpoolTransactionUpdateCmd cmd) async {
+    try {
+      return await repo.update(cmd);
     } catch (e) {
       print(e);
       rethrow;

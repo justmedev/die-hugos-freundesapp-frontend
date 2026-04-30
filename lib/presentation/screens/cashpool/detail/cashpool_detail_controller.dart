@@ -115,10 +115,32 @@ class CashpoolDetailController extends GetxController {
 
     final transaction = await Get.bottomSheet<CashpoolTransaction>(
       const CashpoolCreateTransactionSheet(),
-      settings: RouteSettings(arguments: Get.arguments),
+      settings: RouteSettings(arguments: {"id": cashpool.value!.id}),
       backgroundColor: Get.theme.colorScheme.surface,
       isScrollControlled: true,
     );
     if (transaction != null) transactions.insert(0, transaction);
+  }
+
+  Future<void> handleItemPress(int i) async {
+    Get.lazyPut(
+      () => CashpoolCreateTransactionController(
+        cashpoolTransactionService: cashpoolTransactionService,
+      ),
+    );
+
+    final transaction = await Get.bottomSheet<CashpoolTransaction>(
+      const CashpoolCreateTransactionSheet(),
+      settings: RouteSettings(
+        arguments: {"id": cashpool.value!.id, "transaction": transactions[i]},
+      ),
+      backgroundColor: Get.theme.colorScheme.surface,
+      isScrollControlled: true,
+    );
+    if (transaction != null) {
+      transactions
+        ..removeAt(i)
+        ..insert(i, transaction);
+    }
   }
 }
