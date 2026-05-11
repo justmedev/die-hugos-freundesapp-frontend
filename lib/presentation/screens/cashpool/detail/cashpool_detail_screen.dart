@@ -20,7 +20,7 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
       suffixes: [
         FHeaderAction(
           icon: const Icon(FIcons.calculator),
-          onPress: () async => await Get.toNamed("/cashpools/details/settle"),
+          onPress: () async => controller.handleSettlePress(),
         ),
       ],
       child: Obx(() {

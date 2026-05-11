@@ -10,6 +10,7 @@ import "package:diehugosapp/presentation/screens/login/login_controller.dart";
 import "package:diehugosapp/presentation/screens/login/login_screen.dart";
 import "package:diehugosapp/services/auth_service.dart";
 import "package:diehugosapp/services/cashpool_service.dart";
+import "package:diehugosapp/services/cashpool_settlement_service.dart";
 import "package:diehugosapp/services/cashpool_transaction_service.dart";
 import "package:diehugosapp/services/dialog_service.dart";
 import "package:get/get.dart";
@@ -52,7 +53,11 @@ List<GetPage<dynamic>> routeBindings() => [
     name: "/cashpools/details/settle/",
     page: () => const CashpoolDetailSettleScreen(),
     binding: BindingsBuilder<dynamic>(
-      () => Get.lazyPut(CashpoolDetailSettleController.new),
+      () => Get.lazyPut(
+        () => CashpoolDetailSettleController(
+          cashpoolSettlementService: Get.find<CashpoolSettlementService>(),
+        ),
+      ),
     ),
   ),
   GetPage(

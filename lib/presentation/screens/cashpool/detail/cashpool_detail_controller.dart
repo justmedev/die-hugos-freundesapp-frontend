@@ -6,6 +6,7 @@ import "package:diehugosapp/presentation/screens/cashpool/detail/create_transact
 import "package:diehugosapp/presentation/screens/cashpool/detail/create_transaction_sheet/cashpool_create_transaction_sheet.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/join_dialog/cashpool_detail_join_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/join_dialog/cashpool_detail_join_dialog.dart";
+import "package:diehugosapp/services/cashpool_member_service.dart";
 import "package:diehugosapp/services/cashpool_service.dart";
 import "package:diehugosapp/services/cashpool_transaction_service.dart";
 import "package:diehugosapp/services/dialog_service.dart";
@@ -134,5 +135,12 @@ class CashpoolDetailController extends GetxController {
         ..removeAt(i)
         ..insert(i, transaction);
     }
+  }
+
+  Future<void> handleSettlePress() async {
+    await Get.toNamed<void>(
+      "/cashpools/details/settle",
+      arguments: {"id": cashpool.value!.id},
+    );
   }
 }
