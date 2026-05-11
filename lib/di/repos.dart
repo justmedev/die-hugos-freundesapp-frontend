@@ -16,5 +16,9 @@ void _setupRepos() {
     ..lazyPut<CashpoolTransactionRepo>(
       () => CashpoolTransactionRepoImpl(Get.find<Dio>()),
       fenix: true,
+    )
+    ..lazyPut<CashpoolMemberRepo>(
+      () => CashpoolMemberRepoImpl(Get.find<Dio>()),
+      fenix: true,
     );
 }

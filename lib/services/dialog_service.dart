@@ -3,7 +3,7 @@ import "package:forui/forui.dart";
 import "package:get/get.dart";
 
 class DialogService extends GetxService {
-  Future<void> show({
+  Future<T?> show<T>({
     required Widget Function(
       BuildContext context,
       FDialogStyle style,
@@ -11,15 +11,18 @@ class DialogService extends GetxService {
     )
     builder,
     bool dismissable = true,
+    RouteSettings? routeSettings,
   }) async {
     final context = Get.context;
 
     if (context != null) {
-      await showFDialog<dynamic>(
+      return showFDialog<T>(
         barrierDismissible: dismissable,
         context: context,
+        routeSettings: routeSettings,
         builder: builder,
       );
     }
+    return null;
   }
 }

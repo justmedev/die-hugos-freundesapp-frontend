@@ -11,6 +11,10 @@ void _setupServices() {
       CashpoolTransactionService(Get.find<CashpoolTransactionRepo>()),
       permanent: true,
     )
+    ..put(
+      CashpoolMemberService(Get.find<CashpoolMemberRepo>()),
+      permanent: true,
+    )
     ..put(ToastService(), permanent: true)
     ..put(DialogService(), permanent: true);
 }
