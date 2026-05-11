@@ -2,10 +2,12 @@ import "package:diehugosapp/core/errors/not_a_cashpool_member.dart";
 import "package:diehugosapp/core/utils/ui_state.dart";
 import "package:diehugosapp/data/models/cashpool/cashpool_detailed.dart";
 import "package:diehugosapp/data/models/cashpool_transactions/cashpool_transaction.dart";
+import "package:diehugosapp/data/models/cashpool_transactions/extensions/cashpool_transaction_deviation_calculation.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/create_transaction_sheet/cashpool_create_transaction_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/create_transaction_sheet/cashpool_create_transaction_sheet.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/join_dialog/cashpool_detail_join_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/join_dialog/cashpool_detail_join_dialog.dart";
+import "package:diehugosapp/services/auth_service.dart";
 import "package:diehugosapp/services/cashpool_member_service.dart";
 import "package:diehugosapp/services/cashpool_service.dart";
 import "package:diehugosapp/services/cashpool_transaction_service.dart";
@@ -15,19 +17,23 @@ import "package:get/get.dart";
 
 class CashpoolDetailController extends GetxController {
   CashpoolDetailController({
+    required this.authService,
     required this.cashpoolService,
     required this.cashpoolTransactionService,
     required this.dialogService,
   });
 
+  late final AuthService authService;
   late final CashpoolService cashpoolService;
   late final CashpoolTransactionService cashpoolTransactionService;
   late final DialogService dialogService;
 
+  final RxBool isHeaderShowingTotal = true.obs;
   final Rx<UiState> state = UiState.loading().obs;
   final Rxn<CashpoolDetailed> cashpool = Rxn();
   final RxList<CashpoolTransaction> transactions = RxList.empty();
   final RxInt totalCashpoolValueCents = 0.obs;
+  final RxInt deviationFromFairShareCents = 0.obs;
 
   @override
   Future<void> onInit() async {
@@ -35,6 +41,9 @@ class CashpoolDetailController extends GetxController {
 
     transactions.stream.listen((data) {
       if (transactions.isEmpty) return;
+      deviationFromFairShareCents.value = transactions.getUserDeviation(
+        authService.user!,
+      );
       totalCashpoolValueCents.value = transactions
           .map((t) => t.amountCents)
           .reduce((a, b) => a + b);
@@ -135,6 +144,10 @@ class CashpoolDetailController extends GetxController {
         ..removeAt(i)
         ..insert(i, transaction);
     }
+  }
+
+  void handleTotalAvgTogglePress() {
+    isHeaderShowingTotal.value = !isHeaderShowingTotal.value;
   }
 
   Future<void> handleSettlePress() async {

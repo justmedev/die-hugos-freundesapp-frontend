@@ -30,35 +30,39 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
           Success() => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Get.theme.colorScheme.secondary,
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                ),
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+              FTile(
+                onPress: controller.handleTotalAvgTogglePress,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    if (controller.isHeaderShowingTotal.value)
                       const Icon(
                         FIcons.sigma,
                         size: 24,
-                      ),
-                      Container(width: 8),
+                      )
+                    else
                       Text(
-                        formatCurrency.format(
-                          controller.totalCashpoolValueCents.value / 100,
-                        ),
-                        style: const TextStyle(
-                          height: 1.1,
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
+                        controller.deviationFromFairShareCents.value < 0
+                            ? "Du schuldest"
+                            : "Du bekommst",
                       ),
-                    ],
-                  ),
+                    Container(width: 8),
+                    Text(
+                      formatCurrency.format(
+                        controller.isHeaderShowingTotal.value
+                            ? controller.totalCashpoolValueCents.value / 100
+                            : controller.deviationFromFairShareCents.value
+                                      .abs() /
+                                  100,
+                      ),
+                      style: const TextStyle(
+                        height: 1.1,
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
               ),
 

@@ -67,6 +67,7 @@ List<GetPage<dynamic>> routeBindings() => [
       () {
         Get.lazyPut(
           () => CashpoolDetailController(
+            authService: Get.find<AuthService>(),
             cashpoolTransactionService: Get.find<CashpoolTransactionService>(),
             cashpoolService: Get.find<CashpoolService>(),
             dialogService: Get.find<DialogService>(),

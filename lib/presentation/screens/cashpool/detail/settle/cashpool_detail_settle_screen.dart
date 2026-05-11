@@ -34,12 +34,23 @@ class CashpoolDetailSettleScreen
                   itemBuilder: (ctx, i) {
                     final settlement = controller.settlements[i];
                     return FItem(
-                      title: Text(settlement.from.firstName),
-                      details: Text(
+                      onPress: () {},
+                      title: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(settlement.from.fullName),
+                          const SizedBox(width: 8),
+                          const Icon(FIcons.arrowRight),
+                          const SizedBox(width: 8),
+                          Text(settlement.to.fullName),
+                        ],
+                      ),
+                      subtitle: Text(
                         formatCurrency.format(
                           settlement.amountCents / 100,
                         ),
                       ),
+                      details: const Icon(FIcons.chevronRight),
                     );
                   },
                 );
