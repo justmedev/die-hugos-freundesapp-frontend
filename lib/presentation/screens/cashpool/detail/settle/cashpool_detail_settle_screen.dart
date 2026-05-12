@@ -1,5 +1,6 @@
 import "package:diehugosapp/core/utils/ui_state.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/settle/cashpool_detail_settle_controller.dart";
+import "package:diehugosapp/presentation/widgets/bottom_spacing.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/widgets.dart";
 import "package:forui/forui.dart";
@@ -19,44 +20,53 @@ class CashpoolDetailSettleScreen
         return switch (controller.state.value) {
           Loading() => const Center(child: FCircularProgress()),
           Error() => const Center(child: Text("Something went wrong :(")),
-          Success() => Expanded(
-            child: Obx(() {
-              if (controller.settlements.isEmpty) {
-                return const Center(
-                  child: Text(
-                    "Es gibt keine, Daten um eine Abrechnung zu erstellen!",
+          Success() => Obx(() {
+            if (controller.settlements.isEmpty) {
+              return const Center(
+                child: Text(
+                  "Es gibt keine, Daten um eine Abrechnung zu erstellen!",
+                ),
+              );
+            } else {
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: controller.settlements.length,
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (ctx, i) {
+                        final settlement = controller.settlements[i];
+                        return FItem(
+                          onPress: () => controller.handleSettlementPress(i),
+                          title: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(settlement.from.fullName),
+                              const SizedBox(width: 8),
+                              const Icon(FIcons.arrowRight),
+                              const SizedBox(width: 8),
+                              Text(settlement.to.fullName),
+                            ],
+                          ),
+                          subtitle: Text(
+                            formatCurrency.format(
+                              settlement.amountCents / 100,
+                            ),
+                          ),
+                          details: const Icon(FIcons.chevronRight),
+                        );
+                      },
+                    ),
                   ),
-                );
-              } else {
-                return ListView.builder(
-                  itemCount: controller.settlements.length,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (ctx, i) {
-                    final settlement = controller.settlements[i];
-                    return FItem(
-                      onPress: () {},
-                      title: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(settlement.from.fullName),
-                          const SizedBox(width: 8),
-                          const Icon(FIcons.arrowRight),
-                          const SizedBox(width: 8),
-                          Text(settlement.to.fullName),
-                        ],
-                      ),
-                      subtitle: Text(
-                        formatCurrency.format(
-                          settlement.amountCents / 100,
-                        ),
-                      ),
-                      details: const Icon(FIcons.chevronRight),
-                    );
-                  },
-                );
-              }
-            }),
-          ),
+                  FButton(
+                    onPress: () {},
+                    child: const Text("Überweisung eintragen"),
+                  ),
+                  const BottomSpacing(),
+                ],
+              );
+            }
+          }),
         };
       }),
     );

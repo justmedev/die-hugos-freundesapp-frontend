@@ -20,5 +20,6 @@ void _setupServices() {
       permanent: true,
     )
     ..put(ToastService(), permanent: true)
-    ..put(DialogService(), permanent: true);
+    ..put(DialogService(), permanent: true)
+    ..put(EpcQrService(), permanent: true);
 }

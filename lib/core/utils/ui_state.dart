@@ -1,3 +1,5 @@
+import "package:flutter/widgets.dart";
+
 sealed class UiState {
   const UiState();
 
@@ -8,9 +10,18 @@ sealed class UiState {
 
 class Loading extends UiState {}
 
+@immutable
 class Error extends UiState {
-  Error([this.message]);
+  const Error([this.message]);
   final String? message;
+
+  @override
+  bool operator ==(Object other) {
+    return other is Error && other.message == message;
+  }
+
+  @override
+  int get hashCode => super.hashCode + message.hashCode;
 }
 
 class Success extends UiState {}

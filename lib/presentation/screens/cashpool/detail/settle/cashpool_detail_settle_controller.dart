@@ -1,7 +1,10 @@
 import "package:diehugosapp/core/utils/ui_state.dart";
 import "package:diehugosapp/data/models/cashpool_settlement/cashpool_settlement.dart";
+import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlement_details_sheet/cashpool_settlement_transaction_details_controller.dart";
+import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlement_details_sheet/cashpool_settlement_transaction_details_sheet.dart";
 import "package:diehugosapp/services/cashpool_settlement_service.dart";
-import "package:flutter/foundation.dart";
+import "package:diehugosapp/services/epc_qr_service.dart";
+import "package:flutter/widgets.dart";
 import "package:get/get.dart";
 
 class CashpoolDetailSettleController extends GetxController {
@@ -31,5 +34,23 @@ class CashpoolDetailSettleController extends GetxController {
       debugPrint(e.toString());
       state.value = UiState.error();
     }
+  }
+
+  Future<void> handleSettlementPress(int i) async {
+    Get.lazyPut(
+      () => CashpoolSettlementTransactionDetailsController(
+        cashpoolSettlementService: cashpoolSettlementService,
+        epcQrService: Get.find<EpcQrService>(),
+      ),
+    );
+
+    final settlement = await Get.bottomSheet<void>(
+      const CashpoolSettlementTransactionDetailsSheet(),
+      settings: RouteSettings(
+        arguments: {"settlement": settlements[i]},
+      ),
+      backgroundColor: Get.theme.colorScheme.surface,
+      isScrollControlled: true,
+    );
   }
 }

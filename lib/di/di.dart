@@ -14,6 +14,7 @@ import "package:diehugosapp/services/cashpool_service.dart";
 import "package:diehugosapp/services/cashpool_settlement_service.dart";
 import "package:diehugosapp/services/cashpool_transaction_service.dart";
 import "package:diehugosapp/services/dialog_service.dart";
+import "package:diehugosapp/services/epc_qr_service.dart";
 import "package:diehugosapp/services/toaster_service.dart";
 import "package:dio/dio.dart";
 import "package:get/get_core/src/get_main.dart";
