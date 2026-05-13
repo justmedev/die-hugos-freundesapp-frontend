@@ -53,9 +53,16 @@ class UserEditSheet extends GetView<UserEditController> {
                 onChange: (v) => controller.field.value = v,
               ),
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (value) => ((value?.length ?? 0) >= 1)
-                  ? null
-                  : "Der eingegebene Titel ist zu kurz.",
+              validator: controller.fieldType.type == EditType.iban
+                  ? (v) {
+                      if (v?.isEmpty == true) return null;
+                      if (v == null ||
+                          !controller.ibanService.validateIBAN(v)) {
+                        return "Die IBAN ist ungültig!";
+                      }
+                      return null;
+                    }
+                  : null,
             ),
           const SizedBox(height: 20),
           FButton(

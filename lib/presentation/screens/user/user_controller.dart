@@ -23,6 +23,7 @@ class UserController extends GetxController {
     Get.lazyPut(
       () => UserEditController(
         authService: authService,
+        ibanService: Get.find(),
         userService: Get.find<UserService>(),
         fieldType: field,
         initialValue: initial,

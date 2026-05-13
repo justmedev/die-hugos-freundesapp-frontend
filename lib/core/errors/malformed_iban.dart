@@ -1,0 +1,1 @@
+class MalformedIBAN implements Exception {}

@@ -19,7 +19,8 @@ void _setupServices() {
       CashpoolSettlementService(Get.find<CashpoolSettlementRepo>()),
       permanent: true,
     )
-    ..put(UserService(Get.find<UserRepo>()), permanent: true)
+    ..put(IBANService())
+    ..put(UserService(Get.find(), Get.find()), permanent: true)
     ..put(ToastService(), permanent: true)
     ..put(DialogService(), permanent: true)
     ..put(EpcQrService(), permanent: true);
