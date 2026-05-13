@@ -50,6 +50,14 @@ class AuthService extends GetxService {
     }
   }
 
+  void replaceUser(User user) {
+    _authState.value = AuthSession(
+      accessToken: _authState.value!.accessToken,
+      refreshToken: _authState.value!.refreshToken,
+      user: user,
+    );
+  }
+
   Future<void> authLocally() async {
     if (_isLoggedIn.value) return;
     await authRepo.authLocally();

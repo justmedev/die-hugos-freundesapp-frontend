@@ -7,6 +7,7 @@ import "package:diehugosapp/data/repositories/cashpool_member_repo.dart";
 import "package:diehugosapp/data/repositories/cashpool_repo.dart";
 import "package:diehugosapp/data/repositories/cashpool_settlement_repo.dart";
 import "package:diehugosapp/data/repositories/cashpool_transaction_repo.dart";
+import "package:diehugosapp/data/repositories/user_repo.dart";
 import "package:diehugosapp/presentation/screens/home/home_controller.dart";
 import "package:diehugosapp/services/auth_service.dart";
 import "package:diehugosapp/services/cashpool_member_service.dart";

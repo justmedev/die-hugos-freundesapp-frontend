@@ -9,6 +9,10 @@ void _setupRepos() {
       ),
       fenix: true,
     )
+    ..lazyPut<UserRepo>(
+      () => UserRepoImpl(Get.find<Dio>()),
+      fenix: true,
+    )
     ..lazyPut<CashpoolRepo>(
       () => CashpoolRepoImpl(Get.find<Dio>()),
       fenix: true,

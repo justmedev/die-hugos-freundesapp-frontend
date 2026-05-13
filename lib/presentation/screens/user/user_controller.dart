@@ -1,4 +1,9 @@
+import "package:diehugosapp/data/repositories/user_repo.dart";
+import "package:diehugosapp/presentation/screens/user/edit_sheet/user_edit_controller.dart";
+import "package:diehugosapp/presentation/screens/user/edit_sheet/user_edit_sheet.dart";
+import "package:diehugosapp/presentation/screens/user/user_field.dart";
 import "package:diehugosapp/services/auth_service.dart";
+import "package:flutter/cupertino.dart";
 import "package:get/get.dart";
 
 class UserController extends GetxController {
@@ -12,6 +17,23 @@ class UserController extends GetxController {
     if (!Get.find<AuthService>().isAuthenticated) {
       await Get.offNamed<void>("/login");
     }
+  }
+
+  Future<void> handleTileEditPress(UserField field, Object initial) async {
+    Get.lazyPut(
+      () => UserEditController(
+        authService: authService,
+        userRepo: Get.find<UserRepo>(),
+        fieldType: field,
+        initialValue: initial,
+      ),
+    );
+    await Get.bottomSheet<void>(
+      const UserEditSheet(),
+      settings: RouteSettings(arguments: Get.arguments),
+      backgroundColor: Get.theme.colorScheme.surface,
+      isScrollControlled: true,
+    );
   }
 
   Future<void> logout() async {
