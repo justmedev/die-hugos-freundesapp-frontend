@@ -10,6 +10,12 @@ class HomeScreen extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) => ScaffoldWithNavbar(
+    suffixes: [
+      FHeaderAction(
+        icon: const Icon(FIcons.user),
+        onPress: () => Get.toNamed<void>("/user"),
+      ),
+    ],
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -20,11 +26,6 @@ class HomeScreen extends GetView<HomeController> {
           ),
         ),
         const Spacer(),
-        FButton(
-          onPress: () => controller.logout(),
-          child: const Text("Logout"),
-        ),
-        const SizedBox(height: 8),
         FButton(
           onPress: () async {
             await Get.toNamed<void>("/cashpools");

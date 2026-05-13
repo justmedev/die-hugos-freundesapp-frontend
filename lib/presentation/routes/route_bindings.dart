@@ -8,6 +8,8 @@ import "package:diehugosapp/presentation/screens/home/home_controller.dart";
 import "package:diehugosapp/presentation/screens/home/home_screen.dart";
 import "package:diehugosapp/presentation/screens/login/login_controller.dart";
 import "package:diehugosapp/presentation/screens/login/login_screen.dart";
+import "package:diehugosapp/presentation/screens/user/user_controller.dart";
+import "package:diehugosapp/presentation/screens/user/user_screen.dart";
 import "package:diehugosapp/services/auth_service.dart";
 import "package:diehugosapp/services/cashpool_service.dart";
 import "package:diehugosapp/services/cashpool_settlement_service.dart";
@@ -33,6 +35,17 @@ List<GetPage<dynamic>> routeBindings() => [
     binding: BindingsBuilder<dynamic>(
       () => Get.lazyPut(
         () => LoginController(
+          authService: Get.find<AuthService>(),
+        ),
+      ),
+    ),
+  ),
+  GetPage(
+    name: "/user",
+    page: UserScreen.new,
+    binding: BindingsBuilder<dynamic>(
+      () => Get.lazyPut(
+        () => UserController(
           authService: Get.find<AuthService>(),
         ),
       ),
