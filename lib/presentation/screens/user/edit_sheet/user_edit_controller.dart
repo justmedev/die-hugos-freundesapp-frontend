@@ -1,20 +1,20 @@
 import "package:diehugosapp/data/models/user/cmds/user_update_cmd.dart";
-import "package:diehugosapp/data/repositories/user_repo.dart";
 import "package:diehugosapp/presentation/screens/user/user_field.dart";
 import "package:diehugosapp/services/auth_service.dart";
+import "package:diehugosapp/services/user_service.dart";
 import "package:flutter/widgets.dart";
 import "package:get/get.dart";
 
 class UserEditController extends GetxController {
   UserEditController({
     required this.authService,
-    required this.userRepo,
+    required this.userService,
     required this.initialValue,
     required this.fieldType,
   });
 
   final AuthService authService;
-  final UserRepo userRepo;
+  final UserService userService;
   final Object initialValue;
   final UserField fieldType;
 
@@ -64,7 +64,7 @@ class UserEditController extends GetxController {
     }
 
     authService.replaceUser(
-      await userRepo.update(
+      await userService.update(
         UserUpdateCmd(
           email: email,
           firstName: firstName,

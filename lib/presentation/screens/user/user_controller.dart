@@ -1,8 +1,8 @@
-import "package:diehugosapp/data/repositories/user_repo.dart";
 import "package:diehugosapp/presentation/screens/user/edit_sheet/user_edit_controller.dart";
 import "package:diehugosapp/presentation/screens/user/edit_sheet/user_edit_sheet.dart";
 import "package:diehugosapp/presentation/screens/user/user_field.dart";
 import "package:diehugosapp/services/auth_service.dart";
+import "package:diehugosapp/services/user_service.dart";
 import "package:flutter/cupertino.dart";
 import "package:get/get.dart";
 
@@ -23,7 +23,7 @@ class UserController extends GetxController {
     Get.lazyPut(
       () => UserEditController(
         authService: authService,
-        userRepo: Get.find<UserRepo>(),
+        userService: Get.find<UserService>(),
         fieldType: field,
         initialValue: initial,
       ),
