@@ -1,4 +1,6 @@
+import "package:diehugosapp/data/models/cashpool_settlement/cashpool_settlement.dart";
 import "package:diehugosapp/data/models/cashpool_settlement/cashpool_suggested_settlement.dart";
+import "package:diehugosapp/data/models/cashpool_settlement/cmds/cashpool_settlement_create_cmd.dart";
 import "package:diehugosapp/data/repositories/cashpool_settlement_repo.dart";
 import "package:get/get.dart";
 
@@ -18,5 +20,13 @@ class CashpoolSettlementService extends GetxService {
       print(e);
       rethrow;
     }
+  }
+
+  Future<CashpoolSettlement> create(CashpoolSettlementCreateCmd cmd) {
+    return _repo.create(cmd);
+  }
+
+  Future<Iterable<CashpoolSettlement>> getAllByCashpoolId(int cashpoolId) {
+    return _repo.getAllByCashpoolId(cashpoolId);
   }
 }
