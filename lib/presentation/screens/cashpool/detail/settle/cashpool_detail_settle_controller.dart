@@ -1,5 +1,5 @@
 import "package:diehugosapp/core/utils/ui_state.dart";
-import "package:diehugosapp/data/models/cashpool_settlement/cashpool_settlement.dart";
+import "package:diehugosapp/data/models/cashpool_settlement/cashpool_suggested_settlement.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlement_details_sheet/cashpool_settlement_transaction_details_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlement_details_sheet/cashpool_settlement_transaction_details_sheet.dart";
 import "package:diehugosapp/services/auth_service.dart";
@@ -22,7 +22,7 @@ class CashpoolDetailSettleController extends GetxController {
   late final CashpoolSettlementService cashpoolSettlementService;
 
   final Rx<UiState> state = UiState.loading().obs;
-  final RxList<CashpoolSettlement> settlements = RxList.empty();
+  final RxList<CashpoolSuggestedSettlement> settlements = RxList.empty();
 
   @override
   Future<void> onInit() async {
@@ -35,7 +35,7 @@ class CashpoolDetailSettleController extends GetxController {
     try {
       final cashpoolId = (Get.arguments as Map<String, int>)["id"];
       settlements.value =
-          (await cashpoolSettlementService.getSettlementsByCashpoolId(
+          (await cashpoolSettlementService.getSuggestedSettlementsByCashpoolId(
             cashpoolId!,
           )).toList();
       state.value = UiState.success();
@@ -45,11 +45,11 @@ class CashpoolDetailSettleController extends GetxController {
     }
   }
 
-  bool isSettlementSettleableForMe(CashpoolSettlement settlement) =>
+  bool isSettlementSettleableForMe(CashpoolSuggestedSettlement settlement) =>
       settlement.from.id == authService.user?.id &&
       settlement.to.id != authService.user?.id;
 
-  bool handleDismissSettlementAttempt(CashpoolSettlement settlement) {
+  bool handleDismissSettlementAttempt(CashpoolSuggestedSettlement settlement) {
     if (!isSettlementSettleableForMe(settlement)) {
       toastService.show(
         title: "Du darfst das nicht!",
@@ -62,7 +62,7 @@ class CashpoolDetailSettleController extends GetxController {
   }
 
   Future<void> handleSettleSettlementAction(
-    CashpoolSettlement settlement,
+    CashpoolSuggestedSettlement settlement,
   ) async {
     if (!handleDismissSettlementAttempt(settlement)) return;
   }

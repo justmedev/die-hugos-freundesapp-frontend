@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'cashpool_settlement.dart';
+part of 'cashpool_suggested_settlement.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,22 +13,22 @@ part of 'cashpool_settlement.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$CashpoolSettlement {
+mixin _$CashpoolSuggestedSettlement {
 
  User get from; User get to; int get amountCents;
-/// Create a copy of CashpoolSettlement
+/// Create a copy of CashpoolSuggestedSettlement
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$CashpoolSettlementCopyWith<CashpoolSettlement> get copyWith => _$CashpoolSettlementCopyWithImpl<CashpoolSettlement>(this as CashpoolSettlement, _$identity);
+$CashpoolSuggestedSettlementCopyWith<CashpoolSuggestedSettlement> get copyWith => _$CashpoolSuggestedSettlementCopyWithImpl<CashpoolSuggestedSettlement>(this as CashpoolSuggestedSettlement, _$identity);
 
-  /// Serializes this CashpoolSettlement to a JSON map.
+  /// Serializes this CashpoolSuggestedSettlement to a JSON map.
   Map<String, dynamic> toJson();
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CashpoolSettlement&&(identical(other.from, from) || other.from == from)&&(identical(other.to, to) || other.to == to)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CashpoolSuggestedSettlement&&(identical(other.from, from) || other.from == from)&&(identical(other.to, to) || other.to == to)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,15 +37,15 @@ int get hashCode => Object.hash(runtimeType,from,to,amountCents);
 
 @override
 String toString() {
-  return 'CashpoolSettlement(from: $from, to: $to, amountCents: $amountCents)';
+  return 'CashpoolSuggestedSettlement(from: $from, to: $to, amountCents: $amountCents)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $CashpoolSettlementCopyWith<$Res>  {
-  factory $CashpoolSettlementCopyWith(CashpoolSettlement value, $Res Function(CashpoolSettlement) _then) = _$CashpoolSettlementCopyWithImpl;
+abstract mixin class $CashpoolSuggestedSettlementCopyWith<$Res>  {
+  factory $CashpoolSuggestedSettlementCopyWith(CashpoolSuggestedSettlement value, $Res Function(CashpoolSuggestedSettlement) _then) = _$CashpoolSuggestedSettlementCopyWithImpl;
 @useResult
 $Res call({
  User from, User to, int amountCents
@@ -56,14 +56,14 @@ $UserCopyWith<$Res> get from;$UserCopyWith<$Res> get to;
 
 }
 /// @nodoc
-class _$CashpoolSettlementCopyWithImpl<$Res>
-    implements $CashpoolSettlementCopyWith<$Res> {
-  _$CashpoolSettlementCopyWithImpl(this._self, this._then);
+class _$CashpoolSuggestedSettlementCopyWithImpl<$Res>
+    implements $CashpoolSuggestedSettlementCopyWith<$Res> {
+  _$CashpoolSuggestedSettlementCopyWithImpl(this._self, this._then);
 
-  final CashpoolSettlement _self;
-  final $Res Function(CashpoolSettlement) _then;
+  final CashpoolSuggestedSettlement _self;
+  final $Res Function(CashpoolSuggestedSettlement) _then;
 
-/// Create a copy of CashpoolSettlement
+/// Create a copy of CashpoolSuggestedSettlement
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? from = null,Object? to = null,Object? amountCents = null,}) {
   return _then(_self.copyWith(
@@ -73,7 +73,7 @@ as User,amountCents: null == amountCents ? _self.amountCents : amountCents // ig
 as int,
   ));
 }
-/// Create a copy of CashpoolSettlement
+/// Create a copy of CashpoolSuggestedSettlement
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -82,7 +82,7 @@ $UserCopyWith<$Res> get from {
   return $UserCopyWith<$Res>(_self.from, (value) {
     return _then(_self.copyWith(from: value));
   });
-}/// Create a copy of CashpoolSettlement
+}/// Create a copy of CashpoolSuggestedSettlement
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -95,8 +95,8 @@ $UserCopyWith<$Res> get to {
 }
 
 
-/// Adds pattern-matching-related methods to [CashpoolSettlement].
-extension CashpoolSettlementPatterns on CashpoolSettlement {
+/// Adds pattern-matching-related methods to [CashpoolSuggestedSettlement].
+extension CashpoolSuggestedSettlementPatterns on CashpoolSuggestedSettlement {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
@@ -109,10 +109,10 @@ extension CashpoolSettlementPatterns on CashpoolSettlement {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CashpoolSettlement value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _CashpoolSuggestedSettlement value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _CashpoolSettlement() when $default != null:
+case _CashpoolSuggestedSettlement() when $default != null:
 return $default(_that);case _:
   return orElse();
 
@@ -131,10 +131,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CashpoolSettlement value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _CashpoolSuggestedSettlement value)  $default,){
 final _that = this;
 switch (_that) {
-case _CashpoolSettlement():
+case _CashpoolSuggestedSettlement():
 return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
@@ -152,10 +152,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CashpoolSettlement value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _CashpoolSuggestedSettlement value)?  $default,){
 final _that = this;
 switch (_that) {
-case _CashpoolSettlement() when $default != null:
+case _CashpoolSuggestedSettlement() when $default != null:
 return $default(_that);case _:
   return null;
 
@@ -175,7 +175,7 @@ return $default(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( User from,  User to,  int amountCents)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _CashpoolSettlement() when $default != null:
+case _CashpoolSuggestedSettlement() when $default != null:
 return $default(_that.from,_that.to,_that.amountCents);case _:
   return orElse();
 
@@ -196,7 +196,7 @@ return $default(_that.from,_that.to,_that.amountCents);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( User from,  User to,  int amountCents)  $default,) {final _that = this;
 switch (_that) {
-case _CashpoolSettlement():
+case _CashpoolSuggestedSettlement():
 return $default(_that.from,_that.to,_that.amountCents);case _:
   throw StateError('Unexpected subclass');
 
@@ -216,7 +216,7 @@ return $default(_that.from,_that.to,_that.amountCents);case _:
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( User from,  User to,  int amountCents)?  $default,) {final _that = this;
 switch (_that) {
-case _CashpoolSettlement() when $default != null:
+case _CashpoolSuggestedSettlement() when $default != null:
 return $default(_that.from,_that.to,_that.amountCents);case _:
   return null;
 
@@ -228,28 +228,28 @@ return $default(_that.from,_that.to,_that.amountCents);case _:
 /// @nodoc
 @JsonSerializable()
 
-class _CashpoolSettlement implements CashpoolSettlement {
-  const _CashpoolSettlement({required this.from, required this.to, required this.amountCents});
-  factory _CashpoolSettlement.fromJson(Map<String, dynamic> json) => _$CashpoolSettlementFromJson(json);
+class _CashpoolSuggestedSettlement implements CashpoolSuggestedSettlement {
+  const _CashpoolSuggestedSettlement({required this.from, required this.to, required this.amountCents});
+  factory _CashpoolSuggestedSettlement.fromJson(Map<String, dynamic> json) => _$CashpoolSuggestedSettlementFromJson(json);
 
 @override final  User from;
 @override final  User to;
 @override final  int amountCents;
 
-/// Create a copy of CashpoolSettlement
+/// Create a copy of CashpoolSuggestedSettlement
 /// with the given fields replaced by the non-null parameter values.
 @override @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$CashpoolSettlementCopyWith<_CashpoolSettlement> get copyWith => __$CashpoolSettlementCopyWithImpl<_CashpoolSettlement>(this, _$identity);
+_$CashpoolSuggestedSettlementCopyWith<_CashpoolSuggestedSettlement> get copyWith => __$CashpoolSuggestedSettlementCopyWithImpl<_CashpoolSuggestedSettlement>(this, _$identity);
 
 @override
 Map<String, dynamic> toJson() {
-  return _$CashpoolSettlementToJson(this, );
+  return _$CashpoolSuggestedSettlementToJson(this, );
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CashpoolSettlement&&(identical(other.from, from) || other.from == from)&&(identical(other.to, to) || other.to == to)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CashpoolSuggestedSettlement&&(identical(other.from, from) || other.from == from)&&(identical(other.to, to) || other.to == to)&&(identical(other.amountCents, amountCents) || other.amountCents == amountCents));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -258,15 +258,15 @@ int get hashCode => Object.hash(runtimeType,from,to,amountCents);
 
 @override
 String toString() {
-  return 'CashpoolSettlement(from: $from, to: $to, amountCents: $amountCents)';
+  return 'CashpoolSuggestedSettlement(from: $from, to: $to, amountCents: $amountCents)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class _$CashpoolSettlementCopyWith<$Res> implements $CashpoolSettlementCopyWith<$Res> {
-  factory _$CashpoolSettlementCopyWith(_CashpoolSettlement value, $Res Function(_CashpoolSettlement) _then) = __$CashpoolSettlementCopyWithImpl;
+abstract mixin class _$CashpoolSuggestedSettlementCopyWith<$Res> implements $CashpoolSuggestedSettlementCopyWith<$Res> {
+  factory _$CashpoolSuggestedSettlementCopyWith(_CashpoolSuggestedSettlement value, $Res Function(_CashpoolSuggestedSettlement) _then) = __$CashpoolSuggestedSettlementCopyWithImpl;
 @override @useResult
 $Res call({
  User from, User to, int amountCents
@@ -277,17 +277,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$CashpoolSettlementCopyWithImpl<$Res>
-    implements _$CashpoolSettlementCopyWith<$Res> {
-  __$CashpoolSettlementCopyWithImpl(this._self, this._then);
+class __$CashpoolSuggestedSettlementCopyWithImpl<$Res>
+    implements _$CashpoolSuggestedSettlementCopyWith<$Res> {
+  __$CashpoolSuggestedSettlementCopyWithImpl(this._self, this._then);
 
-  final _CashpoolSettlement _self;
-  final $Res Function(_CashpoolSettlement) _then;
+  final _CashpoolSuggestedSettlement _self;
+  final $Res Function(_CashpoolSuggestedSettlement) _then;
 
-/// Create a copy of CashpoolSettlement
+/// Create a copy of CashpoolSuggestedSettlement
 /// with the given fields replaced by the non-null parameter values.
 @override @pragma('vm:prefer-inline') $Res call({Object? from = null,Object? to = null,Object? amountCents = null,}) {
-  return _then(_CashpoolSettlement(
+  return _then(_CashpoolSuggestedSettlement(
 from: null == from ? _self.from : from // ignore: cast_nullable_to_non_nullable
 as User,to: null == to ? _self.to : to // ignore: cast_nullable_to_non_nullable
 as User,amountCents: null == amountCents ? _self.amountCents : amountCents // ignore: cast_nullable_to_non_nullable
@@ -295,7 +295,7 @@ as int,
   ));
 }
 
-/// Create a copy of CashpoolSettlement
+/// Create a copy of CashpoolSuggestedSettlement
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')
@@ -304,7 +304,7 @@ $UserCopyWith<$Res> get from {
   return $UserCopyWith<$Res>(_self.from, (value) {
     return _then(_self.copyWith(from: value));
   });
-}/// Create a copy of CashpoolSettlement
+}/// Create a copy of CashpoolSuggestedSettlement
 /// with the given fields replaced by the non-null parameter values.
 @override
 @pragma('vm:prefer-inline')

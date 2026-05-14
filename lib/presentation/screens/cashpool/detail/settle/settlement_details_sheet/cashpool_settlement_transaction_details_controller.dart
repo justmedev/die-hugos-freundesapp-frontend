@@ -1,5 +1,5 @@
 import "package:diehugosapp/core/utils/ui_state.dart";
-import "package:diehugosapp/data/models/cashpool_settlement/cashpool_settlement.dart";
+import "package:diehugosapp/data/models/cashpool_settlement/cashpool_suggested_settlement.dart";
 import "package:diehugosapp/services/cashpool_settlement_service.dart";
 import "package:diehugosapp/services/epc_qr_service.dart";
 import "package:flutter/cupertino.dart";
@@ -23,13 +23,14 @@ class CashpoolSettlementTransactionDetailsController extends GetxController {
   ).obs;
   final Rx<TextEditingValue> amountCents = TextEditingValue.empty.obs;
   final RxnString sepaCodeData = RxnString();
-  final Rxn<CashpoolSettlement> settlement = Rxn();
+  final Rxn<CashpoolSuggestedSettlement> settlement = Rxn();
 
   @override
   void onInit() {
     super.onInit();
     settlement.value =
-        (Get.arguments as Map<String, CashpoolSettlement>)["settlement"];
+        (Get.arguments
+            as Map<String, CashpoolSuggestedSettlement>)["settlement"];
     if (settlement.value == null) {
       state.value = UiState.error("No settlement found!");
       return;
