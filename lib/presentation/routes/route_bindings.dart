@@ -68,6 +68,8 @@ List<GetPage<dynamic>> routeBindings() => [
     binding: BindingsBuilder<dynamic>(
       () => Get.lazyPut(
         () => CashpoolDetailSettleController(
+          toastService: Get.find(),
+          authService: Get.find(),
           cashpoolSettlementService: Get.find<CashpoolSettlementService>(),
         ),
       ),

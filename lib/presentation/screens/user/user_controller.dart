@@ -15,7 +15,7 @@ class UserController extends GetxController {
   Future<void> onReady() async {
     super.onReady();
     if (!Get.find<AuthService>().isAuthenticated) {
-      await Get.offNamed<void>("/login");
+      await Get.offAllNamed<void>("/login");
     }
   }
 

@@ -70,6 +70,8 @@ class CashpoolSettlementTransactionDetailsSheet
                               UiState.error("no_account_info")) {
                             return const Text(
                               "Der Nutzer hat keine Konteninformationen hinterlegt.",
+                              softWrap: true,
+                              maxLines: 3,
                             );
                           }
                           return const Text(
@@ -96,6 +98,11 @@ class CashpoolSettlementTransactionDetailsSheet
                       },
                     ),
                   ),
+                ),
+                const SizedBox(height: 20),
+                FButton(
+                  onPress: () {},
+                  child: const Text("Geld wurde überwiesen"),
                 ),
                 const BottomSpacing(),
               ],
