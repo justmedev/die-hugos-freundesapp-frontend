@@ -23,5 +23,5 @@ Map<String, dynamic> _$UserUpdateRequestToJson(_UserUpdateRequest instance) =>
       'lastName': instance.lastName,
       'accountHolderName': instance.accountHolderName,
       'accountIBAN': instance.accountIBAN,
-      'birthdate': instance.birthdate.toIso8601String(),
+      'birthdate': serializeDateOnly(instance.birthdate),
     };

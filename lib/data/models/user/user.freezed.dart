@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$User {
 
- int get id; String get email; String get firstName; String get lastName; String? get accountHolderName; String? get accountIBAN; DateTime get birthdate; bool get isAdmin; DateTime get createdAt;
+ int get id; String get email; String get firstName; String get lastName; String? get accountHolderName; String? get accountIBAN;@JsonKey(toJson: serializeDateOnly) DateTime get birthdate; bool get isAdmin; DateTime get createdAt;
 /// Create a copy of User
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $UserCopyWith<$Res>  {
   factory $UserCopyWith(User value, $Res Function(User) _then) = _$UserCopyWithImpl;
 @useResult
 $Res call({
- int id, String email, String firstName, String lastName, String? accountHolderName, String? accountIBAN, DateTime birthdate, bool isAdmin, DateTime createdAt
+ int id, String email, String firstName, String lastName, String? accountHolderName, String? accountIBAN,@JsonKey(toJson: serializeDateOnly) DateTime birthdate, bool isAdmin, DateTime createdAt
 });
 
 
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN,  DateTime birthdate,  bool isAdmin,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN, @JsonKey(toJson: serializeDateOnly)  DateTime birthdate,  bool isAdmin,  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
 return $default(_that.id,_that.email,_that.firstName,_that.lastName,_that.accountHolderName,_that.accountIBAN,_that.birthdate,_that.isAdmin,_that.createdAt);case _:
@@ -182,7 +182,7 @@ return $default(_that.id,_that.email,_that.firstName,_that.lastName,_that.accoun
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN,  DateTime birthdate,  bool isAdmin,  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN, @JsonKey(toJson: serializeDateOnly)  DateTime birthdate,  bool isAdmin,  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _User():
 return $default(_that.id,_that.email,_that.firstName,_that.lastName,_that.accountHolderName,_that.accountIBAN,_that.birthdate,_that.isAdmin,_that.createdAt);case _:
@@ -202,7 +202,7 @@ return $default(_that.id,_that.email,_that.firstName,_that.lastName,_that.accoun
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN,  DateTime birthdate,  bool isAdmin,  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN, @JsonKey(toJson: serializeDateOnly)  DateTime birthdate,  bool isAdmin,  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _User() when $default != null:
 return $default(_that.id,_that.email,_that.firstName,_that.lastName,_that.accountHolderName,_that.accountIBAN,_that.birthdate,_that.isAdmin,_that.createdAt);case _:
@@ -217,7 +217,7 @@ return $default(_that.id,_that.email,_that.firstName,_that.lastName,_that.accoun
 @JsonSerializable()
 
 class _User extends User {
-  const _User({required this.id, required this.email, required this.firstName, required this.lastName, required this.accountHolderName, required this.accountIBAN, required this.birthdate, required this.isAdmin, required this.createdAt}): super._();
+  const _User({required this.id, required this.email, required this.firstName, required this.lastName, required this.accountHolderName, required this.accountIBAN, @JsonKey(toJson: serializeDateOnly) required this.birthdate, required this.isAdmin, required this.createdAt}): super._();
   factory _User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
 @override final  int id;
@@ -226,7 +226,7 @@ class _User extends User {
 @override final  String lastName;
 @override final  String? accountHolderName;
 @override final  String? accountIBAN;
-@override final  DateTime birthdate;
+@override@JsonKey(toJson: serializeDateOnly) final  DateTime birthdate;
 @override final  bool isAdmin;
 @override final  DateTime createdAt;
 
@@ -263,7 +263,7 @@ abstract mixin class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) _then) = __$UserCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String email, String firstName, String lastName, String? accountHolderName, String? accountIBAN, DateTime birthdate, bool isAdmin, DateTime createdAt
+ int id, String email, String firstName, String lastName, String? accountHolderName, String? accountIBAN,@JsonKey(toJson: serializeDateOnly) DateTime birthdate, bool isAdmin, DateTime createdAt
 });
 
 

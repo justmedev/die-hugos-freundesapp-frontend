@@ -1,3 +1,4 @@
+import "package:diehugosapp/core/utils/serialize_date_only.dart";
 import "package:freezed_annotation/freezed_annotation.dart";
 
 part "user.freezed.dart";
@@ -12,7 +13,7 @@ abstract class User with _$User {
     required String lastName,
     required String? accountHolderName,
     required String? accountIBAN,
-    required DateTime birthdate,
+    @JsonKey(toJson: serializeDateOnly) required DateTime birthdate,
     required bool isAdmin,
     required DateTime createdAt,
   }) = _User;

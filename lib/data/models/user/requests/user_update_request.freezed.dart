@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserUpdateRequest {
 
- String get email; String get firstName; String get lastName; String? get accountHolderName; String? get accountIBAN; DateTime get birthdate;
+ String get email; String get firstName; String get lastName; String? get accountHolderName; String? get accountIBAN;@JsonKey(toJson: serializeDateOnly) DateTime get birthdate;
 /// Create a copy of UserUpdateRequest
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $UserUpdateRequestCopyWith<$Res>  {
   factory $UserUpdateRequestCopyWith(UserUpdateRequest value, $Res Function(UserUpdateRequest) _then) = _$UserUpdateRequestCopyWithImpl;
 @useResult
 $Res call({
- String email, String firstName, String lastName, String? accountHolderName, String? accountIBAN, DateTime birthdate
+ String email, String firstName, String lastName, String? accountHolderName, String? accountIBAN,@JsonKey(toJson: serializeDateOnly) DateTime birthdate
 });
 
 
@@ -158,7 +158,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN,  DateTime birthdate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN, @JsonKey(toJson: serializeDateOnly)  DateTime birthdate)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserUpdateRequest() when $default != null:
 return $default(_that.email,_that.firstName,_that.lastName,_that.accountHolderName,_that.accountIBAN,_that.birthdate);case _:
@@ -179,7 +179,7 @@ return $default(_that.email,_that.firstName,_that.lastName,_that.accountHolderNa
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN,  DateTime birthdate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN, @JsonKey(toJson: serializeDateOnly)  DateTime birthdate)  $default,) {final _that = this;
 switch (_that) {
 case _UserUpdateRequest():
 return $default(_that.email,_that.firstName,_that.lastName,_that.accountHolderName,_that.accountIBAN,_that.birthdate);case _:
@@ -199,7 +199,7 @@ return $default(_that.email,_that.firstName,_that.lastName,_that.accountHolderNa
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN,  DateTime birthdate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String email,  String firstName,  String lastName,  String? accountHolderName,  String? accountIBAN, @JsonKey(toJson: serializeDateOnly)  DateTime birthdate)?  $default,) {final _that = this;
 switch (_that) {
 case _UserUpdateRequest() when $default != null:
 return $default(_that.email,_that.firstName,_that.lastName,_that.accountHolderName,_that.accountIBAN,_that.birthdate);case _:
@@ -214,7 +214,7 @@ return $default(_that.email,_that.firstName,_that.lastName,_that.accountHolderNa
 @JsonSerializable()
 
 class _UserUpdateRequest implements UserUpdateRequest {
-  const _UserUpdateRequest({required this.email, required this.firstName, required this.lastName, required this.accountHolderName, required this.accountIBAN, required this.birthdate});
+  const _UserUpdateRequest({required this.email, required this.firstName, required this.lastName, required this.accountHolderName, required this.accountIBAN, @JsonKey(toJson: serializeDateOnly) required this.birthdate});
   factory _UserUpdateRequest.fromJson(Map<String, dynamic> json) => _$UserUpdateRequestFromJson(json);
 
 @override final  String email;
@@ -222,7 +222,7 @@ class _UserUpdateRequest implements UserUpdateRequest {
 @override final  String lastName;
 @override final  String? accountHolderName;
 @override final  String? accountIBAN;
-@override final  DateTime birthdate;
+@override@JsonKey(toJson: serializeDateOnly) final  DateTime birthdate;
 
 /// Create a copy of UserUpdateRequest
 /// with the given fields replaced by the non-null parameter values.
@@ -257,7 +257,7 @@ abstract mixin class _$UserUpdateRequestCopyWith<$Res> implements $UserUpdateReq
   factory _$UserUpdateRequestCopyWith(_UserUpdateRequest value, $Res Function(_UserUpdateRequest) _then) = __$UserUpdateRequestCopyWithImpl;
 @override @useResult
 $Res call({
- String email, String firstName, String lastName, String? accountHolderName, String? accountIBAN, DateTime birthdate
+ String email, String firstName, String lastName, String? accountHolderName, String? accountIBAN,@JsonKey(toJson: serializeDateOnly) DateTime birthdate
 });
 
 

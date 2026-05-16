@@ -25,7 +25,7 @@ Map<String, dynamic> _$UserToJson(_User instance) => <String, dynamic>{
   'lastName': instance.lastName,
   'accountHolderName': instance.accountHolderName,
   'accountIBAN': instance.accountIBAN,
-  'birthdate': instance.birthdate.toIso8601String(),
+  'birthdate': serializeDateOnly(instance.birthdate),
   'isAdmin': instance.isAdmin,
   'createdAt': instance.createdAt.toIso8601String(),
 };

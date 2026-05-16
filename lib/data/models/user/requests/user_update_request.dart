@@ -1,3 +1,4 @@
+import "package:diehugosapp/core/utils/serialize_date_only.dart";
 import "package:freezed_annotation/freezed_annotation.dart";
 
 part "user_update_request.freezed.dart";
@@ -11,7 +12,7 @@ abstract class UserUpdateRequest with _$UserUpdateRequest {
     required String lastName,
     required String? accountHolderName,
     required String? accountIBAN,
-    required DateTime birthdate,
+    @JsonKey(toJson: serializeDateOnly) required DateTime birthdate,
   }) = _UserUpdateRequest;
 
   factory UserUpdateRequest.fromJson(
