@@ -61,9 +61,11 @@ class UserEditController extends GetxController {
       case UserField.email:
         email = field.value.text;
       case UserField.iban:
-        accountIBAN = field.value.isBlank == true ? null : field.value.text;
+        accountIBAN = field.value.text.isBlank == true
+            ? null
+            : field.value.text;
       case UserField.accountHolder:
-        accountHolderName = field.value.isBlank == true
+        accountHolderName = field.value.text.isBlank == true
             ? null
             : field.value.text;
       case UserField.birthdate:

@@ -31,6 +31,8 @@ class UserEditSheet extends GetView<UserEditController> {
                 initial: controller.field.value,
                 onChange: (v) => controller.field.value = v,
               ),
+              validator: (v) =>
+                  v?.contains("@") == true ? null : "Ungültige E-Mail Adresse!",
             )
           else if (controller.fieldType.type == EditType.date)
             FDateField(
