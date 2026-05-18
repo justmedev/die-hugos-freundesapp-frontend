@@ -14,9 +14,6 @@ class UserController extends GetxController {
   @override
   Future<void> onReady() async {
     super.onReady();
-    if (!Get.find<AuthService>().isAuthenticated) {
-      await Get.offAllNamed<void>("/login");
-    }
   }
 
   Future<void> handleTileEditPress(UserField field, Object initial) async {

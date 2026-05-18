@@ -27,29 +27,33 @@ class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
                 child: Obx(
                   () => RefreshIndicator(
                     onRefresh: controller.fetchCashpools,
-                    child: ListView.builder(
-                      itemCount: controller.cashpoolService.cashpools.length,
-                      padding: EdgeInsets.zero,
-                      itemBuilder: (ctx, i) {
-                        final data = controller.cashpoolService.cashpools[i];
-                        return FItem(
-                          title: Text(data.title),
-                          subtitle: Text(data.description),
-                          details: Text(
-                            "von ${data.owner.firstName} ${data.owner.lastName} am ${formatDatetime.format(data.createdAt)}",
+                    child: controller.cashpoolService.cashpools.isEmpty
+                        ? const Text("Es gibt noch keine Gruppenkassen :(")
+                        : ListView.builder(
+                            itemCount:
+                                controller.cashpoolService.cashpools.length,
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (ctx, i) {
+                              final data =
+                                  controller.cashpoolService.cashpools[i];
+                              return FItem(
+                                title: Text(data.title),
+                                subtitle: Text(data.description),
+                                details: Text(
+                                  "von ${data.owner.firstName} ${data.owner.lastName} am ${formatDatetime.format(data.createdAt)}",
+                                ),
+                                suffix: const Icon(FIcons.chevronRight),
+                                onPress: () async {
+                                  await Get.toNamed<void>(
+                                    "/cashpools/details",
+                                    arguments: {
+                                      "id": data.id,
+                                    },
+                                  );
+                                },
+                              );
+                            },
                           ),
-                          suffix: const Icon(FIcons.chevronRight),
-                          onPress: () async {
-                            await Get.toNamed<void>(
-                              "/cashpools/details",
-                              arguments: {
-                                "id": data.id,
-                              },
-                            );
-                          },
-                        );
-                      },
-                    ),
                   ),
                 ),
               ),

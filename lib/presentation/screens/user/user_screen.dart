@@ -16,6 +16,7 @@ class UserScreen extends GetView<UserController> {
     final formatDate = DateFormat("dd.MM.y", "de");
 
     return ScaffoldWithNavbar(
+      title: const Text("Profil bearbeiten"),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

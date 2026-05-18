@@ -9,6 +9,7 @@ class LoginScreen extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) => ScaffoldWithNavbar(
+    title: const Text("Anmelden"),
     child: Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
