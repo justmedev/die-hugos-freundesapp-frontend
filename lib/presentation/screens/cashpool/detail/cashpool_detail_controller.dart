@@ -12,17 +12,20 @@ import "package:diehugosapp/services/cashpool_member_service.dart";
 import "package:diehugosapp/services/cashpool_service.dart";
 import "package:diehugosapp/services/cashpool_transaction_service.dart";
 import "package:diehugosapp/services/dialog_service.dart";
+import "package:diehugosapp/services/toaster_service.dart";
 import "package:flutter/cupertino.dart";
 import "package:get/get.dart";
 
 class CashpoolDetailController extends GetxController {
   CashpoolDetailController({
+    required this.toastService,
     required this.authService,
     required this.cashpoolService,
     required this.cashpoolTransactionService,
     required this.dialogService,
   });
 
+  late final ToastService toastService;
   late final AuthService authService;
   late final CashpoolService cashpoolService;
   late final CashpoolTransactionService cashpoolTransactionService;
@@ -125,6 +128,16 @@ class CashpoolDetailController extends GetxController {
   }
 
   Future<void> handleItemPress(int i) async {
+    if (transactions[i].owner.id != authService.user?.id &&
+        authService.user?.isAdmin != true) {
+      toastService.show(
+        title: "Keine Berechtigung!",
+        description:
+            "Nur der Ersteller einer Transaktion darf diese bearbeiten.",
+      );
+      return;
+    }
+
     Get.lazyPut(
       () => CashpoolCreateTransactionController(
         cashpoolTransactionService: cashpoolTransactionService,
