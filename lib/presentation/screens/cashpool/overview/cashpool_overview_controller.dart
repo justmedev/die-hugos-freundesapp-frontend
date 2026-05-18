@@ -34,6 +34,7 @@ class CashpoolOverviewController extends GetxController {
         cashpoolService: Get.find<CashpoolService>(),
       ),
     );
+
     await Get.bottomSheet<void>(
       const CashpoolCreateSheet(),
       settings: RouteSettings(arguments: Get.arguments),

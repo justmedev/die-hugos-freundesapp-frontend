@@ -15,16 +15,17 @@ class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
     final formatDatetime = DateFormat("d.M.y HH:mm", "de");
 
     return ScaffoldWithNavbar(
+      title: const Text("Gruppenkassen"),
       child: Obx(
-        () {
-          return switch (controller.state.value) {
-            Loading() => const Center(child: FCircularProgress()),
-            Error() => const Center(child: Text("Something went wrong :(")),
-            Success() => Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Expanded(
-                  child: RefreshIndicator(
+        () => switch (controller.state.value) {
+          Loading() => const Center(child: FCircularProgress()),
+          Error() => const Center(child: Text("Something went wrong :(")),
+          Success() => Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Obx(
+                  () => RefreshIndicator(
                     onRefresh: controller.fetchCashpools,
                     child: ListView.builder(
                       itemCount: controller.cashpoolService.cashpools.length,
@@ -51,14 +52,14 @@ class CashpoolOverviewScreen extends GetView<CashpoolOverviewController> {
                     ),
                   ),
                 ),
-                FButton(
-                  onPress: controller.handleCreateCashpool,
-                  child: const Text("Gruppenkassa erstellen"),
-                ),
-                const BottomSpacing(),
-              ],
-            ),
-          };
+              ),
+              FButton(
+                onPress: controller.handleCreateCashpool,
+                child: const Text("Gruppenkassa erstellen"),
+              ),
+              const BottomSpacing(),
+            ],
+          ),
         },
       ),
     );
