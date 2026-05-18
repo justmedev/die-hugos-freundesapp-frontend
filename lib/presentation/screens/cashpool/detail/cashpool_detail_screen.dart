@@ -17,6 +17,11 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
     final formatDatetime = DateFormat("d.M.y HH:mm", "de");
 
     return ScaffoldWithNavbar(
+      title: Obx(
+        () => controller.cashpool.value == null
+            ? const FCircularProgress.loader()
+            : Text(controller.cashpool.value!.title),
+      ),
       suffixes: [
         FHeaderAction(
           icon: const Icon(FIcons.calculator),
@@ -30,39 +35,37 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
           Success() => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FTile(
-                onPress: controller.handleTotalAvgTogglePress,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (controller.isHeaderShowingTotal.value)
-                      const Icon(
-                        FIcons.sigma,
-                        size: 24,
-                      )
-                    else
+              Obx(
+                () => FTile(
+                  onPress: controller.handleTotalAvgTogglePress,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (controller.isHeaderShowingTotal.value)
+                        const Icon(FIcons.sigma, size: 24)
+                      else
+                        Text(
+                          controller.deviationFromFairShareCents < 0
+                              ? "Du schuldest"
+                              : "Du bekommst",
+                        ),
+                      Container(width: 8),
                       Text(
-                        controller.deviationFromFairShareCents.value < 0
-                            ? "Du schuldest"
-                            : "Du bekommst",
+                        formatCurrency.format(
+                          controller.isHeaderShowingTotal.value
+                              ? controller.totalCashpoolValueCents / 100
+                              : controller.deviationFromFairShareCents.abs() /
+                                    100,
+                        ),
+                        style: const TextStyle(
+                          height: 1.1,
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
-                    Container(width: 8),
-                    Text(
-                      formatCurrency.format(
-                        controller.isHeaderShowingTotal.value
-                            ? controller.totalCashpoolValueCents.value / 100
-                            : controller.deviationFromFairShareCents.value
-                                      .abs() /
-                                  100,
-                      ),
-                      style: const TextStyle(
-                        height: 1.1,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
 
@@ -77,41 +80,41 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
                     return const Center(
                       child: Text("Es gibt noch keine Transaktionen!"),
                     );
-                  } else {
-                    return RefreshIndicator(
-                      onRefresh: controller.fetchCashpoolTransactions,
-                      child: ListView.builder(
-                        itemCount: controller.transactions.length,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (ctx, i) {
-                          final transaction = controller.transactions[i];
-                          return FItem(
-                            onPress: () => controller.handleItemPress(i),
-                            title: Text(transaction.label),
-                            subtitle: Text(
-                              "${transaction.owner.firstName} · ${formatDatetime.format(transaction.createdAt)}",
+                  }
+
+                  return RefreshIndicator(
+                    onRefresh: controller.fetchCashpoolTransactions,
+                    child: ListView.builder(
+                      itemCount: controller.transactions.length,
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (ctx, i) {
+                        final transaction = controller.transactions[i];
+                        return FItem(
+                          onPress: () => controller.handleItemPress(i),
+                          title: Text(transaction.label),
+                          subtitle: Text(
+                            "${transaction.owner.firstName} · ${formatDatetime.format(transaction.createdAt)}",
+                          ),
+                          details: Text(
+                            formatCurrency.format(
+                              transaction.amountCents / 100,
                             ),
-                            details: Text(
-                              formatCurrency.format(
-                                transaction.amountCents / 100,
-                              ),
-                              style: TextStyle(
-                                color: transaction.amountCents > 0
-                                    ? Colors.green
-                                    : Get.theme.colorScheme.error,
-                              ),
-                            ),
-                            suffix: Icon(
-                              FIcons.banknoteArrowDown,
+                            style: TextStyle(
                               color: transaction.amountCents > 0
                                   ? Colors.green
                                   : Get.theme.colorScheme.error,
                             ),
-                          );
-                        },
-                      ),
-                    );
-                  }
+                          ),
+                          suffix: Icon(
+                            FIcons.banknoteArrowDown,
+                            color: transaction.amountCents > 0
+                                ? Colors.green
+                                : Get.theme.colorScheme.error,
+                          ),
+                        );
+                      },
+                    ),
+                  );
                 }),
               ),
               FButton(

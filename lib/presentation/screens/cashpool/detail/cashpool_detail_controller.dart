@@ -35,23 +35,20 @@ class CashpoolDetailController extends GetxController {
   final Rx<UiState> state = UiState.loading().obs;
   final Rxn<CashpoolDetailed> cashpool = Rxn();
   final RxList<CashpoolTransaction> transactions = RxList.empty();
-  final RxInt totalCashpoolValueCents = 0.obs;
-  final RxInt deviationFromFairShareCents = 0.obs;
+
+  int get totalCashpoolValueCents {
+    if (transactions.isEmpty) return 0;
+    return transactions.fold(0, (sum, t) => sum + t.amountCents);
+  }
+
+  int get deviationFromFairShareCents {
+    if (transactions.isEmpty || authService.user == null) return 0;
+    return transactions.getUserDeviation(authService.user!);
+  }
 
   @override
   Future<void> onInit() async {
     super.onInit();
-
-    transactions.stream.listen((data) {
-      if (transactions.isEmpty) return;
-      deviationFromFairShareCents.value = transactions.getUserDeviation(
-        authService.user!,
-      );
-      totalCashpoolValueCents.value = transactions
-          .map((t) => t.amountCents)
-          .reduce((a, b) => a + b);
-    });
-
     await fetchCashpoolDetails();
   }
 

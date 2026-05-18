@@ -6,12 +6,14 @@ import "package:get/get_navigation/src/extension_navigation.dart";
 class ScaffoldWithNavbar extends StatelessWidget {
   const ScaffoldWithNavbar({
     required this.child,
+    this.title = const Text("Die Hugos"),
     this.suffixes = const [],
     super.key,
   });
 
   final Widget child;
   final List<Widget> suffixes;
+  final Widget title;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class ScaffoldWithNavbar extends StatelessWidget {
     return FScaffold(
       header: nav.canPop()
           ? FHeader.nested(
-              title: const Text("Die Hugos"),
+              title: title,
               prefixes: [
                 FHeaderAction.back(
                   onPress: Get.back<void>,
@@ -29,7 +31,7 @@ class ScaffoldWithNavbar extends StatelessWidget {
               suffixes: suffixes,
             )
           : FHeader(
-              title: const Text("Die Hugos"),
+              title: title,
               suffixes: suffixes,
             ),
       child: SafeArea(top: false, child: child),
