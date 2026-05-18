@@ -1,7 +1,10 @@
+import "dart:async";
+
 import "package:diehugosapp/core/errors/not_a_cashpool_member.dart";
 import "package:diehugosapp/core/utils/ui_state.dart";
 import "package:diehugosapp/data/models/cashpool/cashpool_detailed.dart";
 import "package:diehugosapp/data/models/cashpool_transactions/cashpool_transaction.dart";
+import "package:diehugosapp/data/models/cashpool_transactions/cashpool_transaction_event.dart";
 import "package:diehugosapp/data/models/cashpool_transactions/extensions/cashpool_transaction_deviation_calculation.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/create_transaction_sheet/cashpool_create_transaction_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/create_transaction_sheet/cashpool_create_transaction_sheet.dart";
@@ -35,6 +38,7 @@ class CashpoolDetailController extends GetxController {
   final Rx<UiState> state = UiState.loading().obs;
   final Rxn<CashpoolDetailed> cashpool = Rxn();
   final RxList<CashpoolTransaction> transactions = RxList.empty();
+  StreamSubscription<CashpoolTransactionEvent>? _transactionSubscription;
 
   int get totalCashpoolValueCents {
     if (transactions.isEmpty) return 0;
@@ -50,6 +54,33 @@ class CashpoolDetailController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     await fetchCashpoolDetails();
+    await _startListeningToSSETransactions();
+  }
+
+  Future<void> _startListeningToSSETransactions() async {
+    final id = cashpool.value?.id;
+    if (id == null) return;
+
+    _transactionSubscription =
+        (await cashpoolTransactionService.listenToCashpoolTransactions(
+          id,
+        )).listen(_handleSseEvent);
+  }
+
+  void _handleSseEvent(CashpoolTransactionEvent event) {
+    if (event is Created) {
+      if (event.transaction.owner.id == authService.user?.id) return;
+      transactions.insert(0, event.transaction);
+    } else if (event is Updated) {
+      if (event.transaction.owner.id == authService.user?.id) return;
+      final index = transactions.indexWhere(
+        (t) => t.id == event.transaction.id,
+      );
+      if (index != -1) transactions[index] = event.transaction;
+    } else if (event is Deleted) {
+      if (event.emittingUserId == authService.user?.id) return;
+      transactions.removeWhere((t) => t.id == event.transactionId);
+    }
   }
 
   Future<void> fetchCashpoolDetails() async {
@@ -165,5 +196,10 @@ class CashpoolDetailController extends GetxController {
       "/cashpools/details/settle",
       arguments: {"id": cashpool.value!.id},
     );
+  }
+
+  @override
+  void close() {
+    super.dispose();
   }
 }

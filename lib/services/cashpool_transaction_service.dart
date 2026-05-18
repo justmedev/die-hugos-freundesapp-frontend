@@ -1,4 +1,5 @@
 import "package:diehugosapp/data/models/cashpool_transactions/cashpool_transaction.dart";
+import "package:diehugosapp/data/models/cashpool_transactions/cashpool_transaction_event.dart";
 import "package:diehugosapp/data/models/cashpool_transactions/cmds/cashpool_create_transaction_cmd.dart";
 import "package:diehugosapp/data/models/cashpool_transactions/cmds/cashpool_update_transaction_cmd.dart";
 import "package:diehugosapp/data/repositories/cashpool_transaction_repo.dart";
@@ -38,4 +39,12 @@ class CashpoolTransactionService extends GetxService {
       rethrow;
     }
   }
+
+  /// Receive a stream of live [CashpoolTransactionEvent]s. You must close this
+  /// stream to avoid memory leaks.
+  /// This will also stream events that you yourself have triggered, you need to
+  /// filter these out yourself.
+  Future<Stream<CashpoolTransactionEvent>> listenToCashpoolTransactions(
+    int cashpoolId,
+  ) async => repo.listenToTransactionEvents(cashpoolId);
 }

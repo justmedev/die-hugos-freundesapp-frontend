@@ -43,6 +43,7 @@ dependencies:
   intl: ^0.20.2
   qr_flutter: ^4.1.0
   flutter_slidable: ^4.0.3
+  eventflux: ^2.2.1
 
 dev_dependencies:
   flutter_test:
