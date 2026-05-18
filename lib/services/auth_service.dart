@@ -33,6 +33,12 @@ class AuthService extends GetxService {
       _authState.value = session;
       _isLoggedIn.value = session != null;
     });
+
+    ever(_isLoggedIn, (isLoggedIn) async {
+      if (!isLoggedIn && Get.currentRoute != "/login") {
+        await Get.offAllNamed<void>("/login");
+      }
+    });
   }
 
   Future<void> login(String email, String password) async {
