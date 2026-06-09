@@ -5,12 +5,14 @@ import "package:diehugosapp/presentation/screens/home/home_screen.dart";
 import "package:diehugosapp/services/auth_service.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
+import "package:flutter_dotenv/flutter_dotenv.dart";
 import "package:forui/forui.dart";
 import "package:get/get.dart";
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await dotenv.load();
   await setupDI();
   await Get.find<AuthService>().authLocally();
   runApp(const Application());
