@@ -23,29 +23,11 @@ class LoginScreen extends GetView<LoginController> {
           FCard(
             title: const Text("Anmelden 🔐"),
             subtitle: const Text(
-              "Bei Passwortzurücksetzung bitte bei Ilja melden :)",
+              "Die Anmeldung läuft über ein Browserfenster!",
             ),
             child: Column(
               spacing: 20,
               children: [
-                Column(
-                  spacing: 10,
-                  children: [
-                    FTextField.email(
-                      label: const Text("E-Mail"),
-                      control: .managed(
-                        onChange: (v) => controller.email.value = v,
-                      ),
-                    ),
-                    FTextField.password(
-                      label: const Text("Passwort"),
-                      control: .managed(
-                        onChange: (v) => controller.password.value = v,
-                      ),
-                    ),
-                  ],
-                ),
-
                 Obx(
                   () => FButton(
                     prefix: controller.isLoading.value
@@ -55,7 +37,7 @@ class LoginScreen extends GetView<LoginController> {
                         ? null
                         : () => controller.submitLogin(),
                     suffix: const Icon(FIcons.lock),
-                    child: const Text("Anmelden"),
+                    child: const Text("Mit E-mail anmelden"),
                   ),
                 ),
               ],

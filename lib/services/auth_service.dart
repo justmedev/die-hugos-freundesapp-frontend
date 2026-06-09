@@ -2,7 +2,6 @@ import "package:diehugosapp/data/managers/session_manager.dart";
 import "package:diehugosapp/data/models/auth/auth_state/auth_state.dart";
 import "package:diehugosapp/data/models/user/user.dart";
 import "package:diehugosapp/data/repositories/auth_repo.dart";
-import "package:dio/dio.dart";
 import "package:flutter/foundation.dart";
 import "package:get/get.dart";
 
@@ -41,18 +40,12 @@ class AuthService extends GetxService {
     });
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> login() async {
     if (_isLoggedIn.value) return;
     try {
-      await authRepo.login(email, password);
+      await authRepo.login();
     } on Exception catch (e) {
       debugPrint("Login failed: $e");
-
-      if (e is DioException) {
-        if (e.response?.statusCode == 401) {
-          throw WrongCredentials();
-        }
-      }
     }
   }
 

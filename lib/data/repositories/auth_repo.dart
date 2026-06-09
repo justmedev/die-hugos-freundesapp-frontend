@@ -1,10 +1,18 @@
+import "dart:async";
+import "dart:io";
+
 import "package:diehugosapp/data/managers/session_manager.dart";
 import "package:diehugosapp/data/models/auth/auth_response/auth_response.dart";
 import "package:diehugosapp/data/models/auth/auth_state/auth_state.dart";
+import "package:diehugosapp/data/models/user/user.dart";
 import "package:dio/dio.dart";
+import "package:flutter/foundation.dart";
+import "package:flutter_dotenv/flutter_dotenv.dart";
+import "package:oauth2/oauth2.dart" as oauth2;
+import "package:url_launcher/url_launcher.dart";
 
 abstract class AuthRepo {
-  Future<AuthResponse> login(String email, String password);
+  Future<AuthResponse> login();
 
   Future<AuthSession?> authLocally();
 
@@ -12,24 +20,102 @@ abstract class AuthRepo {
 }
 
 class AuthRepoImpl implements AuthRepo {
-  AuthRepoImpl({required this.sessionManager, required this.dio});
+  AuthRepoImpl({
+    required this.sessionManager,
+    required this.dio,
+  });
 
-  late final SessionManager sessionManager;
-  late final Dio dio;
+  final SessionManager sessionManager;
+  final Dio dio;
+
+  final String _clientId = dotenv.get("KC_CLIENTID");
+  final String _authorizationEndpoint =
+      "${dotenv.get("KC_REALM_URI")}/protocol/openid-connect/auth";
+  final String _tokenEndpoint =
+      "${dotenv.get("KC_REALM_URI")}/protocol/openid-connect/token";
+  final String _redirectUrl = "http://localhost:8888/callback";
+  final List<String> _scopes = [
+    "openid",
+    "profile",
+    "email",
+    "offline_access",
+  ];
 
   @override
-  Future<AuthResponse> login(String email, String password) async {
-    final res = await dio.post<Map<dynamic, dynamic>>(
-      "/auth/login",
-      data: {"email": email, "password": password},
+  Future<AuthResponse> login() async {
+    final grant = oauth2.AuthorizationCodeGrant(
+      _clientId,
+      Uri.parse(_authorizationEndpoint),
+      Uri.parse(_tokenEndpoint),
     );
-    if (res.data == null || res.statusCode != 200) {
-      return Future.error(Exception("Auth Response not 200!"));
-    }
 
-    final data = AuthResponse.fromJson(res.data! as Map<String, Object?>);
-    await sessionManager.saveSession(AuthSession.fromAuthResponse(data));
-    return data;
+    final authorizationUrl = grant.getAuthorizationUrl(
+      Uri.parse(_redirectUrl),
+      scopes: _scopes,
+    );
+
+    final completer = Completer<Uri>();
+    HttpServer? server;
+
+    try {
+      server = await HttpServer.bind(InternetAddress.loopbackIPv4, 8888)
+        ..listen((request) async {
+          if (request.uri.path == "/callback") {
+            request.response
+              ..statusCode = HttpStatus.ok
+              ..headers.contentType = ContentType.html
+              ..write(
+                "<h1>Anmeldung erfolgreich!</h1><p>Du kannst dieses Fenster nun schließen.</p>",
+              );
+            await request.response.close();
+            completer.complete(request.uri);
+          } else {
+            request.response
+              ..statusCode = HttpStatus.notFound
+              ..write("Not Found");
+            await request.response.close();
+          }
+        });
+
+      if (await canLaunchUrl(authorizationUrl)) {
+        await launchUrl(authorizationUrl, mode: LaunchMode.externalApplication);
+      } else {
+        throw Exception("Could not launch $authorizationUrl");
+      }
+
+      final responseUri = await completer.future;
+      final client = await grant.handleAuthorizationResponse(
+        responseUri.queryParameters,
+      );
+
+      // Fetch user profile from backend using the new access token
+      final userRes = await dio.get<Map<String, Object?>>(
+        "/users/me",
+        options: Options(
+          headers: {
+            "Authorization": "Bearer ${client.credentials.accessToken}",
+          },
+        ),
+      );
+
+      if (userRes.data == null) {
+        throw Exception("Failed to fetch user profile after OAuth2 login");
+      }
+
+      final user = User.fromJson(userRes.data!);
+      final authResponse = AuthResponse(
+        accessToken: client.credentials.accessToken,
+        refreshToken: client.credentials.refreshToken ?? "",
+        user: user,
+      );
+
+      await sessionManager.saveSession(
+        AuthSession.fromAuthResponse(authResponse),
+      );
+      return authResponse;
+    } finally {
+      await server?.close(force: true);
+    }
   }
 
   @override
@@ -39,20 +125,37 @@ class AuthRepoImpl implements AuthRepo {
 
   @override
   Future<AuthSession> tokenRefresh(String refreshToken) async {
-    final res = await dio.post<Map<dynamic, dynamic>>(
-      "/auth/refresh",
-      data: {"refreshToken": refreshToken},
-    );
-    if (res.data == null || res.statusCode != 200) {
-      return Future.error(Exception("Auth Response not 200!"));
+    final currentSession = sessionManager.currentSession;
+    if (currentSession == null) {
+      throw Exception("No current session found during token refresh");
     }
 
-    final session = AuthSession.fromAuthResponse(
-      AuthResponse.fromJson(
-        res.data! as Map<String, Object?>,
-      ),
+    final credentials = oauth2.Credentials(
+      currentSession.accessToken,
+      refreshToken: refreshToken,
+      tokenEndpoint: Uri.parse(_tokenEndpoint),
+      scopes: _scopes,
     );
-    await sessionManager.saveSession(session);
-    return session;
+
+    final client = oauth2.Client(
+      credentials,
+      identifier: _clientId,
+    );
+
+    try {
+      final newClient = await client.refreshCredentials();
+      final newSession = currentSession.copyWith(
+        accessToken: newClient.credentials.accessToken,
+        refreshToken: newClient.credentials.refreshToken ?? refreshToken,
+      );
+
+      await sessionManager.saveSession(newSession);
+      return newSession;
+    } on Exception catch (e) {
+      debugPrint("Token refresh failed: $e");
+      rethrow;
+    } finally {
+      client.close();
+    }
   }
 }
