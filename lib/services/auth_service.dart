@@ -64,5 +64,6 @@ class AuthService extends GetxService {
 
   Future<void> logout() async {
     await sessionManager.clearSession();
+    await authRepo.logout();
   }
 }

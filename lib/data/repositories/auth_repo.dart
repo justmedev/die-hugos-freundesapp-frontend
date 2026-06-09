@@ -14,6 +14,8 @@ import "package:url_launcher/url_launcher.dart";
 abstract class AuthRepo {
   Future<AuthResponse> login();
 
+  Future<void> logout();
+
   Future<AuthSession?> authLocally();
 
   Future<AuthSession> tokenRefresh(String refreshToken);
@@ -31,6 +33,8 @@ class AuthRepoImpl implements AuthRepo {
   final String _clientId = dotenv.get("KC_CLIENTID");
   final String _authorizationEndpoint =
       "${dotenv.get("KC_REALM_URI")}/protocol/openid-connect/auth";
+  final String _endSessionEndpoint =
+      "${dotenv.get("KC_REALM_URI")}/protocol/openid-connect/logout";
   final String _tokenEndpoint =
       "${dotenv.get("KC_REALM_URI")}/protocol/openid-connect/token";
   final String _redirectUrl = "http://localhost:8888/callback";
@@ -115,6 +119,16 @@ class AuthRepoImpl implements AuthRepo {
       return authResponse;
     } finally {
       await server?.close(force: true);
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    final uri = Uri.parse(_endSessionEndpoint);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw Exception("Could not launch $uri");
     }
   }
 
