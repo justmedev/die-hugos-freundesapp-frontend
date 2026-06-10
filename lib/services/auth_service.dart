@@ -23,7 +23,7 @@ class AuthService extends GetxService {
   bool get isAuthenticated => _isLoggedIn.value;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     _authState.value = sessionManager.currentSession;
     _isLoggedIn.value = sessionManager.currentSession != null;
@@ -33,11 +33,13 @@ class AuthService extends GetxService {
       _isLoggedIn.value = session != null;
     });
 
-    ever(_isLoggedIn, (isLoggedIn) async {
-      if (!isLoggedIn && Get.currentRoute != "/login") {
-        await Get.offAllNamed<void>("/login");
-      }
-    });
+    ever(_isLoggedIn, (isLoggedIn) async => redirectIfNotLoggedIn());
+  }
+
+  Future<void> redirectIfNotLoggedIn() async {
+    if (!_isLoggedIn.value && Get.currentRoute != "/login") {
+      await Get.offAllNamed<void>("/login");
+    }
   }
 
   Future<void> login() async {
