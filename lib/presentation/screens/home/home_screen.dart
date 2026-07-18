@@ -26,11 +26,22 @@ class HomeScreen extends GetView<HomeController> {
           ),
         ),
         const Spacer(),
-        FButton(
-          onPress: () async {
-            await Get.toNamed<void>("/cashpools");
-          },
-          child: const Text("Zur Gruppenkassa"),
+        Column(
+          spacing: 8,
+          children: [
+            FButton(
+              onPress: () async {
+                await Get.toNamed<void>("/shuffler");
+              },
+              child: const Text("Glücksrad"),
+            ),
+            FButton(
+              onPress: () async {
+                await Get.toNamed<void>("/cashpools");
+              },
+              child: const Text("Gruppenkassen"),
+            ),
+          ],
         ),
         const BottomSpacing(),
       ],

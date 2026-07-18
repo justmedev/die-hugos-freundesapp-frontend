@@ -8,6 +8,8 @@ import "package:diehugosapp/presentation/screens/home/home_controller.dart";
 import "package:diehugosapp/presentation/screens/home/home_screen.dart";
 import "package:diehugosapp/presentation/screens/login/login_controller.dart";
 import "package:diehugosapp/presentation/screens/login/login_screen.dart";
+import "package:diehugosapp/presentation/screens/shuffler/shuffler_controller.dart";
+import "package:diehugosapp/presentation/screens/shuffler/shuffler_screen.dart";
 import "package:diehugosapp/presentation/screens/user/user_controller.dart";
 import "package:diehugosapp/presentation/screens/user/user_screen.dart";
 import "package:diehugosapp/services/auth_service.dart";
@@ -49,6 +51,13 @@ List<GetPage<dynamic>> routeBindings() => [
           authService: Get.find<AuthService>(),
         ),
       ),
+    ),
+  ),
+  GetPage(
+    name: "/shuffler",
+    page: ShufflerScreen.new,
+    binding: BindingsBuilder<dynamic>(
+      () => Get.lazyPut(ShufflerController.new),
     ),
   ),
   GetPage(

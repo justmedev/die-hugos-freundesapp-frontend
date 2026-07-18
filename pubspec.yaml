@@ -47,6 +47,7 @@ dependencies:
   oauth2: ^2.0.5
   url_launcher: ^6.3.2
   flutter_dotenv: ^6.0.1
+  fortune_wheel: ^0.3.0
 
 dev_dependencies:
   flutter_test:
