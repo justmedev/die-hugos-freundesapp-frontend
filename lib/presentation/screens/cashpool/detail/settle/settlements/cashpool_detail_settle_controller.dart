@@ -1,8 +1,8 @@
 import "package:diehugosapp/core/utils/ui_state.dart";
 import "package:diehugosapp/data/models/cashpool_settlement/cashpool_suggested_settlement.dart";
 import "package:diehugosapp/data/models/cashpool_settlement/cmds/cashpool_settlement_create_cmd.dart";
-import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlement_details_sheet/cashpool_settlement_transaction_details_controller.dart";
-import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlement_details_sheet/cashpool_settlement_transaction_details_sheet.dart";
+import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlements/settlement_details_sheet/cashpool_settlement_transaction_details_controller.dart";
+import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlements/settlement_details_sheet/cashpool_settlement_transaction_details_sheet.dart";
 import "package:diehugosapp/services/auth_service.dart";
 import "package:diehugosapp/services/cashpool_settlement_service.dart";
 import "package:diehugosapp/services/epc_qr_service.dart";
