@@ -84,10 +84,6 @@ class CashpoolDetailSettleScreen
                     },
                   ),
                 ),
-                FButton(
-                  onPress: () {},
-                  child: const Text("Überweisung eintragen"),
-                ),
                 const BottomSpacing(),
               ],
             );
