@@ -9,27 +9,21 @@ class LoginController extends GetxController {
 
   late final AuthService authService;
 
-  Rx<TextEditingValue> email = TextEditingValue.empty.obs;
-  Rx<TextEditingValue> password = TextEditingValue.empty.obs;
   RxBool isLoading = false.obs;
 
   Future<void> submitLogin() async {
-    final toastService = Get.find<ToastService>();
     isLoading.value = true;
 
     try {
-      await authService.login(
-        email.value.text,
-        password.value.text,
-      );
+      await authService.login();
 
       if (authService.isAuthenticated) {
         await Get.offNamed<void>("/");
       }
-    } on WrongCredentials {
-      toastService.show(
+    } on Exception catch (e) {
+      Get.find<ToastService>().show(
         title: "Die Anmeldung war nicht erfolgreich!",
-        description: "Sind E-mail und Passwort korrekt?",
+        description: "Fehler: $e",
         icon: const Icon(FIcons.triangleAlert),
       );
     } finally {

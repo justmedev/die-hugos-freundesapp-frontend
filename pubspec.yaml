@@ -44,6 +44,9 @@ dependencies:
   qr_flutter: ^4.1.0
   flutter_slidable: ^4.0.3
   eventflux: ^2.2.1
+  oauth2: ^2.0.5
+  url_launcher: ^6.3.2
+  flutter_dotenv: ^6.0.1
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +64,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - .env
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

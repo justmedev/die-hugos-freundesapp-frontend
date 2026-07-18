@@ -19,11 +19,6 @@ class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    // Skip interceptor for refresh token call itself to avoid infinite loop
-    if (options.path.contains("/auth/refresh")) {
-      return handler.next(options);
-    }
-
     final session = _sessionManager.currentSession;
     if (session != null) {
       if (_isTokenExpiringSoon(session.accessToken)) {

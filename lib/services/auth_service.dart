@@ -2,7 +2,6 @@ import "package:diehugosapp/data/managers/session_manager.dart";
 import "package:diehugosapp/data/models/auth/auth_state/auth_state.dart";
 import "package:diehugosapp/data/models/user/user.dart";
 import "package:diehugosapp/data/repositories/auth_repo.dart";
-import "package:dio/dio.dart";
 import "package:flutter/foundation.dart";
 import "package:get/get.dart";
 
@@ -24,7 +23,7 @@ class AuthService extends GetxService {
   bool get isAuthenticated => _isLoggedIn.value;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
     _authState.value = sessionManager.currentSession;
     _isLoggedIn.value = sessionManager.currentSession != null;
@@ -34,25 +33,21 @@ class AuthService extends GetxService {
       _isLoggedIn.value = session != null;
     });
 
-    ever(_isLoggedIn, (isLoggedIn) async {
-      if (!isLoggedIn && Get.currentRoute != "/login") {
-        await Get.offAllNamed<void>("/login");
-      }
-    });
+    ever(_isLoggedIn, (isLoggedIn) async => redirectIfNotLoggedIn());
   }
 
-  Future<void> login(String email, String password) async {
+  Future<void> redirectIfNotLoggedIn() async {
+    if (!_isLoggedIn.value && Get.currentRoute != "/login") {
+      await Get.offAllNamed<void>("/login");
+    }
+  }
+
+  Future<void> login() async {
     if (_isLoggedIn.value) return;
     try {
-      await authRepo.login(email, password);
+      await authRepo.login();
     } on Exception catch (e) {
       debugPrint("Login failed: $e");
-
-      if (e is DioException) {
-        if (e.response?.statusCode == 401) {
-          throw WrongCredentials();
-        }
-      }
     }
   }
 
@@ -71,5 +66,6 @@ class AuthService extends GetxService {
 
   Future<void> logout() async {
     await sessionManager.clearSession();
+    await authRepo.logout();
   }
 }
