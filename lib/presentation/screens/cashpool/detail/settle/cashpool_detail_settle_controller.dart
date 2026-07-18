@@ -1,5 +1,6 @@
 import "package:diehugosapp/core/utils/ui_state.dart";
 import "package:diehugosapp/data/models/cashpool_settlement/cashpool_suggested_settlement.dart";
+import "package:diehugosapp/data/models/cashpool_settlement/cmds/cashpool_settlement_create_cmd.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlement_details_sheet/cashpool_settlement_transaction_details_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlement_details_sheet/cashpool_settlement_transaction_details_sheet.dart";
 import "package:diehugosapp/services/auth_service.dart";
@@ -21,22 +22,23 @@ class CashpoolDetailSettleController extends GetxController {
   late final AuthService authService;
   late final CashpoolSettlementService cashpoolSettlementService;
 
+  late final int cashpoolId;
   final Rx<UiState> state = UiState.loading().obs;
   final RxList<CashpoolSuggestedSettlement> settlements = RxList.empty();
 
   @override
   Future<void> onInit() async {
     super.onInit();
+    cashpoolId = (Get.arguments as Map<String, int>)["id"]!;
     await fetch();
   }
 
   Future<void> fetch() async {
     state.value = UiState.loading();
     try {
-      final cashpoolId = (Get.arguments as Map<String, int>)["id"];
       settlements.value =
           (await cashpoolSettlementService.getSuggestedSettlementsByCashpoolId(
-            cashpoolId!,
+            cashpoolId,
           )).toList();
       state.value = UiState.success();
     } on Exception catch (e) {
@@ -65,6 +67,32 @@ class CashpoolDetailSettleController extends GetxController {
     CashpoolSuggestedSettlement settlement,
   ) async {
     if (!handleDismissSettlementAttempt(settlement)) return;
+
+    try {
+      final cmd = CashpoolSettlementCreateCmd(
+        cashpoolId: cashpoolId,
+        fromUserId: settlement.from.id,
+        toUserId: settlement.to.id,
+        purpose: "Abrechnung",
+        amountCents: settlement.amountCents,
+      );
+      await cashpoolSettlementService.create(cmd);
+
+      await fetch();
+
+      toastService.show(
+        title: "Überweisung eingetragen",
+        description: "Die Überweisung wurde erfolgreich eingetragen.",
+        icon: const Icon(FIcons.check),
+      );
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+      toastService.show(
+        title: "Fehler",
+        description: "Die Überweisung konnte nicht eingetragen werden: $e",
+        icon: const Icon(FIcons.ban),
+      );
+    }
   }
 
   Future<void> handleSettlementPress(int i) async {
@@ -72,16 +100,25 @@ class CashpoolDetailSettleController extends GetxController {
       () => CashpoolSettlementTransactionDetailsController(
         cashpoolSettlementService: cashpoolSettlementService,
         epcQrService: Get.find<EpcQrService>(),
+        toastService: toastService,
+        authService: authService,
       ),
     );
 
-    final settlement = await Get.bottomSheet<void>(
+    final result = await Get.bottomSheet<dynamic>(
       const CashpoolSettlementTransactionDetailsSheet(),
       settings: RouteSettings(
-        arguments: {"settlement": settlements[i]},
+        arguments: {
+          "settlement": settlements[i],
+          "cashpoolId": cashpoolId,
+        },
       ),
       backgroundColor: Get.theme.colorScheme.surface,
       isScrollControlled: true,
     );
+
+    if (result == true) {
+      await fetch();
+    }
   }
 }

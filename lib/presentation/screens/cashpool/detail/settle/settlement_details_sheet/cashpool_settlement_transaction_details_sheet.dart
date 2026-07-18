@@ -100,9 +100,13 @@ class CashpoolSettlementTransactionDetailsSheet
                   ),
                 ),
                 const SizedBox(height: 20),
-                FButton(
-                  onPress: () {},
-                  child: const Text("Geld wurde überwiesen"),
+                Obx(
+                  () => FButton(
+                    onPress: controller.isSettleable
+                        ? () => controller.handleSettleSettlementAction()
+                        : null,
+                    child: const Text("Geld wurde überwiesen"),
+                  ),
                 ),
                 const BottomSpacing(),
               ],
