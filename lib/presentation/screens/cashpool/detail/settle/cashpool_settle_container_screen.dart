@@ -1,3 +1,4 @@
+import "package:diehugosapp/presentation/screens/cashpool/detail/settle/past_settlements/cashpool_detail_past_settle_screen.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlements/cashpool_detail_settle_screen.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/widgets.dart";
@@ -16,7 +17,10 @@ class CashpoolSettleContainerScreen extends StatelessWidget {
             label: Text("Ausstehend"),
             child: SizedBox.expand(child: CashpoolDetailSettleScreen()),
           ),
-          .entry(label: Text("Vergangen"), child: Placeholder()),
+          .entry(
+            label: Text("Vergangen"),
+            child: SizedBox.expand(child: CashpoolDetailPastSettleScreen()),
+          ),
         ],
       ),
     );

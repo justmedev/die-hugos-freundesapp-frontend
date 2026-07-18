@@ -1,6 +1,7 @@
 import "package:diehugosapp/presentation/screens/cashpool/detail/cashpool_detail_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/cashpool_detail_screen.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/settle/cashpool_settle_container_screen.dart";
+import "package:diehugosapp/presentation/screens/cashpool/detail/settle/past_settlements/cashpool_detail_past_settle_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlements/cashpool_detail_settle_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/overview/cashpool_overview_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/overview/cashpool_overview_screen.dart";
@@ -76,13 +77,19 @@ List<GetPage<dynamic>> routeBindings() => [
     page: () => const CashpoolSettleContainerScreen(),
     binding: BindingsBuilder<dynamic>(
       () {
-        Get.lazyPut(
-          () => CashpoolDetailSettleController(
-            toastService: Get.find(),
-            authService: Get.find(),
-            cashpoolSettlementService: Get.find<CashpoolSettlementService>(),
-          ),
-        );
+        Get
+          ..lazyPut(
+            () => CashpoolDetailSettleController(
+              toastService: Get.find(),
+              authService: Get.find(),
+              cashpoolSettlementService: Get.find<CashpoolSettlementService>(),
+            ),
+          )
+          ..lazyPut(
+            () => CashpoolDetailPastSettleController(
+              cashpoolSettlementService: Get.find<CashpoolSettlementService>(),
+            ),
+          );
       },
     ),
   ),
