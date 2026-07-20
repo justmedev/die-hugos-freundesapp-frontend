@@ -35,37 +35,77 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
           Success() => Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Obx(
-                () => FTile(
-                  onPress: controller.handleTotalAvgTogglePress,
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (controller.isHeaderShowingTotal.value)
-                        const Icon(FIcons.sigma, size: 24)
-                      else
-                        Text(
-                          controller.deviationFromFairShareCents < 0
-                              ? "Du schuldest"
-                              : "Du bekommst",
-                        ),
-                      Container(width: 8),
-                      Text(
-                        formatCurrency.format(
-                          controller.isHeaderShowingTotal.value
-                              ? controller.totalCashpoolValueCents / 100
-                              : controller.deviationFromFairShareCents.abs() /
-                                    100,
-                        ),
-                        style: const TextStyle(
+              FTile(
+                onPress: controller.handleTotalAvgTogglePress,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Obx(
+                      () {
+                        if (controller.cashpoolUserSettlementSummary.value ==
+                            null) {
+                          return const FCircularProgress();
+                        }
+
+                        const numberTextStyle = TextStyle(
                           height: 1.1,
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
+                        );
+                        if (controller.isHeaderShowingTotal.value) {
+                          return Row(
+                            children: [
+                              const Icon(FIcons.sigma, size: 24),
+                              Container(width: 8),
+                              Obx(
+                                () => Text(
+                                  formatCurrency.format(
+                                    controller
+                                            .cashpoolUserSettlementSummary
+                                            .value!
+                                            .totalOpenCashpoolWorth /
+                                        100,
+                                  ),
+                                  style: numberTextStyle,
+                                ),
+                              ),
+                            ],
+                          );
+                        } else {
+                          return Row(
+                            children: [
+                              Obx(
+                                () => Text(
+                                  controller
+                                              .cashpoolUserSettlementSummary
+                                              .value!
+                                              .netUserBalance <
+                                          0
+                                      ? "Du schuldest"
+                                      : "Du bekommst",
+                                ),
+                              ),
+                              Container(width: 8),
+                              Obx(
+                                () => Text(
+                                  formatCurrency.format(
+                                    controller
+                                            .cashpoolUserSettlementSummary
+                                            .value!
+                                            .netUserBalance
+                                            .abs() /
+                                        100,
+                                  ),
+                                  style: numberTextStyle,
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ),
 

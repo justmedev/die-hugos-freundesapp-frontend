@@ -104,6 +104,7 @@ List<GetPage<dynamic>> routeBindings() => [
             authService: Get.find<AuthService>(),
             cashpoolTransactionService: Get.find<CashpoolTransactionService>(),
             cashpoolService: Get.find<CashpoolService>(),
+            cashpoolSettlementService: Get.find(),
             dialogService: Get.find<DialogService>(),
           ),
         );

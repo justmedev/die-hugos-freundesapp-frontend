@@ -3,9 +3,9 @@ import "dart:async";
 import "package:diehugosapp/core/errors/not_a_cashpool_member.dart";
 import "package:diehugosapp/core/utils/ui_state.dart";
 import "package:diehugosapp/data/models/cashpool/cashpool_detailed.dart";
+import "package:diehugosapp/data/models/cashpool_settlement/cashpool_user_settlement_summary.dart";
 import "package:diehugosapp/data/models/cashpool_transactions/cashpool_transaction.dart";
 import "package:diehugosapp/data/models/cashpool_transactions/cashpool_transaction_event.dart";
-import "package:diehugosapp/data/models/cashpool_transactions/extensions/cashpool_transaction_deviation_calculation.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/create_transaction_sheet/cashpool_create_transaction_controller.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/create_transaction_sheet/cashpool_create_transaction_sheet.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/join_dialog/cashpool_detail_join_controller.dart";
@@ -13,6 +13,7 @@ import "package:diehugosapp/presentation/screens/cashpool/detail/join_dialog/cas
 import "package:diehugosapp/services/auth_service.dart";
 import "package:diehugosapp/services/cashpool_member_service.dart";
 import "package:diehugosapp/services/cashpool_service.dart";
+import "package:diehugosapp/services/cashpool_settlement_service.dart";
 import "package:diehugosapp/services/cashpool_transaction_service.dart";
 import "package:diehugosapp/services/dialog_service.dart";
 import "package:diehugosapp/services/toaster_service.dart";
@@ -25,6 +26,7 @@ class CashpoolDetailController extends GetxController {
     required this.authService,
     required this.cashpoolService,
     required this.cashpoolTransactionService,
+    required this.cashpoolSettlementService,
     required this.dialogService,
   });
 
@@ -32,28 +34,22 @@ class CashpoolDetailController extends GetxController {
   late final AuthService authService;
   late final CashpoolService cashpoolService;
   late final CashpoolTransactionService cashpoolTransactionService;
+  late final CashpoolSettlementService cashpoolSettlementService;
   late final DialogService dialogService;
 
   final RxBool isHeaderShowingTotal = true.obs;
   final Rx<UiState> state = UiState.loading().obs;
   final Rxn<CashpoolDetailed> cashpool = Rxn();
+  final Rxn<CashpoolUserSettlementSummary> cashpoolUserSettlementSummary =
+      Rxn();
   final RxList<CashpoolTransaction> transactions = RxList.empty();
   StreamSubscription<CashpoolTransactionEvent>? _transactionSubscription;
-
-  int get totalCashpoolValueCents {
-    if (transactions.isEmpty) return 0;
-    return transactions.fold(0, (sum, t) => sum + t.amountCents);
-  }
-
-  int get deviationFromFairShareCents {
-    if (transactions.isEmpty || authService.user == null) return 0;
-    return transactions.getUserDeviation(authService.user!);
-  }
 
   @override
   Future<void> onInit() async {
     super.onInit();
     await fetchCashpoolDetails();
+    await fetchCashpoolUserSettlementSummary();
     await _startListeningToSSETransactions();
   }
 
@@ -67,7 +63,7 @@ class CashpoolDetailController extends GetxController {
         )).listen(_handleSseEvent);
   }
 
-  void _handleSseEvent(CashpoolTransactionEvent event) {
+  Future<void> _handleSseEvent(CashpoolTransactionEvent event) async {
     if (event is Created) {
       if (event.transaction.owner.id == authService.user?.id) return;
       transactions.insert(0, event.transaction);
@@ -81,6 +77,8 @@ class CashpoolDetailController extends GetxController {
       if (event.emittingUserId == authService.user?.id) return;
       transactions.removeWhere((t) => t.id == event.transactionId);
     }
+
+    await fetchCashpoolUserSettlementSummary();
   }
 
   Future<void> fetchCashpoolDetails() async {
@@ -137,6 +135,19 @@ class CashpoolDetailController extends GetxController {
       state.value = UiState.error("Unable to fetch transactions");
     }
     state.value = UiState.success();
+  }
+
+  Future<void> fetchCashpoolUserSettlementSummary() async {
+    print("fetchCashpoolUserSettlementSummary");
+    final cashpoolId = cashpool.value?.id;
+    if (cashpoolId == null) return;
+    print("fetchCashpoolUserSettlementSummary w cashpoolId: ${cashpoolId}");
+
+    cashpoolUserSettlementSummary.value = await cashpoolSettlementService
+        .getUserSettlementSummary(
+          cashpoolId,
+        );
+    print("summary: ${cashpoolUserSettlementSummary.value}");
   }
 
   Future<void> showCreateTransactionSheet() async {
@@ -199,7 +210,8 @@ class CashpoolDetailController extends GetxController {
   }
 
   @override
-  void close() {
+  Future<void> close() async {
     super.dispose();
+    await _transactionSubscription?.cancel();
   }
 }

@@ -1,10 +1,15 @@
 import "package:diehugosapp/data/models/cashpool_settlement/cashpool_settlement.dart";
 import "package:diehugosapp/data/models/cashpool_settlement/cashpool_suggested_settlement.dart";
+import "package:diehugosapp/data/models/cashpool_settlement/cashpool_user_settlement_summary.dart";
 import "package:diehugosapp/data/models/cashpool_settlement/cmds/cashpool_settlement_create_cmd.dart";
 import "package:dio/dio.dart";
 
 abstract class CashpoolSettlementRepo {
   Future<Iterable<CashpoolSuggestedSettlement>> getSettlementsByCashpoolId(
+    int cashpoolId,
+  );
+
+  Future<CashpoolUserSettlementSummary> getUserSettlementSummary(
     int cashpoolId,
   );
 
@@ -30,6 +35,17 @@ class CashpoolSettlementRepoImpl implements CashpoolSettlementRepo {
       (item) =>
           CashpoolSuggestedSettlement.fromJson(item as Map<String, Object?>),
     );
+  }
+
+  @override
+  Future<CashpoolUserSettlementSummary> getUserSettlementSummary(
+    int cashpoolId,
+  ) async {
+    final res = await dio.get<Map<String, Object?>>(
+      "/cashpools/$cashpoolId/settle/suggest/me",
+    );
+    if (res.data == null) throw Exception("res.data shall not be null!");
+    return CashpoolUserSettlementSummary.fromJson(res.data!);
   }
 
   @override
