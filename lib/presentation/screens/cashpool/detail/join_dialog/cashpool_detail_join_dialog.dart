@@ -1,4 +1,5 @@
 import "package:diehugosapp/presentation/screens/cashpool/detail/join_dialog/cashpool_detail_join_controller.dart";
+import "package:diehugosapp/presentation/widgets/async_button.dart";
 import "package:flutter/widgets.dart";
 import "package:forui/forui.dart";
 import "package:get/get.dart";
@@ -19,7 +20,7 @@ class CashpoolDetailJoinDialog extends GetView<CashpoolDetailJoinController> {
           onPress: () => Get.close(2),
           child: const Text("Zurück zur Übersicht"),
         ),
-        FButton(
+        AsyncButton(
           onPress: controller.handleJoinPress,
           child: const Text("Beitreten"),
         ),

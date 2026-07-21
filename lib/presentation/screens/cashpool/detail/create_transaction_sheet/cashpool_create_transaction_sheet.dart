@@ -1,5 +1,6 @@
 import "package:diehugosapp/presentation/screens/cashpool/detail/create_transaction_sheet/cashpool_create_transaction_controller.dart";
 import "package:diehugosapp/presentation/styles.dart";
+import "package:diehugosapp/presentation/widgets/async_button.dart";
 import "package:diehugosapp/presentation/widgets/bottom_sheet_container.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
@@ -84,7 +85,7 @@ class CashpoolCreateTransactionSheet
                     validator: controller.validateAmountField,
                   ),
                   const SizedBox(height: 20),
-                  FButton(
+                  AsyncButton(
                     size: .sm,
                     onPress: controller.handleCreateOrEditTransaction,
                     child: const Text("Speichern"),

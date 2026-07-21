@@ -1,5 +1,6 @@
 import "package:diehugosapp/presentation/screens/user/user_controller.dart";
 import "package:diehugosapp/presentation/screens/user/user_field.dart";
+import "package:diehugosapp/presentation/widgets/async_button.dart";
 import "package:diehugosapp/presentation/widgets/bottom_spacing.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/cupertino.dart";
@@ -97,9 +98,9 @@ class UserScreen extends GetView<UserController> {
             },
           ),
           const Spacer(),
-          FButton(
+          AsyncButton(
             variant: FButtonVariant.destructive,
-            onPress: () => controller.logout(),
+            onPress: controller.logout,
             child: const Text("Logout"),
           ),
           const BottomSpacing(),

@@ -19,76 +19,79 @@ class CashpoolDetailSettleScreen
       return switch (controller.state.value) {
         Loading() => const Center(child: FCircularProgress()),
         Error() => const Center(child: Text("Something went wrong :(")),
-        Success() => Obx(() {
-          if (controller.settlements.isEmpty) {
-            return const Center(
-              child: Text(
-                "Derzeit sind alle Transaktionen ausgeglichen!",
-              ),
-            );
-          } else {
-            return Column(
-              children: [
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: controller.settlements.length,
-                    padding: EdgeInsets.zero,
-                    itemBuilder: (ctx, i) {
-                      final settlement = controller.settlements[i];
-                      return Slidable(
-                        key: const ValueKey(0),
-                        startActionPane: ActionPane(
-                          motion: const ScrollMotion(),
-                          dismissible: DismissiblePane(
-                            onDismissed: () => controller
-                                .handleSettleSettlementAction(settlement),
-                            confirmDismiss: () async => controller
-                                .handleDismissSettlementAttempt(settlement),
-                            closeOnCancel: true,
-                          ),
-                          children: [
-                            SlidableAction(
-                              onPressed: (ctx) => controller
+        Success() => RefreshIndicator(
+          onRefresh: controller.fetch,
+          child: Obx(() {
+            if (controller.settlements.isEmpty) {
+              return const Center(
+                child: Text(
+                  "Derzeit sind alle Transaktionen ausgeglichen!",
+                ),
+              );
+            } else {
+              return Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: controller.settlements.length,
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (ctx, i) {
+                        final settlement = controller.settlements[i];
+                        return Slidable(
+                          key: const ValueKey(0),
+                          startActionPane: ActionPane(
+                            motion: const ScrollMotion(),
+                            dismissible: DismissiblePane(
+                              onDismissed: () => controller
                                   .handleSettleSettlementAction(settlement),
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8),
-                              ),
-                              backgroundColor: Colors.green,
-                              foregroundColor:
-                                  Get.theme.colorScheme.inverseSurface,
-                              icon: FIcons.check,
-                              label: "Geld ist überwiesen",
+                              confirmDismiss: () async => controller
+                                  .handleDismissSettlementAttempt(settlement),
+                              closeOnCancel: true,
                             ),
-                          ],
-                        ),
-                        child: FItem(
-                          onPress: () => controller.handleSettlementPress(i),
-                          title: Row(
-                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(settlement.from.fullName),
-                              const SizedBox(width: 8),
-                              const Icon(FIcons.arrowRight),
-                              const SizedBox(width: 8),
-                              Text(settlement.to.fullName),
+                              SlidableAction(
+                                onPressed: (ctx) => controller
+                                    .handleSettleSettlementAction(settlement),
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                                backgroundColor: Colors.green,
+                                foregroundColor:
+                                    Get.theme.colorScheme.inverseSurface,
+                                icon: FIcons.check,
+                                label: "Geld ist überwiesen",
+                              ),
                             ],
                           ),
-                          subtitle: Text(
-                            formatCurrency.format(
-                              settlement.amountCents / 100,
+                          child: FItem(
+                            onPress: () => controller.handleSettlementPress(i),
+                            title: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(settlement.from.fullName),
+                                const SizedBox(width: 8),
+                                const Icon(FIcons.arrowRight),
+                                const SizedBox(width: 8),
+                                Text(settlement.to.fullName),
+                              ],
                             ),
+                            subtitle: Text(
+                              formatCurrency.format(
+                                settlement.amountCents / 100,
+                              ),
+                            ),
+                            details: const Icon(FIcons.chevronRight),
                           ),
-                          details: const Icon(FIcons.chevronRight),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
-                ),
-                const BottomSpacing(),
-              ],
-            );
-          }
-        }),
+                  const BottomSpacing(),
+                ],
+              );
+            }
+          }),
+        ),
       };
     });
   }

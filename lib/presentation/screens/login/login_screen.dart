@@ -1,4 +1,5 @@
 import "package:diehugosapp/presentation/screens/login/login_controller.dart";
+import "package:diehugosapp/presentation/widgets/async_button.dart";
 import "package:diehugosapp/presentation/widgets/scaffold_with_navbar.dart";
 import "package:flutter/material.dart";
 import "package:forui/forui.dart";
@@ -29,13 +30,8 @@ class LoginScreen extends GetView<LoginController> {
               spacing: 20,
               children: [
                 Obx(
-                  () => FButton(
-                    prefix: controller.isLoading.value
-                        ? const FCircularProgress()
-                        : null,
-                    onPress: controller.isLoading.value
-                        ? null
-                        : () => controller.submitLogin(),
+                  () => AsyncButton(
+                    onPress: controller.submitLogin,
                     suffix: const Icon(FIcons.lock),
                     child: const Text("Mit E-mail anmelden"),
                   ),

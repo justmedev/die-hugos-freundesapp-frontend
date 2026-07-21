@@ -1,5 +1,6 @@
 import "package:diehugosapp/presentation/screens/cashpool/overview/create_sheet/cashpool_create_controller.dart";
 import "package:diehugosapp/presentation/styles.dart";
+import "package:diehugosapp/presentation/widgets/async_button.dart";
 import "package:diehugosapp/presentation/widgets/bottom_sheet_container.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
@@ -45,9 +46,9 @@ class CashpoolCreateSheet extends GetView<CashpoolCreateController> {
                 : "Die eingegebene Beschreibung ist zu kurz.",
           ),
           const SizedBox(height: 20),
-          FButton(
+          AsyncButton(
+            onPress: controller.handleCreatePressed,
             child: const Text("Erstellen"),
-            onPress: () => controller.handleCreatePressed(),
           ),
         ],
       ),

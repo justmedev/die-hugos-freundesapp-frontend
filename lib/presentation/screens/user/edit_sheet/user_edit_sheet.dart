@@ -1,6 +1,7 @@
 import "package:diehugosapp/presentation/screens/user/edit_sheet/user_edit_controller.dart";
 import "package:diehugosapp/presentation/screens/user/user_field.dart";
 import "package:diehugosapp/presentation/styles.dart";
+import "package:diehugosapp/presentation/widgets/async_button.dart";
 import "package:diehugosapp/presentation/widgets/bottom_sheet_container.dart";
 import "package:diehugosapp/presentation/widgets/bottom_spacing.dart";
 import "package:flutter/cupertino.dart";
@@ -67,7 +68,7 @@ class UserEditSheet extends GetView<UserEditController> {
                   : null,
             ),
           const SizedBox(height: 20),
-          FButton(
+          AsyncButton(
             onPress: controller.save,
             child: const Text("Speichern"),
           ),

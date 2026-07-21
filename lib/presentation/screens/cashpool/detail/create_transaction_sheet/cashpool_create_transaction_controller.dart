@@ -20,6 +20,7 @@ class CashpoolCreateTransactionController extends GetxController {
   final Rx<TextEditingValue> label = TextEditingValue.empty.obs;
   final Rx<TextEditingValue> amountCents = TextEditingValue.empty.obs;
   final Rxn<CashpoolTransaction> editingTransaction = Rxn();
+  final RxBool isCreateOrEditBtnLoading = false.obs;
 
   @override
   void onInit() {

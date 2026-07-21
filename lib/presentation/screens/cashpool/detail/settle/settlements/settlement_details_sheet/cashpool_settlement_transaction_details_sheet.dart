@@ -1,6 +1,7 @@
 import "package:diehugosapp/core/utils/ui_state.dart";
 import "package:diehugosapp/presentation/screens/cashpool/detail/settle/settlements/settlement_details_sheet/cashpool_settlement_transaction_details_controller.dart";
 import "package:diehugosapp/presentation/styles.dart";
+import "package:diehugosapp/presentation/widgets/async_button.dart";
 import "package:diehugosapp/presentation/widgets/bottom_sheet_container.dart";
 import "package:diehugosapp/presentation/widgets/bottom_spacing.dart";
 import "package:flutter/material.dart";
@@ -101,9 +102,9 @@ class CashpoolSettlementTransactionDetailsSheet
                 ),
                 const SizedBox(height: 20),
                 Obx(
-                  () => FButton(
+                  () => AsyncButton(
                     onPress: controller.isSettleable
-                        ? () => controller.handleSettleSettlementAction()
+                        ? controller.handleSettleSettlementAction
                         : null,
                     child: const Text("Geld wurde überwiesen"),
                   ),
