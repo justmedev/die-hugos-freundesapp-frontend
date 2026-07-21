@@ -29,12 +29,10 @@ class LoginScreen extends GetView<LoginController> {
             child: Column(
               spacing: 20,
               children: [
-                Obx(
-                  () => AsyncButton(
-                    onPress: controller.submitLogin,
-                    suffix: const Icon(FIcons.lock),
-                    child: const Text("Mit E-mail anmelden"),
-                  ),
+                AsyncButton(
+                  onPress: controller.submitLogin,
+                  suffix: const Icon(FIcons.lock),
+                  child: const Text("Mit E-mail anmelden"),
                 ),
               ],
             ),
