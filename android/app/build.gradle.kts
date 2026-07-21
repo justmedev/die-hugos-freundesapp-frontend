@@ -28,7 +28,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        manifestPlaceholders += mapOf('appAuthRedirectScheme' to 'at.diehugosapp')
+        manifestPlaceholders += mapOf("appAuthRedirectScheme" to "at.diehugosapp")
     }
 
     buildTypes {
