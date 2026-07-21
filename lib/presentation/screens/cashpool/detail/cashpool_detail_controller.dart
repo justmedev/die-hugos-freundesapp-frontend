@@ -43,7 +43,7 @@ class CashpoolDetailController extends GetxController {
   final Rxn<CashpoolUserSettlementSummary> cashpoolUserSettlementSummary =
       Rxn();
   final RxList<CashpoolTransaction> transactions = RxList.empty();
-  StreamSubscription<CashpoolTransactionEvent>? _transactionSubscription;
+  final Rxn<CashpoolTransactionEvent> lastEvent = Rxn();
 
   @override
   Future<void> onInit() async {
@@ -57,11 +57,11 @@ class CashpoolDetailController extends GetxController {
     final id = cashpool.value?.id;
     if (id == null) return;
 
-    print("start listening");
-    _transactionSubscription =
-        (await cashpoolTransactionService.listenToCashpoolTransactions(
-          id,
-        )).listen(_handleSseEvent);
+    final stream = await cashpoolTransactionService
+        .listenToCashpoolTransactions(id);
+
+    lastEvent.bindStream(stream);
+    ever(lastEvent, (event) => _handleSseEvent(event!));
   }
 
   Future<void> _handleSseEvent(CashpoolTransactionEvent event) async {
@@ -143,7 +143,7 @@ class CashpoolDetailController extends GetxController {
     print("fetchCashpoolUserSettlementSummary");
     final cashpoolId = cashpool.value?.id;
     if (cashpoolId == null) return;
-    print("fetchCashpoolUserSettlementSummary w cashpoolId: ${cashpoolId}");
+    print("fetchCashpoolUserSettlementSummary w cashpoolId: $cashpoolId");
 
     cashpoolUserSettlementSummary.value = await cashpoolSettlementService
         .getUserSettlementSummary(
@@ -215,10 +215,5 @@ class CashpoolDetailController extends GetxController {
       "/cashpools/details/settle",
       arguments: {"id": cashpool.value!.id},
     );
-  }
-
-  @override
-  Future<void> onClose() async {
-    await _transactionSubscription?.cancel();
   }
 }

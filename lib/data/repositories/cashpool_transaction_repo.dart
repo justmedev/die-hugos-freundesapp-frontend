@@ -68,6 +68,7 @@ class CashpoolTransactionRepoImpl implements CashpoolTransactionRepo {
   ) async {
     final completer = Completer<Stream<CashpoolTransactionEvent>>();
 
+    await EventFlux.instance.disconnect();
     EventFlux.instance.connect(
       EventFluxConnectionType.get,
       "${dio.options.baseUrl}/cashpools/$cashpoolId/transactions/listen",
