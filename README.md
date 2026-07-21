@@ -1,16 +1,19 @@
-# diehugosapp
+# Die Hugos
 
-App für Freundesgruppe
+an app to split bills for friends. It also includes some helpful friendgroup tools like a wheel of
+names and some minigames.
 
-## Getting Started
+# Environment Variables
 
-This project is a starting point for a Flutter application.
+can be set either by creating a .env or defining them by command line
 
-A few resources to get you started if this is your first Flutter project:
+| Name         | Purpose                                                          | Example Value                        |
+|--------------|------------------------------------------------------------------|--------------------------------------|
+| KC_CLIENTID  | The keycloak clientid                                            | die-hugos                            |
+| KC_REALM     | The name of the realm                                            | https://my-keycloak/realms/die-hugos |
+| API_BASE_URL | The url of the backend without a leading slash, can include port | https://my-diehugos-backend          |
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Keycloak
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+A keycloak instance is required, and a new realm with a clientid must be set up and input into the env
+variables.
