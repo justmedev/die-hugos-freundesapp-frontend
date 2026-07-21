@@ -123,7 +123,7 @@ class CashpoolDetailScreen extends GetView<CashpoolDetailController> {
                   }
 
                   return RefreshIndicator(
-                    onRefresh: controller.fetchCashpoolTransactions,
+                    onRefresh: controller.handlePullToRefresh,
                     child: ListView.builder(
                       itemCount: controller.transactions.length,
                       padding: EdgeInsets.zero,

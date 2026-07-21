@@ -57,6 +57,7 @@ class CashpoolDetailController extends GetxController {
     final id = cashpool.value?.id;
     if (id == null) return;
 
+    print("start listening");
     _transactionSubscription =
         (await cashpoolTransactionService.listenToCashpoolTransactions(
           id,
@@ -64,6 +65,7 @@ class CashpoolDetailController extends GetxController {
   }
 
   Future<void> _handleSseEvent(CashpoolTransactionEvent event) async {
+    print("new sse event: ${event.runtimeType}");
     if (event is Created) {
       if (event.transaction.owner.id == authService.user?.id) return;
       transactions.insert(0, event.transaction);
@@ -150,6 +152,12 @@ class CashpoolDetailController extends GetxController {
     print("summary: ${cashpoolUserSettlementSummary.value}");
   }
 
+  Future<void> handlePullToRefresh() async {
+    await fetchCashpoolDetails();
+    await fetchCashpoolTransactions();
+    await fetchCashpoolUserSettlementSummary();
+  }
+
   Future<void> showCreateTransactionSheet() async {
     Get.lazyPut(
       () => CashpoolCreateTransactionController(
@@ -210,8 +218,7 @@ class CashpoolDetailController extends GetxController {
   }
 
   @override
-  Future<void> close() async {
-    super.dispose();
+  Future<void> onClose() async {
     await _transactionSubscription?.cancel();
   }
 }
